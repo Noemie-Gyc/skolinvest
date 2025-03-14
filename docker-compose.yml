@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./BACK/my_docker_django_app
+    container_name: backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./BACK/my_docker_django_app:/app
+
+
+
+  frontend:
+    build: ./FRONT/mon_projet_next
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./FRONT/mon_projet_next:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
