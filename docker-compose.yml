@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   backend:
@@ -8,6 +7,9 @@ services:
       - "8000:8000"
     volumes:
       - ./BACK/my_docker_django_app:/app
+    
+    depends_on:
+      - mysql
 
 
 
@@ -24,3 +26,22 @@ services:
       - NEXT_PUBLIC_API_URL=http://backend:8000
     depends_on:
       - backend
+
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Mot de passe root de MySQL
+      MYSQL_DATABASE: skolinvestdb     # Nom de la base de données
+      MYSQL_USER: skolinvestuser                 # Utilisateur MySQL
+      MYSQL_PASSWORD: userpass     # Mot de passe de l'utilisateur
+    ports:
+      - "3306:3306"                    # Redirection du port
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+volumes:
+  mysql_data:
+    driver: local

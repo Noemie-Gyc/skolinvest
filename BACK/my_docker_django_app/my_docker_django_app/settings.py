@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +48,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
+
+# Permettre les requêtes depuis n'importe quel domaine (en développement)
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'my_docker_django_app.urls'
 
@@ -73,13 +79,17 @@ WSGI_APPLICATION = 'my_docker_django_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'skolinvestdb',  # Le nom de votre base de données MySQL
+        'USER': 'skolinvestuser',         # L'utilisateur MySQL
+        'PASSWORD': 'userpass', # Le mot de passe
+        'HOST': 'mysql',      # L'hôte (localhost si vous utilisez une base locale)
+        'PORT': '3306',           # Le port de MySQL (par défaut 3306)
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

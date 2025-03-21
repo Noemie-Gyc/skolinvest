@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+/*import { useEffect, useState } from "react";
 
 export default function TestAPI() {
   const [data, setData] = useState(null);
@@ -18,3 +18,8 @@ export default function TestAPI() {
     </div>
   );
 }
+
+
+//*/
+
+// Dans un fichier Next.js (par exemple, dans un composant ou une page)
