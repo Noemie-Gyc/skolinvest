@@ -1,2 +1,3 @@
 /venv
-my_docker_django_app/__pycache__
+my_docker_django_app/__pycache__/
+*.pyc

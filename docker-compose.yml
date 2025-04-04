@@ -7,9 +7,11 @@ services:
       - "8000:8000"
     volumes:
       - ./BACK/my_docker_django_app:/app
-    
+    restart: always
     depends_on:
       - mysql
+    networks:
+      - mynetwork
 
 
 
@@ -26,6 +28,8 @@ services:
       - NEXT_PUBLIC_API_URL=http://backend:8000
     depends_on:
       - backend
+    networks:
+      - mynetwork
 
 
   mysql:
@@ -40,8 +44,13 @@ services:
       - "3306:3306"                    # Redirection du port
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
 
 volumes:
   mysql_data:
     driver: local
+networks:
+  mynetwork:
+    driver: bridge
