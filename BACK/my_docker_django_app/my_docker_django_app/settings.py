@@ -71,7 +71,11 @@ MIDDLEWARE = [
 ]
 
 # Permettre les requêtes depuis n'importe quel domaine (en développement)
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
 ROOT_URLCONF = 'my_docker_django_app.urls'
 

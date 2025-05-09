@@ -1,53 +1,43 @@
-"use client";
+'use client'; // uniquement si tu utilises App Router (Next.js 13+)
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react';
 
 export default function Dashboard() {
-  const router = useRouter();
-  const [adminData, setAdminData] = useState(null);
-  const [error, setError] = useState("");
+  const [data, setData] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("access");
-    if (!token) {
-      router.push("login"); // Rediriger si non connecté
-      return;
-    }
-
-    // Appel à l'API Django pour récupérer les données admin
-    fetch("http://localhost:8000/admin-data/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    fetch('http://localhost:8000/api/home/', {
+      method: 'GET',
+      credentials: 'include', // important pour les cookies de session
     })
       .then(async (res) => {
         if (!res.ok) {
-          throw new Error("Accès refusé");
+          const text = await res.text(); // pour afficher le message d'erreur côté Django
+          throw new Error(`Erreur HTTP ${res.status} : ${text}`);
         }
-        const data = await res.json();
-        setAdminData(data);
+        return res.json();
+      })
+      .then((json) => {
+        setData(json);
+        setError('');
       })
       .catch((err) => {
-        console.error(err);
-        setError("Accès non autorisé.");
-        router.push("login");
+        console.error('Erreur de requête :', err);
+        setError('Accès refusé ou erreur serveur.');
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [router]);
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!adminData) {
-    return <p>Chargement des données...</p>;
-  }
+  }, []);
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto" }}>
-      <h1>Tableau de bord de l'administratrice</h1>
-      <p>{adminData.message}</p>
-      {/* Tu peux ajouter ici des statistiques, une liste d'utilisateurs, etc. */}
+    <div style={{ padding: '2rem' }}>
+      <h1>Dashboard Admin</h1>
+      {loading && <p>Chargement...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
     </div>
   );
 }
