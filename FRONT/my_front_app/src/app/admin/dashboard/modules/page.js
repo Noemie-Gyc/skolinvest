@@ -1,3 +1,45 @@
-export default function Page() {
-    return <h1>La liste des modules</h1>
-  }
+'use client';
+import React, { useEffect, useState } from 'react';
+
+export default function ModulesPage() {
+  const [modules, setModules] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/modules/', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Erreur HTTP ${res.status} : ${text}`);
+        }
+        return res.json();
+      })
+      .then((data) => setModules(data))
+      .catch((err) => {
+        console.error('Erreur lors du chargement des modules :', err);
+        setErrorMsg('Impossible de charger les modules.');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h1>Liste des Modules</h1>
+
+      {loading && <p>Roulement de tambour...</p>}
+      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+
+      <ul>
+        {modules.map((module) => (
+          <li key={module.id}>
+            <strong>{module.title}</strong> — {module.status}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
