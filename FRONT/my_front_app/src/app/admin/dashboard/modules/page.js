@@ -28,7 +28,7 @@ export default function ModulesPage() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Liste des Modules</h1>
+      <h1>Mes modules</h1>
 
       {loading && <p>Roulement de tambour...</p>}
       {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
