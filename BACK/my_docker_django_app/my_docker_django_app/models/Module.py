@@ -1,5 +1,5 @@
 from django.db import models;
-from .User import User
+from django.contrib.auth.models import User
 
 class Status(models.TextChoices):
     PUBLISHED = 'published', 'Published'
@@ -7,7 +7,7 @@ class Status(models.TextChoices):
 
 class Module(models.Model):
     publication_date = models.DateField(blank = True)
-    modification_date = models.DateField
+    modification_date = models.DateField(auto_now=True)
     title = models.CharField(max_length=255, null = False)
     thumbnail = models.CharField(max_length=255)
     status = models.CharField(

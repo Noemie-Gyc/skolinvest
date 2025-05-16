@@ -16,12 +16,12 @@ services:
 
 
   frontend:
-    build: ./FRONT/mon_projet_next
+    build: ./FRONT/my_front_app
     container_name: frontend
     ports:
       - "3000:3000"
     volumes:
-      - ./FRONT/mon_projet_next:/app
+      - ./FRONT/my_front_app:/app
       - /app/node_modules
       - /app/.next
     environment:
