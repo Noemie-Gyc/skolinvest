@@ -1,8 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
+
+interface Module {
+  id: number | string;
+  title: string;
+  status: string;
+}
+
 export default function ModulesPage() {
-  const [modules, setModules] = useState([]);
+  const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -41,5 +48,6 @@ export default function ModulesPage() {
         ))}
       </ul>
     </div>
+   
   );
 }
