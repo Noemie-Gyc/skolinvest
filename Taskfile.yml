@@ -1,0 +1,33 @@
+version: '3'
+
+tasks:
+  start:
+    desc: Démarre tous les conteneurs
+    cmds:
+      - docker-compose up -d
+
+  stop:
+    desc: Arrête tous les conteneurs
+    cmds:
+      - docker-compose down
+
+  install:
+    desc: Installe les dépendances pour le frontend et le backend
+    cmds:
+      - docker-compose exec frontend npm install
+      - docker-compose exec backend pip install -r requirements.txt
+
+  test-unit:
+    desc: Lance les tests unitaires du backend
+    cmds:
+      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic
+
+  logs:
+    desc: Affiche les logs des conteneurs
+    cmds:
+      - docker-compose logs -f
+
+  build:
+    desc: Reconstruit les images Docker
+    cmds:
+      - docker-compose build 
