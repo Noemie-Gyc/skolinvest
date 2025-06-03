@@ -28,6 +28,6 @@ export default function Page() {
       <DiscoverButton>Découvrir</DiscoverButton>
        <br/><br/>
          <span><EditBadge>EDITION</EditBadge></span>
-    </main>  
+    </main>    
   )
 }
