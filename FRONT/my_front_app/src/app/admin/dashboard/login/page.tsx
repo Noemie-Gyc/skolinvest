@@ -1,11 +1,13 @@
-"use client"; // si tu es en app router
+"use client"; 
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LoginInput } from "@/components/loginInput";
+import { ConnexionButton } from "@/components/connexionButton"
 
 export default function LoginPage() {
-    
-  const router = useRouter(); 
+
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -50,25 +52,30 @@ export default function LoginPage() {
 
   return (
     <div style={{ maxWidth: 400, margin: "auto" }}>
-      <h1>Connexion Admin</h1>
+      <h1>ESPACE ADMINISTRATEUR</h1>
+       
       <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Nom d'utilisateur"
+        <div>
+        <LoginInput
+          placeholder="Identifiant"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         /><br /><br />
-        <input
+
+        <LoginInput
           type="password"
           placeholder="Mot de passe"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
           required
         /><br /><br />
-        <button type="submit" disabled={loading}>
+
+        <ConnexionButton type="submit" disabled={loading}>
           {loading ? "Connexion..." : "Se connecter"}
-        </button>
+        </ConnexionButton>
+       
+        </div>
       </form>
       {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
     </div>
