@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginInput } from "@/components/loginInput";
 import { ConnexionButton } from "@/components/connexionButton"
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
 
@@ -25,14 +26,13 @@ export default function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("access", data.access);
-        localStorage.setItem("refresh", data.refresh);
-        router.push("dashboard");
+        router.push("/admin/dashboard/modules");
         alert("Connexion réussie !");
         // Redirection si nécessaire
       } else {
