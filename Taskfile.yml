@@ -20,7 +20,7 @@ tasks:
   test-unit:
     desc: Lance les tests unitaires du backend
     cmds:
-      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic
+      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic my_docker_django_app.tests.test_video
 
   logs:
     desc: Affiche les logs des conteneurs
