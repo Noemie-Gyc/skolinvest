@@ -4,7 +4,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types":["@playwright/test"], 
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
