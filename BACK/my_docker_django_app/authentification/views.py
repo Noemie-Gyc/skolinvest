@@ -10,14 +10,14 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         response = super().post(request, *args, **kwargs)
         access_token = response.data.get("access")
 
-        # Ajoute le cookie HTTP visible par Next.js middleware
+        # Add the cookie HTTP visible by Next.js middleware
         response.set_cookie(
             key="access",
             value=access_token,
             path="/",
-            httponly=False,  # True = JS can't read it
+            httponly=True,
             samesite="Strict",
-            secure=False,    # True si HTTPS
+            secure=True,
         )
 
         return response

@@ -35,17 +35,3 @@ urlpatterns = [
 
 
 
-
-""""
-
-from django.urls import path
-from .views import HomeAPI
-
-urlpatterns = [
-    path("api/home/", HomeAPI.as_view()),  # Nouvelle route avec DRF
-]
-
-"
-"""
-
-

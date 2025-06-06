@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginInput } from "@/components/loginInput";
-import { ConnexionButton } from "@/components/connexionButton"
-import Cookies from "js-cookie";
+import { ConnexionButton } from "@/components/connexionButton";
 
 export default function LoginPage() {
 
@@ -32,7 +31,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        router.push("/admin/dashboard/modules");
+        router.push("modules");
         alert("Connexion réussie !");
         // Redirection si nécessaire
       } else {
