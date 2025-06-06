@@ -17,10 +17,20 @@ tasks:
       - docker-compose exec frontend npm install
       - docker-compose exec backend pip install -r requirements.txt
 
-  test-unit:
+  test-unit-back:
     desc: Lance les tests unitaires du backend
     cmds:
       - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic my_docker_django_app.tests.test_video
+
+  test-e2e-playwright:
+    desc: Lance les tests e2e
+    cmds:
+      - cd Front && cd my_front_app && npx playwright test tests/e2e/login.spec.ts
+
+  test-unit-front:
+    desc: Lance les tests unitaires du frontend
+    cmds:
+      - cd Front && cd my_front_app && npx jest test 
 
   logs:
     desc: Affiche les logs des conteneurs
