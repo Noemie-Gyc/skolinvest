@@ -3,7 +3,7 @@ from django.test import TestCase
 from my_docker_django_app.utils import is_valid_video_extension
 from my_docker_django_app.utils import is_valid_video_size
 
-# TODO : Créer les fonctions utilitaire pour valider le format et la limite du poids de la vidéo
+# TODO : Create fonction to validate the video format and size
 
 class VideoExtensionTestCase(TestCase):
     def test_valid_mp4_extension(self):
@@ -17,15 +17,15 @@ class VideoExtensionTestCase(TestCase):
 class VideoSizeTest(TestCase):
 
     def test_video_within_size_limit(self):
-        # Simule un fichier de 100 Mo (100 * 1024 * 1024 octets)
+        # Fie of 100 Mo (100 * 1024 * 1024 octets)
         fake_size = 100 * 1024 * 1024
         mock_video = SimpleUploadedFile("video.mp4", b"a" * fake_size, content_type="video/mp4")
         self.assertTrue(is_valid_video_size(mock_video))
 
     def test_video_exceeds_size_limit(self):
-        # Simule un fichier de 3 Go (3 * 1024 * 1024 * 1024 octets)
+        # File of 3 Go (3 * 1024 * 1024 * 1024 octets)
         fake_size = 3 * 1024 * 1024 * 1024
-        #On ne peut pas mocker la volume du fichier donc il faut le rajouter à l'objet mock_video
+        #Add the file size to the mock video object
         mock_video = SimpleUploadedFile("video.mp4", b"dummy", content_type="video/mp4")
-        mock_video.size = fake_size  # on force la taille simulée
+        mock_video.size = fake_size  # force simulated file size
         self.assertFalse(is_valid_video_size(mock_video))
