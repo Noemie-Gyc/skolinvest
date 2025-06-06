@@ -32,7 +32,7 @@ export default function LoginPage() {
       if (res.ok) {
         localStorage.setItem("access", data.access);
         localStorage.setItem("refresh", data.refresh);
-        router.push("dashboard");
+        router.push("modules");
         alert("Connexion réussie !");
         // Redirection si nécessaire
       } else {

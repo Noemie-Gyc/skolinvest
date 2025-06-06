@@ -7,7 +7,7 @@ class AdminOnlyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        if not self.user.is_superuser:
+        if not self.user.is_superuser and not self.user.is_staff :
             raise AuthenticationFailed("Seuls les administrateurs peuvent se connecter.")
 
         return data

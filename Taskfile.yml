@@ -30,4 +30,4 @@ tasks:
   build:
     desc: Reconstruit les images Docker
     cmds:
-      - docker-compose build 
+      - docker-compose up --build 

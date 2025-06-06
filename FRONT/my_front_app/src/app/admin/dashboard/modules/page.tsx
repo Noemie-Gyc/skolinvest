@@ -1,6 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Alert } from "@/components/ui/alert"
 
 interface Module {
   id: number | string;
@@ -12,13 +14,38 @@ export default function ModulesPage() {
   const [modules, setModules] = useState<Module[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+  const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    router.push('login');
+  };
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/modules/', {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      alert("Vous devez être connecté.");
+      router.push('login');
+      setLoading(false);
+      return;
+    }
+
+    fetch('http://localhost:8000/api/admin/modules/', {
       method: 'GET',
-      credentials: 'include',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     })
       .then(async (res) => {
+        if (res.status === 401 || res.status === 403) {
+          alert("Vous n'avez pas les droits pour accéder à cette page.");
+          router.push('login');
+          throw new Error("Accès refusé");
+        }
+
         if (!res.ok) {
           const text = await res.text();
           throw new Error(`Erreur HTTP ${res.status} : ${text}`);
@@ -37,8 +64,22 @@ export default function ModulesPage() {
     <div style={{ padding: '2rem' }}>
       <h1>Mes modules</h1>
 
-      {loading && <p>Roulement de tambour...</p>}
-      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+      <button
+        onClick={logout}
+        style={{
+          marginBottom: '1rem',
+          backgroundColor: '#c00',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        Déconnexion
+      </button>
+
+      {loading && <p>Chargement...</p>}
+
 
       <ul>
         {modules.map((module) => (
@@ -48,6 +89,5 @@ export default function ModulesPage() {
         ))}
       </ul>
     </div>
-   
   );
 }
