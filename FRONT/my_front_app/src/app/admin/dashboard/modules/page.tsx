@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Alert } from "@/components/ui/alert"
+
 
 interface Module {
   id: number | string;
