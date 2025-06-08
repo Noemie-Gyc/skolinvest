@@ -1,4 +1,4 @@
-'use client'; // uniquement si tu utilises App Router (Next.js 13+)
+'use client'; 
 
 import React, { useEffect, useState } from 'react';
 
