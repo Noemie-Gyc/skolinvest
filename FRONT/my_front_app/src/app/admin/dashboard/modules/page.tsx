@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 
 interface Module {
   id: number | string;
@@ -16,50 +16,31 @@ export default function ModulesPage() {
   const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
 
-  const logout = () => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    router.push('login');
+  const logout = async () => {
+    await fetch('http://localhost:8000/api/auth/logout/', { method: 'POST', credentials: 'include' });
+    router.push('/admin/dashboard/login');
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("access");
-
-    if (!token) {
-      alert("Vous devez être connecté.");
-      router.push('login');
-      setLoading(false);
-      return;
-    }
-
-    fetch('http://localhost:8000/api/admin/modules/', {
+    fetchWithAuth('http://localhost:8000/api/admin/modules/', {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
     })
       .then(async (res) => {
-        if (res.status === 401 || res.status === 403) {
-          alert("Vous n'avez pas les droits pour accéder à cette page.");
-          router.push('login');
-          throw new Error("Accès refusé");
+        if (!res) {
+          alert('Session expirée. Redirection...');
+          router.push('/admin/dashboard/login');
+          return;
         }
 
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`Erreur HTTP ${res.status} : ${text}`);
-        }
-        return res.json();
+        const data = await res.json();
+        setModules(data);
       })
-      .then((data) => setModules(data))
       .catch((err) => {
         console.error('Erreur lors du chargement des modules :', err);
         setErrorMsg('Impossible de charger les modules.');
       })
       .finally(() => setLoading(false));
   }, []);
-
   return (
     <div style={{ padding: '2rem' }}>
       <h1>Mes modules</h1>
@@ -79,7 +60,7 @@ export default function ModulesPage() {
       </button>
 
       {loading && <p>Chargement...</p>}
-
+      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
 
       <ul>
         {modules.map((module) => (

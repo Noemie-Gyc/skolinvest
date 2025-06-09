@@ -1,9 +1,9 @@
-"use client"; 
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginInput } from "@/components/loginInput";
-import { ConnexionButton } from "@/components/connexionButton"
+import { ConnexionButton } from "@/components/connexionButton";
 
 export default function LoginPage() {
 
@@ -25,21 +25,19 @@ export default function LoginPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("access", data.access);
-        localStorage.setItem("refresh", data.refresh);
         router.push("modules");
         alert("Connexion réussie !");
-        // Redirection si nécessaire
       } else {
         if (data.detail) {
           setErrorMsg(data.detail); // Par exemple : "No active account found"
         } else {
-          setErrorMsg("Identifiants invalides ou non autorisé.");
+          setErrorMsg("Vous n'êtes pas autorisé à accéder à cet espace.");
         }
       }
     } catch (error) {
@@ -53,28 +51,28 @@ export default function LoginPage() {
   return (
     <div style={{ maxWidth: 400, margin: "auto" }}>
       <h1>ESPACE ADMINISTRATEUR</h1>
-       
+
       <form onSubmit={handleLogin}>
         <div>
-        <LoginInput
-          placeholder="Identifiant"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        /><br /><br />
+          <LoginInput
+            placeholder="Identifiant"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          /><br /><br />
 
-        <LoginInput
-          type="password"
-          placeholder="Mot de passe"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          required
-        /><br /><br />
+          <LoginInput
+            type="password"
+            placeholder="Mot de passe"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          /><br /><br />
 
-        <ConnexionButton type="submit" disabled={loading}>
-          {loading ? "Connexion..." : "Se connecter"}
-        </ConnexionButton>
-       
+          <ConnexionButton type="submit" disabled={loading}>
+            {loading ? "Connexion..." : "Se connecter"}
+          </ConnexionButton>
+
         </div>
       </form>
       {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
