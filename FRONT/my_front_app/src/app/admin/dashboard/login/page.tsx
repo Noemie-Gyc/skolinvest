@@ -50,8 +50,8 @@ export default function LoginPage() {
 
   return (
     <div style={{ maxWidth: 400, margin: "auto" }}>
-      <h1>ESPACE ADMINISTRATEUR</h1>
-
+      <h1 className="text-3xl font-bold text-blue-700 text-center">ESPACE ADMINISTRATEUR</h1>
+       
       <form onSubmit={handleLogin}>
         <div>
           <LoginInput

@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { NewsletterInput } from "@/components/newsletterInput";
 
 describe('newsletterInput', () => {
-    it('Affiche une erreur si l email est invalide', () => {
+    it('Display an error when email is invalid', () => {
         render(<NewsletterInput />);
         const input = screen.getByTestId('newsletter-email-input');
         const button = screen.getByTestId('submit-button');
@@ -13,7 +13,7 @@ describe('newsletterInput', () => {
         expect(screen.getByTestId('error-message')).toHaveTextContent('Adresse email invalide');
     });
 
-    it('ne montre pas d’erreur si l’email est valide', () => {
+    it('Does not display error when email is valid', () => {
         render(<NewsletterInput />);
         const input = screen.getByTestId('newsletter-email-input');
         const button = screen.getByTestId('submit-button');
