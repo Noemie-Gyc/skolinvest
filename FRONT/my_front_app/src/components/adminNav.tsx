@@ -1,13 +1,12 @@
-// src/components/AdminNav.tsx
-
 import AdminNavItem from './adminNavItem';
 import Link from 'next/link';
 
 export default function AdminNav() {
   return (
     <nav className="flex justify-between items-center px-8 py-4 bg-[#3952fb] shadow-sm">
-      {/* Logo */}
-      <div className="text-white font-bold text-xl">Logo</div>
+
+      <img src="/logo.png" alt="Logo"/>
+
 
       {/* Menu */}
       <div className="flex items-center gap-4">
