@@ -46,15 +46,18 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "authentification.authentication.CookieJWTAuthentication",
+    ],
+     "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ],
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # durée de vie du token d'accès
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # durée de vie du token de rafraîchissement
-    'ROTATE_REFRESH_TOKENS': False,  # Si tu veux révoquer le refresh token à chaque fois
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
+    'ROTATE_REFRESH_TOKENS': False, 
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
