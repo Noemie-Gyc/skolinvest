@@ -20,7 +20,7 @@ tasks:
   test-unit:
     desc: Lance les tests unitaires du backend
     cmds:
-      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic my_docker_django_app.tests.test_video
+      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic my_docker_django_app.tests.test_video authentification.tests.test_authentication
 
   logs:
     desc: Affiche les logs des conteneurs
@@ -30,4 +30,8 @@ tasks:
   build:
     desc: Reconstruit les images Docker
     cmds:
-      - docker-compose up --build 
+      - docker-compose up --build
+  front-server:
+    desc: Lance le server front
+    cmds: 
+      - cd Front && cd my_front_app && npm run dev
