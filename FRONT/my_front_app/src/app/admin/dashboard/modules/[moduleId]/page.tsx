@@ -33,7 +33,7 @@ export default function ModuleDetailPage() {
   useEffect(() => {
     if (!moduleId) return;
 
-    fetchWithAuth(`http://localhost:8000/api/modules/${moduleId}/`, {
+    fetchWithAuth(`http://localhost:8000/api/v1/modules/${moduleId}/`, {
       method: 'GET',
     })
       .then(async (res) => {

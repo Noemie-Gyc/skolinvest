@@ -6,10 +6,10 @@ class Status(models.TextChoices):
     DRAFT = 'draft', 'Draft'
 
 class Module(models.Model):
-    publication_date = models.DateField(blank = True)
+    publication_date = models.DateField(blank = True, null=True)
     modification_date = models.DateField(auto_now=True)
     title = models.CharField(max_length=255, null = False)
-    thumbnail = models.CharField(max_length=255)
+    thumbnail = models.CharField(max_length=255, blank=True)
     status = models.CharField(
         max_length=10,
         choices=Status.choices, 

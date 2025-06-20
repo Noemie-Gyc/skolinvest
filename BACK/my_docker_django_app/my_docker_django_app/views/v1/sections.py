@@ -1,39 +1,9 @@
-from django.http import JsonResponse
-from my_docker_django_app.models import Module, Section
-from .serializers import ModuleSerializer, SectionSerializer
-from rest_framework.generics import RetrieveAPIView
+from my_docker_django_app.models import Section
+from my_docker_django_app.serializers import  SectionSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-
-def api_home(request):
-    return JsonResponse({"message": "Hello from Django API!"})
-
-class ModuleListView(APIView):
-    def get(self, request):
-        modules = Module.objects.all()
-        serializer = ModuleSerializer(modules, many=True)
-        return Response(serializer.data)
-    
-# RetrieveAPIView is a native class to get the detail of an instance identified by the primary key
-class ModuleDetailView(RetrieveAPIView):
-    queryset = Module.objects.all()
-    serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
-
-
-class EditableModuleListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
-        if not user.is_staff and not user.is_superuser:
-            return Response({"detail": "Accès interdit."}, status=status.HTTP_403_FORBIDDEN)
-
-        modules = Module.objects.all()
-        serializer = ModuleSerializer(modules, many=True)
-        return Response(serializer.data)
 
 class SectionListCreateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -50,7 +20,8 @@ class SectionListCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Section CRUD is created manually. This way is better if we want to customize the methods in the future. We could have used the native django methods
+# as done in the module.
 class SectionDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -85,3 +56,4 @@ class SectionDetailView(APIView):
         section.delete()
         # 204 error means the response has no content has this is deleted.
         return Response(status=status.HTTP_204_NO_CONTENT)
+    

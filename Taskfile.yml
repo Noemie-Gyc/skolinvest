@@ -45,3 +45,13 @@ tasks:
     desc: Lance le server front
     cmds: 
       - cd Front && cd my_front_app && npm run dev
+      
+  #FIXME à voir les commandes n'ont pas l'air de fonctionner via task
+  # makemigrations:
+  # desc: Prépare les migrations à envoyer en base de données
+  # cmds:
+  #   - docker-compose exec backend python manage.py makemigrations
+  # migrate:
+  # desc: envoie les migrations vers la base de données
+  # cmds:
+  #   - docker-compose exec backend python manage.py migrate
