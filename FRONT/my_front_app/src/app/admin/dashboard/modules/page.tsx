@@ -22,7 +22,7 @@ export default function ModulesPage() {
   };
 
   useEffect(() => {
-    fetchWithAuth('http://localhost:8000/api/admin/modules/', {
+    fetchWithAuth('http://localhost:8000/api/v1/modules/admin/', {
       method: 'GET',
     })
       .then(async (res) => {
