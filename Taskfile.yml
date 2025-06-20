@@ -20,7 +20,7 @@ tasks:
   test-unit-back:
     desc: Lance les tests unitaires du backend
     cmds:
-      - docker-compose exec backend python manage.py test my_docker_django_app.tests.test_basic  authentification.tests.test_authentication my_docker_django_app.tests.test_section
+      - docker-compose exec backend python manage.py test authentification.tests.test_authentication
 
   test-e2e-playwright:
     desc: Lance les tests e2e

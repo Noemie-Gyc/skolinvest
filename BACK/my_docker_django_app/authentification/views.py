@@ -30,16 +30,16 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             value=access_token,
             path="/",
             httponly=True, # prevent from XSS attacks. JS can't read the document.cookie, data is never exposed to JS code.
-            samesite="Lax", # Should be "strict" in production mode, Lax limits the cross sites requests
-            secure=False, # Should be true in production mode (HTTPS)
+            samesite="Strict", # Should be "strict" in production mode, Lax limits the cross sites requests
+            secure=True, # Should be true in production mode (HTTPS)
          ) 
         response.set_cookie(
             key="refresh",
             value=refresh_token,
             path="/",
             httponly=True,
-            samesite="Lax",
-            secure=False,
+            samesite="Strict",
+            secure=True,
         )
         # return final response with the cookies one containing the access token, the other one containing the resfresh token. 
         return response
@@ -68,8 +68,8 @@ class CookieTokenRefreshView(TokenRefreshView):
                 key="access",
                 value=access_token,
                 httponly=True,
-                samesite="Lax",
-                secure=False,
+                samesite="Strict",
+                secure=True,
                 path="/",
             )
 
