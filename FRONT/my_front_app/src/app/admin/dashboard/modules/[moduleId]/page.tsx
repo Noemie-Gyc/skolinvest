@@ -1,90 +1,37 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
+import CardSommaire from './CardSommaire';
+import AddSectionForm from './AddSectionForm';
 
-interface Section {
-  id: number | string;
-  title: string;
-}
-
-interface Module {
-  id: number | string;
-  title: string;
-  status: string;
-  sections: Section[];
-}
-
-export default function ModuleDetailPage() {
-  const params = useParams();
-  const moduleId = params?.moduleId; 
-  const [module, setModule] = useState<Module | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState('');
-  const router = useRouter();
-
-  const logout = async () => {
-  await fetch('http://localhost:8000/api/auth/logout/', { method: 'POST', credentials: 'include' });
-  router.push('/admin/dashboard/login');
-  };
-
+export default function ModuleEditPage() {
+  const { moduleId } = useParams();
+  const [module, setModule] = useState<any>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    if (!moduleId) return;
+    async function loadModule() {
+      const res = await fetchWithAuth(`/api/modules/${moduleId}/`);
+      if (!res || !res.ok) return;
+      const data = await res.json();
+      setModule(data);
+    }
 
-    fetchWithAuth(`http://localhost:8000/api/v1/modules/${moduleId}/`, {
-      method: 'GET',
-    })
-      .then(async (res) => {
-        if (!res) {
-          alert('Session expirée. Redirection...');
-          router.push('/admin/dashboard/login');
-          return;
-        }
-        const data = await res.json();
-        setModule(data);
-      })
-      .catch((err) => {
-        console.error('Erreur lors du chargement du module :', err);
-        setErrorMsg('Impossible de charger le module.');
-      })
-      .finally(() => setLoading(false));
-  }, [moduleId, router]);
+    loadModule();
+  }, [moduleId, refreshKey]);
 
-  if (loading) return <p>Chargement...</p>;
-  if (errorMsg) return <p style={{ color: 'red' }}>{errorMsg}</p>;
-  if (!module) return <p>Module non trouvé</p>;
+  if (!module) return <p>Chargement...</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>{module.title}</h1>
-
-      <button
-        onClick={logout}
-        style={{
-          marginBottom: '1rem',
-          backgroundColor: '#c00',
-          color: 'white',
-          padding: '0.5rem 1rem',
-          borderRadius: '5px',
-          cursor: 'pointer',
-        }}
-      >
-        Déconnexion
-      </button>
-      <p>Status : {module.status}</p>
-
-      <h2>Sections</h2>
-      <ul>
-        {module.sections.length === 0 ? (
-          <li><em>Aucune section</em></li>
-        ) : (
-          module.sections.map((section) => (
-            <li key={section.id}>{section.title}</li>
-          ))
-        )}
-      </ul>
+    <div className="flex gap-6 p-6">
+      <aside className="w-1/3">
+        <CardSommaire module={module} onRefresh={() => setRefreshKey(k => k + 1)} />
+      </aside>
+      <main className="w-2/3">
+        <AddSectionForm moduleId={module.id} onSuccess={() => setRefreshKey(k => k + 1)} />
+      </main>
     </div>
   );
 }

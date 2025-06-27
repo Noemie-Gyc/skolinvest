@@ -29,7 +29,7 @@ class SectionAPITests(APITestCase):
 
     # test our CREATE method
     def test_create_section(self):
-        url = "/api/sections/"
+        url = "/api/v1/sections/"
         data = {
             "title": "Test Section",
             "publication_date": "2025-06-13",
@@ -44,7 +44,7 @@ class SectionAPITests(APITestCase):
         Section.objects.create(title="S1", publication_date="2025-06-13", module=self.module)
         Section.objects.create(title="S2", publication_date="2025-06-13", module=self.module)
 
-        url = "/api/sections/"
+        url = "/api/v1/sections/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
@@ -52,7 +52,7 @@ class SectionAPITests(APITestCase):
     # Test our UPDATE/PATCH method
     def test_update_section(self):
         section = Section.objects.create(title="Old Title", publication_date="2025-06-13", module=self.module)
-        url = f"/api/sections/{section.id}/"
+        url = f"/api/v1/sections/{section.id}/"
         data = {"title": "Updated Title"}
         response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -62,20 +62,20 @@ class SectionAPITests(APITestCase):
     # Test our DELETE method
     def test_delete_section(self):
         section = Section.objects.create(title="To delete", publication_date="2025-06-13", module=self.module)
-        url = f"/api/sections/{section.id}/"
+        url = f"/api/v1/sections/{section.id}/"
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Section.objects.filter(id=section.id).exists())
 
     # Test a not exisiting section call, should have an error 404
     def test_section_not_found(self):
-        url = "/api/sections/9999/"
+        url = "/api/v1/sections/9999/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     # Test CREATE method with invalid data for example, an empty title
     def test_create_invalid_section(self):
-        url = "/api/sections/"
+        url = "/api/v1/sections/"
         data = {
             "title": "",  
             "module": 9999  

@@ -54,7 +54,7 @@ class EditableModuleListView(APIView):
 
     def get(self, request):
         user = request.user
-        if not user.is_staff and not user.is_superuser:
+        if not user.is_staff or not user.is_superuser:
             return Response({"detail": "Accès interdit."}, status=status.HTTP_403_FORBIDDEN)
 
         modules = Module.objects.all()

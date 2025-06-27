@@ -54,6 +54,6 @@ class SectionDetailView(APIView):
         if not section:
             return Response({"detail": "Section introuvable"}, status=status.HTTP_404_NOT_FOUND)
         section.delete()
-        # 204 error means the response has no content has this is deleted.
+        # 204 error means the response has no content as this is deleted.
         return Response(status=status.HTTP_204_NO_CONTENT)
     
