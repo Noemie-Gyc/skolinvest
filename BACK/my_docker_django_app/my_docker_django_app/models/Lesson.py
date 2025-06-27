@@ -3,7 +3,7 @@ from .Module import Module;
 from .Section  import Section;
 
 class Lesson(models.Model):
-    publication_date = models.DateField(blank = True)
+    publication_date = models.DateField(blank = True, null=True)
     modification_date = models.DateField(auto_now=True)
     title = models.CharField(max_length=255, null = False)
     url_video = models.CharField(max_length=255, null = False)
