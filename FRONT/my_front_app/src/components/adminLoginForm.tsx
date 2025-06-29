@@ -24,6 +24,15 @@ export function AdminLoginForm({
 }: AdminLoginFormProps) {
   return (
     <form
+       className="
+        bg-white rounded-[20px] shadow
+        flex flex-col items-center gap-4
+        max-w-xl mx-auto
+        w-[50vw] min-w-[200px]
+        px-4 py-8
+        sm:px-8 sm:py-12
+        md:px-16 md:py-16
+      "
       onSubmit={onSubmit}
       style={{
         display: "flex",
@@ -38,7 +47,11 @@ export function AdminLoginForm({
       }}
     >
       <h1
-        className="text-3xl font-bold text-blue-700 text-center"
+        className="
+          text-xl font-bold text-blue-700 text-center mb-8
+          sm:text-2xl sm:mb-12
+          md:text-3xl
+        "
         style={{ marginBottom: "3rem" }}
       >
         {title}
