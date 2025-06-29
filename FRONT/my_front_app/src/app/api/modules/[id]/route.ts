@@ -1,7 +1,8 @@
 // path('<int:pk>/update/', ModuleUpdateView.as_view(), name='module-update'), pour éditer le titre du module ou s'il passe en publié.
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request, { params }: { params: { id: string }}) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }>}) {
+    const params = await props.params;
     const cookie = request.headers.get('cookie') || '';
     const { id } = params;
 
