@@ -5,17 +5,28 @@ import { ReactNode } from 'react';
 export default function AdminNavItem({
   href,
   children,
+  className = "",
 }: {
   href: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
     <Button
       asChild
-      variant="ghost" // style neutre sans fond
-      className="text-white text-lg leading-tight px-4 py-2 hover:bg-white hover:text-[#6C63FF] rounded-md transition"
-    >
-      <Link href={href}>{children}</Link>
-    </Button>
+      variant="ghost"
+      className={`
+        text-white text-2xl font-semibold
+        px-8 py-10
+        flex flex-col items-center justify-center
+        text-center
+        rounded-md
+        transition
+        hover:bg-white hover:text-[#6C63FF]
+        ${className}
+      `}
+>
+  <Link href={href}>{children}</Link>
+</Button>
   );
 }
