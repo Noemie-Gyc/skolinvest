@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
+import {CirclePlus} from "lucide-react";
  
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  // On ne rend PAS la prop variant publique ici, car on veut forcer "orange"
   children: React.ReactNode;
 };
 
@@ -10,6 +10,7 @@ export function AddButton({ children, className, ...props }: ButtonProps) {
 
   return (
     <Button className={`${baseClasses} ${className ?? ""}`} {...props}>
+      <CirclePlus size={18} />
       {children}
     </Button>
   );

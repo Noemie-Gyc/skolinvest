@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('my_docker_django_app', '0006_alter_section_module'),
+        ('my_docker_django_app', '0006_alter_lesson_publication_date_alter_section_module_and_more'),
     ]
 
     operations = [

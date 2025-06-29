@@ -7,11 +7,17 @@ import CardSommaire from './CardSommaire';
 import AddSectionForm from './AddSectionForm';
 
 export default function ModuleEditPage() {
-  const { moduleId } = useParams();
+  const params = useParams();
+  // makes sure moduleId contains a string
+  const moduleId = Array.isArray(params.moduleId) ? params.moduleId[0] : params.moduleId;
+
   const [module, setModule] = useState<any>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
 
   useEffect(() => {
+    if (!moduleId) return;
+
     async function loadModule() {
       const res = await fetchWithAuth(`/api/modules/${moduleId}/`);
       if (!res || !res.ok) return;
@@ -27,10 +33,21 @@ export default function ModuleEditPage() {
   return (
     <div className="flex gap-6 p-6">
       <aside className="w-1/3">
-        <CardSommaire module={module} onRefresh={() => setRefreshKey(k => k + 1)} />
+        <CardSommaire
+          module={module}
+          onRefresh={() => setRefreshKey(k => k + 1)}
+          onEditSectionClick={(section) => setEditingSection(section)}
+        />
       </aside>
       <main className="w-2/3">
-        <AddSectionForm moduleId={module.id} onSuccess={() => setRefreshKey(k => k + 1)} />
+        <AddSectionForm
+          moduleId={module.id}
+          section={editingSection}
+          onSuccess={() => {
+            setRefreshKey(k => k + 1);
+            setEditingSection(null);
+          }}
+        />
       </main>
     </div>
   );
