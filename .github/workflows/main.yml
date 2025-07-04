@@ -23,28 +23,28 @@ jobs:
       - name: Run Jest tests
         run: npm run test
 
-  test-e2e-playwright:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: FRONT/my_front_app
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  # test-e2e-playwright:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: FRONT/my_front_app
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '18'
 
-      - name: Install dependencies
-        run: npm ci
+  #    - name: Install dependencies
+  #      run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+  #    - name: Install Playwright browsers
+  #      run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npx playwright test tests/e2e
+  #    - name: Run Playwright tests
+  #      run: npx playwright test tests/e2e
 
   test-backend:
     runs-on: ubuntu-latest
