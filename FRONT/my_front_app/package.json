@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --format json --output-file eslint-current.json",
     "lint:check": "ts-node check-eslint.ts",
     "test": "jest"
   },
