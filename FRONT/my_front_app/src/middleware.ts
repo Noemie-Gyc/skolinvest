@@ -4,8 +4,8 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('access')?.value;
 
-  if (!token && request.nextUrl.pathname.startsWith('/admin/dashboard/modules')) {
-    return NextResponse.redirect(new URL('/admin/dashboard/login', request.url));
+  if (!token && request.nextUrl.pathname.startsWith('/admin/modules')) {
+    return NextResponse.redirect(new URL('/admin-login', request.url));
   }
 
   return NextResponse.next();
@@ -13,5 +13,5 @@ export function middleware(request: NextRequest) {
 
 
 export const config = {
-  matcher: ['/admin/dashboard/modules', '/admin/dashboard/modules/:path*'],
+  matcher: ['/admin/modules', '/admin/modules/:path*'],
 };
