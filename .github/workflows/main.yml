@@ -55,6 +55,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
+          MYSQL_ROOT_PASSWORD: rootpassword
           MYSQL_DATABASE: skolinvestdb
           MYSQL_USER: skolinvestuser
           MYSQL_PASSWORD: userpass
