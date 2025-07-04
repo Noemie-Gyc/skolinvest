@@ -10,14 +10,18 @@ jobs:
         working-directory: FRONT/my_front_app
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-      - uses: actions/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - run: npm ci
-      - run: npm run test
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest tests
+        run: npm run test
 
   test-e2e-playwright:
     runs-on: ubuntu-latest
@@ -25,13 +29,22 @@ jobs:
       run:
         working-directory: FRONT/my_front_app
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - run: npm ci
-      - run: npx playwright install --with-deps
-      - run: npx playwright test tests/e2e
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test tests/e2e
 
   test-backend:
     runs-on: ubuntu-latest
@@ -46,17 +59,25 @@ jobs:
           MYSQL_USER: skolinvestuser
           MYSQL_PASSWORD: userpass
         ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
-      - name: Checkout code
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Python
-      - uses: actions/setup-python@v5
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13-slim'
-      - run: pip install -r requirements.txt
-      - run: python manage.py test
-        env:
-          DATABASE_URL: mysql://skolinvestuser:userpass@localhost:3306/skolinvestdb
+          python-version: '3.11'
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Django tests
+        run: python manage.py test
+        env:
+          DATABASE_URL: mysql://skolinvestuser:userpass@127.0.0.1:3306/skolinvestdb
