@@ -1,0 +1,49 @@
+.admin-background {
+  background-color: #FBF8FF;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #3952fb;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-nav .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.admin-nav ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.admin-nav ul li a {
+  text-decoration: none;
+  color: white;
+}
+
+.admin-tab {
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  line-height: 1.2;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, color 0.2s;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.admin-tab:hover {
+  background-color: white;
+  color: #6C63FF; /* Violet foncé */
+}

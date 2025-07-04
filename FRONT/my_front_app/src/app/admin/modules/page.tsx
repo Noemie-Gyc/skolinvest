@@ -18,7 +18,7 @@ export default function ModulesPage() {
 
   const logout = async () => {
     await fetch('http://localhost:8000/api/auth/logout/', { method: 'POST', credentials: 'include' });
-    router.push('/admin/dashboard/login');
+    router.push('/admin-login');
   };
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function ModulesPage() {
       .then(async (res) => {
         if (!res) {
           alert('Session expirée. Redirection...');
-          router.push('/admin/dashboard/login');
+          router.push('/admin-login');
           return;
         }
 

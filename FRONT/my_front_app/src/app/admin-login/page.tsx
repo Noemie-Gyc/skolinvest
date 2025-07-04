@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LoginInput } from "@/components/loginInput";
-import { ConnexionButton } from "@/components/connexionButton";
+import { AdminLoginForm } from "@/components/adminLoginForm";
 
 export default function LoginPage() {
 
@@ -31,11 +30,14 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        router.push("modules");
+        localStorage.setItem("access", data.access);
+        localStorage.setItem("refresh", data.refresh);
+        router.push("admin/modules");
         alert("Connexion réussie !");
+        // Redirects to the main view of admin panel
       } else {
         if (data.detail) {
-          setErrorMsg(data.detail); // Par exemple : "No active account found"
+          setErrorMsg(data.detail);
         } else {
           setErrorMsg("Vous n'êtes pas autorisé à accéder à cet espace.");
         }
@@ -49,33 +51,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto" }}>
-      <h1 className="text-3xl font-bold text-blue-700 text-center">ESPACE ADMINISTRATEUR</h1>
-       
-      <form onSubmit={handleLogin}>
-        <div>
-          <LoginInput
-            placeholder="Identifiant"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          /><br /><br />
-
-          <LoginInput
-            type="password"
-            placeholder="Mot de passe"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            required
-          /><br /><br />
-
-          <ConnexionButton type="submit" disabled={loading}>
-            {loading ? "Connexion..." : "Se connecter"}
-          </ConnexionButton>
-
-        </div>
-      </form>
-      {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+    <div style={{
+        display: 'flex',    
+        flexDirection: 'column',      
+        alignItems: 'center',      
+        justifyContent: 'center',  
+        height: '90vh',        
+      }}>
+      
+      <AdminLoginForm
+        title="ESPACE ADMINISTRATEUR"
+        username={username}
+        password={password}
+        loading={loading}
+        errorMsg={errorMsg}
+        onUsernameChange={(e) => setUsername(e.target.value)}
+        onPasswordChange={(e) => setPassword(e.target.value)}
+        onSubmit={handleLogin}
+      />
     </div>
   );
 }
