@@ -17,7 +17,7 @@ export default function NewModuleForm() {
     // call to django API from api/routes it means our API routes won't be visible to malicious users via the dev tools (headers, source code on front side) or via tools as
     // Postman, curls, scripts etc.
     // Advantage of protected routes :  if we change API later, all routes are in one place, the api directory.
-    const res = await fetchWithAuth('/api/nouveauModule', {
+    const res = await fetchWithAuth('/api/modules', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title }),

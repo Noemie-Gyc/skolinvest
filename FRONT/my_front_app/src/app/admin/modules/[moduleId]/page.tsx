@@ -31,15 +31,17 @@ export default function ModuleEditPage() {
   if (!module) return <p>Chargement...</p>;
 
   return (
-    <div className="flex gap-6 p-6">
-      <aside className="w-1/3">
+    // w-full manage the responsivness according to the size of the screen.
+    // The repartition is different for md (desktop)
+    <div className="flex flex-col md:flex-row gap-6 p-4">
+      <aside className="w-full md:w-1/3">
         <CardSommaire
           module={module}
           onRefresh={() => setRefreshKey(k => k + 1)}
           onEditSectionClick={(section) => setEditingSection(section)}
         />
       </aside>
-      <main className="w-2/3">
+      <main className="w-full md:w-2/3">
         <AddSectionForm
           moduleId={module.id}
           section={editingSection}

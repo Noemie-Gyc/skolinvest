@@ -2,43 +2,48 @@
 
 import { NextResponse } from 'next/server';
 
-// We made a promise containing the ID of the section we want to get
+// GET : get datas for one specific section via the ID
 export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  // Wait the resolution of the promise containing the paramerer to call in the URL
   const params = await props.params;
   const cookieHeader = request.headers.get('cookie') || '';
   const { id } = params;
 
+  // We need the cookie make the call to the API
   const res = await fetch(`http://localhost:8000/api/v1/sections/${id}/`, {
     headers: {
       'Content-Type': 'application/json',
       cookie: cookieHeader,
     },
   });
-
+  // Extract the text from the response
   const raw = await res.text();
 
+  //if response is not Ok (code HTTP >=400), the program send an error JSON
   if (!res.ok) {
     return NextResponse.json(
       { error: 'Erreur du backend Django', details: raw },
       { status: res.status }
     );
   }
+
+  // otherwise, on get the JSON answer that will be used by the react client component. 
   return new NextResponse(raw, {
     status: res.status,
     headers: { 'Content-Type': 'application/json' },
   });
 }
 
-// We made a promise containing the ID of the section we want to update, once we click on the title of the sections the ID is received with the fields changed. 
-
+// PATCH: update a specific section via the ID
 export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const { id } = params;
-
+  // we extract the body of the request sent by client
   const requestBody = await request.json();
+  //still need cookies for this url
   const cookieHeader = request.headers.get('cookie') || '';
 
-
+  // we send the request PATCH to backend tp update the section
   const res = await fetch(`http://localhost:8000/api/v1/sections/${id}/`, {
     method: 'PATCH',
     headers: {

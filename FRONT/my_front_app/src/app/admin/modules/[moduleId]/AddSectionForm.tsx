@@ -3,30 +3,41 @@
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
+// Definition of proprieties expected by the component
 interface Props {
-  moduleId: number;
-  section: { id: number; title: string } | null;
-  onSuccess: () => void;
+  moduleId: number; 
+  section: { id: number; title: string } | null; // section to edit or null if no section
+  onSuccess: () => void; // Callback called after the registration has succeeded. 
 }
 
+
+// React component : to add or update a section
 export default function AddSectionForm({ moduleId, section, onSuccess }: Props) {
+  // local state for section title
   const [title, setTitle] = useState('');
+
+  // state to inform is the form is being submitted 
   const [loading, setLoading] = useState(false);
 
+  // Automatically fill the input title in the cardSommaire once we update the section in the form
   useEffect(() => {
     if (section) setTitle(section.title);
   }, [section]);
 
+  // Manage submission of the form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const method = section && section.id !== 0 ? 'PATCH' : 'POST';
-    const url = section && section.id !== 0 ? `/api/sections/${section.id}` : `/api/sections`;
+    // HTTP Method choice : PATCH = update, POST = create
+    const isEdit = section && section.id !== 0;
+    const method = isEdit ? 'PATCH' : 'POST';
+    const url = isEdit ? `/api/sections/${section.id}` : `/api/sections`;
+    const body = isEdit ? { title } : { title, module: moduleId };
 
-    const body = section && section.id !== 0 ? { title } : { title, module: moduleId };
-
+    // call to the API
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -34,6 +45,7 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
     });
 
     setLoading(false);
+
     if (res.ok) {
       onSuccess();
       setTitle('');
@@ -43,20 +55,35 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-lg font-semibold">
-        {section && section.id !== 0 ? 'Modifier la section' : 'Nouvelle section'}
-      </h2>
-      <Input
-        placeholder="Titre de la section"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-        minLength={2}
-      />
-      <Button type="submit" disabled={loading}>
-        {loading ? 'Enregistrement...' : 'Enregistrer'}
-      </Button>
-    </form>
+    <Card className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>
+          {section && section.id !== 0 ? 'Modifier la section' : 'Nouvelle section'}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4" aria-label="Formulaire section">
+          <div>
+            <label htmlFor="section-title" className="sr-only">Titre de la section</label>
+            <Input
+              id="section-title"
+              name="title"
+              placeholder="Titre de la section"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              minLength={2}
+              aria-required="true"
+              aria-invalid={title.length < 2}
+            />
+          </div>
+
+          <Button type="submit" disabled={loading} aria-busy={loading}>
+            {loading ? 'Enregistrement...' : 'Enregistrer'}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
