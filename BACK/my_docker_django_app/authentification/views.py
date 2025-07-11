@@ -44,7 +44,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         )
 
         logger = logging.getLogger(__name__)
-        logger.info("Test reussite login")
+        logger.info("Successfully logged in")
         # return final response with the cookies one containing the access token, the other one containing the resfresh token. 
         return response
 

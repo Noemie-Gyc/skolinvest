@@ -10,7 +10,7 @@ import logging
 
 def api_home(request):
     logger = logging.getLogger(__name__)
-    logger.info("Test logger home")
+    logger.info("Successfully accessed API home")
     return JsonResponse({"message": "Hello from Django API!"})
 
 class ModuleListView(APIView):
