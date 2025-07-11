@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import StaffTokenObtainPairSerializer
+import logging
 
 # This class enables obtaining access token + refresh token. Inherits from TokenObtainPairView that will be overloaded to sent back tokens through cookies
 class CookieTokenObtainPairView(TokenObtainPairView):
@@ -41,6 +42,9 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             samesite="Strict",
             secure=True,
         )
+
+        logger = logging.getLogger(__name__)
+        logger.info("Test reussite login")
         # return final response with the cookies one containing the access token, the other one containing the resfresh token. 
         return response
 

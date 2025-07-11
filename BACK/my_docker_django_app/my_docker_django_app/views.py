@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+import logging
+
 
 def api_home(request):
+    logger = logging.getLogger(__name__)
+    logger.info("Test logger home")
     return JsonResponse({"message": "Hello from Django API!"})
 
 class ModuleListView(APIView):
