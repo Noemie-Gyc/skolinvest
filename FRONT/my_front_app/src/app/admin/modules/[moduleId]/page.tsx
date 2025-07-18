@@ -42,14 +42,16 @@ export default function ModuleEditPage() {
         />
       </aside>
       <main className="w-full md:w-2/3">
-        <AddSectionForm
-          moduleId={module.id}
-          section={editingSection}
-          onSuccess={() => {
-            setRefreshKey(k => k + 1);
-            setEditingSection(null);
-          }}
-        />
+        {editingSection && (
+          <AddSectionForm
+            moduleId={module.id}
+            section={editingSection}
+            onSuccess={() => {
+              setRefreshKey(k => k + 1);
+              setEditingSection(null);
+            }}
+          />
+        )}
       </main>
     </div>
   );

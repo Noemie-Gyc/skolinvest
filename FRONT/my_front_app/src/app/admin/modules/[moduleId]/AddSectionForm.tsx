@@ -75,7 +75,8 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
               required
               minLength={2}
               aria-required="true"
-              aria-invalid={title.length < 2}
+              // Check if the below attribute is usefull, border becomes red if number of letters<2
+              // aria-invalid={title.length < 2}
             />
           </div>
 

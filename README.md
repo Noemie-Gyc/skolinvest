@@ -1,6 +1,27 @@
 # skolinvest
 Skolinvest est une application de e-learning. Cette plateforme de e-learning s’inscrit dans un projet lancé en 2020. Elle a  pour but de démocratiser l’éducation financière avec un outil accessible, pédagogique et complet, et s’adresse à une clientèle curieuse et motivée à développer son autonomie dans la gestion de portefeuille.
 
+# Travailler sans connexion internet avec Docker :
+Pour lancer docker en local sans internet, ça sous entend qu'on ait bien buildé l'app récemment pour
+avoir localement les dernières images à jour. 
+
+Pour lancer les containers localement, saisir cette ligne de commande  : docker-compose up.
+
+# Dockerfile développement côté frontend :
+On a retiré le build du dockerfile car :
+Avec build dans l'image : Code modifié → Docker build → Création image → Démarrage conteneur (2-5 minutes à chaque changement)
+
+Sans build (avec volumes) : Code modifié → Hot reload détecte → Rebuild à la volée (1-3 seconds). 
+
+Dans tous les cas, le volume sera utilisé pour mettre à jour les changements et le build sera écrasé par le volume. 
+
+# Mise à jour des images Docker distantes utilisées
+Bonne pratique : afin d'être sûr que les images soient bien à jour, lancer manuellement de façon hebdomadaire la commande docker-compose build --no-cache. Notamment pour des soucis de mise à jour de sécurité sur les images distantes. 
+
+# Mise en production avec Docker :
+Il faudra créer une autre configuration Docker-compose. Exemple : docker-compose.prod.yml et également créer des fichiers dockerfile différents dans le backend et le frontend : Dockerfile.prod
+
+
 # opérations asynchrones sur les routes
 Si vous souhaitez rajouter une route.ts contenant des promesses et que vous n'avez pas encore travaillé sur le projet, si les promesses ne sont pas détectées du 1er coup, essayez les étapes suivantes :
 - Se placer dans le container frontend  winpty docker exec -it frontend sh (sur Gitbash) ou docker exec -it frontend sh (sur Powershell)
@@ -8,4 +29,11 @@ Si vous souhaitez rajouter une route.ts contenant des promesses et que vous n'av
 - télécharger le gestionnaire de package codemod : npx @next/codemod@canary next-async-request-api .
 - unstash 
 - régler les conflits du merge
+
+# Problème de modules non reconnus 
+Parfois, lorsque l'on souhaite rajouter un composant. Par exemple, une boîte de dialog via shadcn. L'import dans le composant React n'est pas reconnu malgré la présence de la dépendance dans le package.json. Dans ce cas, la solution est de supprimer les nodes modules sur la machine locale. 
+
+S'il y a la présence d'un dossier Node modules dans le dossier FRONT, dans le terminal git bash, lancer la commande suivante : rm -rf FRONT/node_modules. Ensuite supprimer l'autre dossier Node modules présent dans my_front_app : rm -rf my_front_app/node_modules. 
+
+Une fois les dossiers supprimés, réinstaller les dépendances en lançant toujours localement npm install en se positionnant dans le dossier my_front_app.
 

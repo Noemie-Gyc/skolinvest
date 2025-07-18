@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import { ConnexionButton } from "@/components/connexionButton";
+import '@/styles/styles.css';
 
 export default function NewModuleForm() {
   const [title, setTitle] = useState('');
@@ -14,9 +15,6 @@ export default function NewModuleForm() {
     setError(null);
     setSuccess(false);
 
-    // call to django API from api/routes it means our API routes won't be visible to malicious users via the dev tools (headers, source code on front side) or via tools as
-    // Postman, curls, scripts etc.
-    // Advantage of protected routes :  if we change API later, all routes are in one place, the api directory.
     const res = await fetchWithAuth('/api/modules', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -39,25 +37,33 @@ export default function NewModuleForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Nouveau module :
-        <input
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          required
-          minLength={3}
-        />
-      </label>
+    <div className="form-card">
+      <form onSubmit={handleSubmit} aria-labelledby="formTitle">
+        <div className="form-group">
+          <label htmlFor="moduleTitle">Nouveau module :</label>
+          <input
+            id="moduleTitle"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            minLength={3}
+            aria-describedby="moduleTitleDesc"
+            placeholder="Entrez le titre du module"
+          />
+          <small id="moduleTitleDesc">Veuillez entrer au moins 3 caractères.</small>
+        </div>
 
-      <ConnexionButton
-        type="submit"
-        style={{ marginBottom: '1rem' }} // si ConnexionButton accepte style
-      >Créer
-      </ConnexionButton>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>Module créé avec succès !</p>}
-    </form>
+        <ConnexionButton
+          type="submit"
+          style={{ marginBottom: '1rem' }}
+        >
+          Ajouter
+        </ConnexionButton>
+
+        {error && <p className="error" aria-live="assertive">{error}</p>}
+        {success && <p className="success" aria-live="polite">Module créé avec succès !</p>}
+      </form>
+    </div>
   );
 }

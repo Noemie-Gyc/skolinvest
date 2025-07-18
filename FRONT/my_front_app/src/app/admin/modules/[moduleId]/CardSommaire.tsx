@@ -2,7 +2,7 @@
 
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { AddButton } from '@/components/addButton';
-import { Trash2 } from 'lucide-react';
+import DeleteSectionDialog from './DeleteSectionDialog';
 
 // TypeScript : definition of a Section object (proprieties and types)
 interface Section {
@@ -63,14 +63,12 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick }: 
                 {section.title}
               </p>
 
-              <button
-                onClick={() => deleteSection(section.id)}
-                className="text-red-500 hover:text-red-700"
-                // Aria-label added for accessibility
-                aria-label={`Supprimer la section ${section.title}`}
-              >
-                <Trash2 size={16} />
-              </button>
+              <DeleteSectionDialog
+                sectionTitle={section.title}
+                onDelete={async () => {
+                  await deleteSection(section.id);
+                }}
+              />
             </div>
           ))
         )}
@@ -81,7 +79,7 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick }: 
           className="w-auto"
           aria-label="Ajouter une nouvelle section"
         >
-          une section
+          Section
         </AddButton>
       </CardFooter>
     </Card>

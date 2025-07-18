@@ -36,5 +36,29 @@ export async function POST(request: Request) {
   });
 }
 
+export async function GET(request: Request) {
+  const cookieHeader = request.headers.get('cookie') || '';
+
+  const res = await fetch('http://localhost:8000/api/v1/modules/admin/', {
+    headers: {
+      'Content-Type': 'application/json',
+      cookie: cookieHeader,
+    },
+  });
+
+  const raw = await res.text();
+
+  if (!res.ok) {
+    return NextResponse.json(
+      { error: 'Erreur du backend Django', details: raw },
+      { status: res.status }
+    );
+  }
+  return new NextResponse(raw, {
+    status: res.status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
 
 
