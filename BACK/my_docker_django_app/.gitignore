@@ -1,3 +1,5 @@
 /venv
 my_docker_django_app/__pycache__/
 *.pyc
+logs/
+*.log
