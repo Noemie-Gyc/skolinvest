@@ -11,6 +11,11 @@ tasks:
     cmds:
       - docker-compose down
 
+  build:
+    desc: Met à jour les images docker distantes présentes dans les dockerfiles (à lancer une fois/semaine)
+    cmds: 
+      - docker-compose build --no-cache
+
   install:
     desc: Installe les dépendances pour le frontend et le backend
     cmds:
@@ -37,10 +42,6 @@ tasks:
     cmds:
       - docker-compose logs -f
 
-  build:
-    desc: Reconstruit les images Docker
-    cmds:
-      - docker-compose up --build
   front-server:
     desc: Lance le server front
     cmds: 

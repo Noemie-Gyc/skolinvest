@@ -13,35 +13,48 @@ services:
     networks:
       - mynetwork
 
-
-
   frontend:
     build: ./FRONT/my_front_app
     container_name: frontend
     ports:
       - "3000:3000"
     volumes:
+      # Get local source code in the container, get local changes in the container
       - ./FRONT/my_front_app:/app
+      # Preserve dependancies installed in docker image
       - /app/node_modules
+      # Avoid conflicts between local cache and the container one
+      # Enhance rebuild performances
       - /app/.next
     environment:
       - NEXT_PUBLIC_API_URL=http://backend:8000
+      # Necessary in Docker where files native events do not work
+      - CHOKIDAR_USEPOLLING=true
+      # Useful for a better detection on the files to update in the browser
+      - WATCHPACK_POLLING=true
+      # Activation of optimizations and development tools
+      - NODE_ENV=development
+      # Advanced hot reload functionality
+      - FAST_REFRESH=true
+    # Docker compose starts backend container before frontend container
     depends_on:
       - backend
+    # Enhance communication between containers
     networks:
       - mynetwork
-
+    # launch development server with hot reload
+    command: npm run dev
 
   mysql:
     image: mysql:8
     container_name: mysql_container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword # Mot de passe root de MySQL
-      MYSQL_DATABASE: skolinvestdb     # Nom de la base de données
-      MYSQL_USER: skolinvestuser                 # Utilisateur MySQL
-      MYSQL_PASSWORD: userpass     # Mot de passe de l'utilisateur
+      MYSQL_DATABASE: skolinvestdb  # Nom de la base de données
+      MYSQL_USER: skolinvestuser  # Utilisateur MySQL
+      MYSQL_PASSWORD: userpass     
     ports:
-      - "3306:3306"                    # Redirection du port
+      - "3306:3306"                 
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
