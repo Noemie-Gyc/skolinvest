@@ -2,5 +2,3 @@
 my_docker_django_app/__pycache__/
 *.pyc
 logs/
-*.log
-../../BACK/my_docker_django_app/logs/django.log
