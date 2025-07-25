@@ -1,13 +1,13 @@
-//Ici ajouter les méthode DELETE/PATCH
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const cookieHeader = request.headers.get('cookie') || '';
   const { id } = params;
 
-  const res = await fetch(`http://localhost:8000/api/v1/modules/${id}/`, {
+  const res = await fetch(`${baseUrl}/api/v1/modules/${id}/`, {
     headers: {
       'Content-Type': 'application/json',
       cookie: cookieHeader,
@@ -39,7 +39,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
   const cookieHeader = request.headers.get('cookie') || '';
 
   // we send the request PATCH to backend tp update the section
-  const res = await fetch(`http://localhost:8000/api/v1/modules/${id}/update/`, {
+  const res = await fetch(`${baseUrl}/api/v1/modules/${id}/update/`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export async function DELETE(request: Request, props: { params: Promise<{ id: st
   const cookieHeader = request.headers.get('cookie') || '';
   const { id } = params;
 
-  const res = await fetch(`http://localhost:8000/api/v1/modules/${id}/delete/`, {
+  const res = await fetch(`${baseUrl}/api/v1/modules/${id}/delete/`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

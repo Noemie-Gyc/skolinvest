@@ -2,7 +2,7 @@ import NewModuleForm from './NewModuleForm';
 
 export default function NewModulePage() {
   return (
-    <div>
+    <div className="mt-12">
       <NewModuleForm />
     </div>
   );

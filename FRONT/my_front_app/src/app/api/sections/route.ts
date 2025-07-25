@@ -1,12 +1,11 @@
-// Sections CRUD elements that concerns every sections (we don't need any specific ID to create an instance or to get the full list of sections)
-
 import { NextResponse } from 'next/server';
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 export async function POST(request: Request) {
   const cookieHeader = request.headers.get('cookie') || '';
   const requestBody = await request.json();
 
-  const res = await fetch('http://localhost:8000/api/v1/sections/', {
+  const res = await fetch(`${baseUrl}/api/v1/sections/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +29,7 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   const cookieHeader = request.headers.get('cookie') || '';
 
-  const res = await fetch('http://localhost:8000/api/v1/sections/', {
+  const res = await fetch(`${baseUrl}/api/v1/sections/`, {
     headers: {
       'Content-Type': 'application/json',
       cookie: cookieHeader,

@@ -1,6 +1,6 @@
-// CRUD section elements that concerns one specific ID, we want to update one ID or delete one specific ID
-
 import { NextResponse } from 'next/server';
+
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // GET : get datas for one specific section via the ID
 export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
@@ -10,7 +10,7 @@ export async function GET(request: Request, props: { params: Promise<{ id: strin
   const { id } = params;
 
   // We need the cookie make the call to the API
-  const res = await fetch(`http://localhost:8000/api/v1/sections/${id}/`, {
+  const res = await fetch(`${baseUrl}/api/v1/sections/${id}/`, {
     headers: {
       'Content-Type': 'application/json',
       cookie: cookieHeader,
@@ -44,7 +44,7 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
   const cookieHeader = request.headers.get('cookie') || '';
 
   // we send the request PATCH to backend tp update the section
-  const res = await fetch(`http://localhost:8000/api/v1/sections/${id}/`, {
+  const res = await fetch(`${baseUrl}/api/v1/sections/${id}/`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export async function DELETE(request: Request, props: { params: Promise<{ id: st
   const cookieHeader = request.headers.get('cookie') || '';
   const { id } = params;
 
-  const res = await fetch(`http://localhost:8000/api/v1/sections/${id}/`, {
+  const res = await fetch(`${baseUrl}/api/v1/sections/${id}/`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
