@@ -1,74 +1,43 @@
-'use client';
+import ModulesListClient from './ModulesListClient';
+import { cookies } from 'next/headers';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { fetchWithAuth } from '@/lib/fetchWithAuth';
+async function fetchModules() {
+  const cookieStore = await cookies();
 
-interface Module {
-  id: number | string;
-  title: string;
-  status: string;
+  // Récupérer les cookies d'authentification
+  const accessToken = cookieStore.get('access');
+  const refreshToken = cookieStore.get('refresh');
+
+  // Construire le header Cookie
+  const cookieParts = [];
+  if (accessToken) cookieParts.push(`access=${accessToken.value}`);
+  if (refreshToken) cookieParts.push(`refresh=${refreshToken.value}`);
+  const cookieHeader = cookieParts.join('; ');
+
+  const res = await fetch('http://localhost:3000/api/modules', {
+    headers: {
+      // IMPORTANT: Transmettre les cookies à votre API route
+      ...(cookieHeader && { Cookie: cookieHeader }),
+    },
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Erreur lors du chargement des modules');
+  }
+
+  return res.json();
 }
 
-export default function ModulesPage() {
-  const [modules, setModules] = useState<Module[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState('');
-  const router = useRouter();
+export default async function ModulesList() {
+  const modules = await fetchModules();
 
-  const logout = async () => {
-    await fetch('http://localhost:8000/api/auth/logout/', { method: 'POST', credentials: 'include' });
-    router.push('/admin-login');
-  };
-
-  useEffect(() => {
-    fetchWithAuth('http://localhost:8000/api/v1/modules/admin/', {
-      method: 'GET',
-    })
-      .then(async (res) => {
-        if (!res) {
-          alert('Session expirée. Redirection...');
-          router.push('/admin-login');
-          return;
-        }
-
-        const data = await res.json();
-        setModules(data);
-      })
-      .catch((err) => {
-        console.error('Erreur lors du chargement des modules :', err);
-        setErrorMsg('Impossible de charger les modules.');
-      })
-      .finally(() => setLoading(false));
-  }, []);
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Mes modules</h1>
 
-      <button
-        onClick={logout}
-        style={{
-          marginBottom: '1rem',
-          backgroundColor: '#c00',
-          color: 'white',
-          padding: '0.5rem 1rem',
-          borderRadius: '5px',
-          cursor: 'pointer',
-        }}
-      >
-        Déconnexion
-      </button>
+    <div className="max-w-6xl mx-auto mt-12 px-4">
 
-      {loading && <p>Chargement...</p>}
-      {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
+      <ModulesListClient modules={modules} />
 
-      <ul>
-        {modules.map((module) => (
-          <li key={module.id}>
-            <strong>{module.title}</strong> — {module.status}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

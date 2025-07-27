@@ -46,7 +46,7 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick }: 
           module.sections.map(section => (
             <div
               key={section.id}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0"
+              className="bg-[#FBF8FF]  text-blue-700 flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0"
             >
               <p
                 // Accessibility

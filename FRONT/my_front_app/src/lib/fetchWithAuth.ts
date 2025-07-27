@@ -16,7 +16,7 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
                 credentials: 'include',
             });
         } else {
-            window.location.href = '/admin/dashboard/login';
+            window.location.href = '/admin-login';
             return null;
         }
     }
