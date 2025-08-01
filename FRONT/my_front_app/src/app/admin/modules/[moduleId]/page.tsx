@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import CardSommaire from './CardSommaire';
 import AddSectionForm from './AddSectionForm';
+import AddLessonForm from './AddLessonForm';
 
 export default function ModuleEditPage() {
   const params = useParams();
@@ -14,6 +15,7 @@ export default function ModuleEditPage() {
   const [module, setModule] = useState<any>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
+  const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
 
   useEffect(() => {
     if (!moduleId) return;
@@ -37,18 +39,31 @@ export default function ModuleEditPage() {
       <aside className="w-full md:w-1/3">
         <CardSommaire
           module={module}
-          onRefresh={() => setRefreshKey(k => k + 1)}
-          onEditSectionClick={(section) => setEditingSection(section)}
+          onRefresh={() => setRefreshKey((k) => k + 1)}
+          onEditSectionClick={setEditingSection}
+          onEditLessonClick={(section, lesson) =>
+            setEditingLesson({ sectionId: section.id, lesson })
+          }
         />
       </aside>
       <main className="w-full md:w-2/3">
-        {editingSection && (
+        {editingSection && !editingLesson && (
           <AddSectionForm
             moduleId={module.id}
             section={editingSection}
             onSuccess={() => {
-              setRefreshKey(k => k + 1);
+              setRefreshKey((k) => k + 1);
               setEditingSection(null);
+            }}
+          />
+        )}
+        {editingLesson && (
+          <AddLessonForm
+            sectionId={editingLesson.sectionId}
+            lesson={editingLesson.lesson}
+            onSuccess={() => {
+              setRefreshKey((k) => k + 1);
+              setEditingLesson(null);
             }}
           />
         )}
