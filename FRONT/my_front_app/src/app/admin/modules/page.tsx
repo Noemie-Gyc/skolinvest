@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 async function fetchModules() {
   const cookieStore = await cookies();
 
-  // Récupérer les cookies d'authentification
+  // get cookies stored by the browser
   const accessToken = cookieStore.get('access');
   const refreshToken = cookieStore.get('refresh');
 
@@ -16,7 +16,7 @@ async function fetchModules() {
 
   const res = await fetch('http://localhost:3000/api/modules', {
     headers: {
-      // IMPORTANT: Transmettre les cookies à votre API route
+      // send the cookie headers to the backend API
       ...(cookieHeader && { Cookie: cookieHeader }),
     },
     cache: 'no-store',
@@ -30,6 +30,7 @@ async function fetchModules() {
 }
 
 export default async function ModulesList() {
+  // while the request in the fetchModules function are not done, we can't load the client component ModuleListClient
   const modules = await fetchModules();
 
   return (
