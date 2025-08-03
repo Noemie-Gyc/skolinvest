@@ -59,7 +59,9 @@ export default function ModuleEditPage() {
         )}
         {editingLesson && (
           <AddLessonForm
-            sectionId={editingLesson.sectionId}
+            moduleId={module.id}
+            sectionId={editingLesson?.sectionId ?? module.sections[0]?.id}
+            sections={module.sections}
             lesson={editingLesson.lesson}
             onSuccess={() => {
               setRefreshKey((k) => k + 1);

@@ -6,18 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 interface Props {
+  moduleId: number;
   sectionId: number;
+  sections: { id: number; title: string }[];
   lesson: { id: number; title: string } | null;
   onSuccess: () => void;
 }
 
-export default function AddLessonForm({ sectionId, lesson, onSuccess }: Props) {
+export default function AddLessonForm({ moduleId, sectionId, sections, lesson, onSuccess }: Props) {
   const [title, setTitle] = useState('');
+  const [selectedSection, setSelectedSection] = useState(sectionId);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTitle(lesson ? lesson.title : '');
-  }, [lesson]);
+    setSelectedSection(sectionId);
+  }, [lesson, sectionId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ export default function AddLessonForm({ sectionId, lesson, onSuccess }: Props) {
     const isEdit = lesson && lesson.id !== 0;
     const method = isEdit ? 'PATCH' : 'POST';
     const url = isEdit ? `/api/lessons/${lesson.id}` : `/api/lessons`;
-    const body = isEdit ? { title } : { title, section: sectionId };
+    const body = isEdit ? { title } : { title, section: selectedSection, module: moduleId };
 
     const res = await fetch(url, {
       method,
@@ -60,6 +64,22 @@ export default function AddLessonForm({ sectionId, lesson, onSuccess }: Props) {
             required
             minLength={2}
           />
+          <div>
+            <label htmlFor="section-select" className="block text-sm mb-1">Section</label>
+            <select
+              id="section-select"
+              value={selectedSection}
+              onChange={e => setSelectedSection(Number(e.target.value))}
+              className="border rounded px-2 py-1 w-full"
+              required
+            >
+              {sections.map(section => (
+                <option key={section.id} value={section.id}>
+                  {section.title}
+                </option>
+              ))}
+            </select>
+          </div>
           <Button type="submit" disabled={loading}>
             {loading ? 'Enregistrement...' : 'Enregistrer'}
           </Button>

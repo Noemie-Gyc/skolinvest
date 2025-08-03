@@ -83,15 +83,6 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick, on
                 }}
               />
 
-
-
-              {/* Button to edit the section */}
-              <button
-                className="text-blue-600 text-xs mt-2"
-                onClick={() => onEditSectionClick(section)}
-              >
-                Modifier la section
-              </button>
               {/* Liste des lessons */}
               <div className="pl-4 mt-2 space-y-1">
                 {section.lessons && section.lessons.length > 0 ? (
@@ -122,13 +113,6 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick, on
                     Aucune leçon
                   </span>
                 )}
-                {/* Bouton pour ajouter une lesson */}
-                <button
-                  className="text-green-600 text-xs mt-2"
-                  onClick={() => onEditLessonClick(section, null)}
-                >
-                  + Ajouter une leçon
-                </button>
               </div>
             </div>
           ))
@@ -141,6 +125,13 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick, on
           aria-label="Ajouter une nouvelle section"
         >
           Section
+        </AddButton>
+        <AddButton
+          onClick={() => onEditLessonClick(module.sections[0], null)}
+          className="w-auto"
+          aria-label="Ajouter une nouvelle leçon"
+        >
+          Leçon
         </AddButton>
       </CardFooter>
     </Card>
