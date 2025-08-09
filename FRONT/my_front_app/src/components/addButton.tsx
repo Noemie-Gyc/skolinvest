@@ -6,7 +6,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export function AddButton({ children, className, ...props }: ButtonProps) {
-  const baseClasses = "bg-orange-200 border-1 border-amber-800 text-amber-800 rounded-2xl py-2 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition";
+  const baseClasses = "bg-orange-200 border-1 border-amber-800 text-amber-800 rounded-2xl py-2 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition mr-[10px]";
 
   return (
     <Button className={`${baseClasses} ${className ?? ""}`} {...props}>
