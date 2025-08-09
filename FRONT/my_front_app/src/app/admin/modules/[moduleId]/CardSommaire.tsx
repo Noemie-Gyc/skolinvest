@@ -127,7 +127,7 @@ export default function CardSommaire({ module, onRefresh, onEditSectionClick, on
           Section
         </AddButton>
         <AddButton
-          onClick={() => onEditLessonClick(module.sections[0], null)}
+          onClick={() => onEditLessonClick(undefined, null)}
           className="w-auto"
           aria-label="Ajouter une nouvelle leçon"
         >

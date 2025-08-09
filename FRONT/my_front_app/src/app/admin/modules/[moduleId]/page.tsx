@@ -42,7 +42,10 @@ export default function ModuleEditPage() {
           onRefresh={() => setRefreshKey((k) => k + 1)}
           onEditSectionClick={setEditingSection}
           onEditLessonClick={(section, lesson) =>
-            setEditingLesson({ sectionId: section.id, lesson })
+            setEditingLesson({
+              sectionId: section?.id ?? undefined,
+              lesson,
+            })
           }
         />
       </aside>
@@ -60,7 +63,7 @@ export default function ModuleEditPage() {
         {editingLesson && (
           <AddLessonForm
             moduleId={module.id}
-            sectionId={editingLesson?.sectionId ?? module.sections[0]?.id}
+            sectionId={editingLesson?.sectionId ?? undefined}
             sections={module.sections}
             lesson={editingLesson.lesson}
             onSuccess={() => {
