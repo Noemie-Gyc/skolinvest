@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import ReactPlayer from 'react-player';
 
 interface Props {
   moduleId: number;
@@ -16,11 +17,13 @@ interface Props {
 export default function AddLessonForm({ moduleId, sectionId, sections, lesson, onSuccess }: Props) {
   const [title, setTitle] = useState('');
   const [selectedSection, setSelectedSection] = useState<string>("");
+  const [urlVideo, setUrlVideo] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTitle(lesson ? lesson.title : '');
     setSelectedSection(sectionId ? String(sectionId) : "");
+    setUrlVideo((lesson as any)?.url_video ?? "");
   }, [lesson, sectionId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +33,9 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
     const isEdit = lesson && lesson.id !== 0;
     const method = isEdit ? 'PATCH' : 'POST';
     const url = isEdit ? `/api/lessons/${lesson.id}` : `/api/lessons`;
-    const body = isEdit ? { title } : { title, section: Number(selectedSection), module: moduleId };
+    const body = isEdit 
+     ? { title, url_video: urlVideo }
+     : { title, url_video: urlVideo, section: Number(selectedSection), module: moduleId };
 
     const res = await fetch(url, {
       method,
@@ -56,13 +61,18 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {urlVideo && (
+          <div className="mb-4">
+            <label className="block text-sm mb-1">Aperçu vidéo</label>
+            <ReactPlayer src={urlVideo} width="100%" height="250px" controls />
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="section-select" className="block text-sm mb-1">
               Section
             </label>
             <select
-            
               id="section-select"
               value={selectedSection}
               onChange={(e) => setSelectedSection(e.target.value)}
@@ -85,6 +95,11 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
             onChange={(e) => setTitle(e.target.value)}
             required
             minLength={2}
+          />
+          <Input
+            placeholder="URL YouTube/Vimeo (optionnel)"
+            value={urlVideo}
+            onChange={(e) => setUrlVideo(e.target.value)}
           />
 
           <Button type="submit" disabled={loading}>
