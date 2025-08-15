@@ -7,13 +7,15 @@ export async function GET(request: Request, props: { params: Promise<{ id: strin
   // Wait the resolution of the promise containing the paramerer to call in the URL
   const params = await props.params;
   const cookieHeader = request.headers.get('cookie') || '';
+  const authorization = request.headers.get('authorization') ?? '';
   const { id } = params;
 
   // We need the cookie make the call to the API
   const res = await fetch(`${baseUrl}/api/v1/lessons/${id}/`, {
     headers: {
-      'Content-Type': 'application/json',
+      //'Content-Type': 'application/json',
       cookie: cookieHeader,
+      ...(authorization ? { authorization } : {}),
     },
   });
   // Extract the text from the response
@@ -39,18 +41,22 @@ export async function PATCH(request: Request, props: { params: Promise<{ id: str
   const params = await props.params;
   const { id } = params;
   // we extract the body of the request sent by client
-  const requestBody = await request.json();
+  //const requestBody = await request.json();
+  const formData = await request.formData();
   //still need cookies for this url
   const cookieHeader = request.headers.get('cookie') || '';
+  const authorization = request.headers.get('authorization') ?? '';
 
   // we send the request PATCH to backend tp update the section
   const res = await fetch(`${baseUrl}/api/v1/lessons/${id}/`, {
     method: 'PATCH',
     headers: {
-      'Content-Type': 'application/json',
+      //'Content-Type': 'application/json',
       cookie: cookieHeader,
+      ...(authorization ? { authorization } : {}),
     },
-    body: JSON.stringify(requestBody),
+    //body: JSON.stringify(requestBody),
+    body: formData,
   });
 
   const raw = await res.text();
@@ -74,12 +80,14 @@ export async function DELETE(request: Request, props: { params: Promise<{ id: st
   const params = await props.params;
   const cookieHeader = request.headers.get('cookie') || '';
   const { id } = params;
+  const authorization = request.headers.get('authorization') ?? '';
 
   const res = await fetch(`${baseUrl}/api/v1/lessons/${id}/`, {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
+      //'Content-Type': 'application/json',
       cookie: cookieHeader,
+      ...(authorization ? { authorization } : {}),
     },
   });
 

@@ -3,15 +3,20 @@ import { NextResponse } from 'next/server';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 export async function POST(request: Request) {
   const cookieHeader = request.headers.get('cookie') || '';
-  const requestBody = await request.json();
-
+  const formData = await request.formData(); 
+ //const requestBody = await request.json();
+  const authorization = request.headers.get('authorization') ?? '';
+  
   const res = await fetch(`${baseUrl}/api/v1/lessons/`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      //'Content-Type': 'application/json',
       cookie: cookieHeader,
+      ...(authorization ? { authorization } : {}),
+
     },
-    body: JSON.stringify(requestBody),
+    //body: JSON.stringify(requestBody),
+    body: formData,
   });
 
   const raw = await res.text();

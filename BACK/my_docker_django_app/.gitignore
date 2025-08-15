@@ -1,3 +1,9 @@
 /venv
 my_docker_django_app/__pycache__/
 *.pyc
+**/media/**
+**/media/videos/**
+*.mp4
+*.mov
+*.mkv
+*.avi

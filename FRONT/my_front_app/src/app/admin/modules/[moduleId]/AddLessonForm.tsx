@@ -17,6 +17,7 @@ interface Props {
 export default function AddLessonForm({ moduleId, sectionId, sections, lesson, onSuccess }: Props) {
   const [title, setTitle] = useState('');
   const [selectedSection, setSelectedSection] = useState<string>("");
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [urlVideo, setUrlVideo] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -33,14 +34,21 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
     const isEdit = lesson && lesson.id !== 0;
     const method = isEdit ? 'PATCH' : 'POST';
     const url = isEdit ? `/api/lessons/${lesson.id}` : `/api/lessons`;
-    const body = isEdit 
+    
+    /*const body = isEdit 
      ? { title, url_video: urlVideo }
      : { title, url_video: urlVideo, section: Number(selectedSection), module: moduleId };
-
+    */
+    
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('module', String(moduleId));
+    formData.append('section', String(selectedSection));
+    if (videoFile) formData.append('url_video', videoFile);
+   
     const res = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: formData,
     });
 
     setLoading(false);
@@ -48,10 +56,16 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
     if (res.ok) {
       onSuccess();
       setTitle('');
+      setVideoFile(null);
     } else {
       alert('Erreur lors de l’enregistrement');
     }
   };
+
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  const previewUrl = videoFile
+    ? URL.createObjectURL(videoFile)
+    : (urlVideo ? (urlVideo.startsWith('http') ? urlVideo : `${apiBase}${urlVideo.startsWith('/') ? '' : '/'}${urlVideo}`) : '');
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -61,10 +75,15 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {urlVideo && (
+        {previewUrl && (
           <div className="mb-4">
             <label className="block text-sm mb-1">Aperçu vidéo</label>
-            <ReactPlayer src={urlVideo} width="100%" height="250px" controls />
+            <ReactPlayer
+              src={previewUrl}
+              width="100%"
+              height="250px"
+              controls
+            />
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -96,11 +115,23 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
             required
             minLength={2}
           />
+          {/* URL de la vidéo avec juste player 
           <Input
             placeholder="URL YouTube/Vimeo (optionnel)"
             value={urlVideo}
             onChange={(e) => setUrlVideo(e.target.value)}
           />
+          */}
+
+          <div>
+            <label className="block text-sm mb-1">Fichier vidéo</label>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(e) => setVideoFile(e.target.files?.[0] ?? null)}
+              className="block w-full"
+            />
+          </div>
 
           <Button type="submit" disabled={loading}>
             {loading ? "Enregistrement..." : "Enregistrer"}

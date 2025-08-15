@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,6 @@ SECRET_KEY = 'django-insecure-as9@+m1ei3!(u&l2d49zra7fj&w8##j484=vjmhbjsj#5%kx77
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "backend"]
-
 
 # Application definition
 
@@ -156,3 +156,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media (for uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media' 
+
+# Static in prod
+STATIC_ROOT = BASE_DIR / 'staticfiles'

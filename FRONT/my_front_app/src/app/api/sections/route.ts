@@ -28,11 +28,13 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const cookieHeader = request.headers.get('cookie') || '';
+  const authorization = request.headers.get('authorization') ?? '';
 
   const res = await fetch(`${baseUrl}/api/v1/sections/`, {
     headers: {
-      'Content-Type': 'application/json',
+      //'Content-Type': 'application/json',
       cookie: cookieHeader,
+      ...(authorization ? { authorization } : {}),
     },
   });
 
