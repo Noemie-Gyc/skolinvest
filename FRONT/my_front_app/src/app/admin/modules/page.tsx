@@ -45,20 +45,6 @@ export default function ModulesPage() {
     <div style={{ padding: '2rem' }}>
       <h1>Mes modules</h1>
 
-      <button
-        onClick={logout}
-        style={{
-          marginBottom: '1rem',
-          backgroundColor: '#c00',
-          color: 'white',
-          padding: '0.5rem 1rem',
-          borderRadius: '5px',
-          cursor: 'pointer',
-        }}
-      >
-        Déconnexion
-      </button>
-
       {loading && <p>Chargement...</p>}
       {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
 
