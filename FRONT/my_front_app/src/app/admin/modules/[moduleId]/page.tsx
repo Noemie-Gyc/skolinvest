@@ -6,6 +6,7 @@ import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import CardSommaire from './CardSommaire';
 import AddSectionForm from './AddSectionForm';
 import AddLessonForm from './AddLessonForm';
+import EditModuleForm from './EditModuleForm';
 
 export default function ModuleEditPage() {
   const params = useParams();
@@ -16,6 +17,7 @@ export default function ModuleEditPage() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
   const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
+  const [editingModule, setEditingModule] = useState<null | { id: number; title: string }>(null);
 
   useEffect(() => {
     if (!moduleId) return;
@@ -41,6 +43,7 @@ export default function ModuleEditPage() {
           module={module}
           onRefresh={() => setRefreshKey((k) => k + 1)}
           onEditSectionClick={setEditingSection}
+          onEditModuleClick={setEditingModule}
           onEditLessonClick={(section, lesson) =>
             setEditingLesson({
               sectionId: section?.id ?? undefined,
@@ -50,7 +53,17 @@ export default function ModuleEditPage() {
         />
       </aside>
       <main className="w-full md:w-2/3">
-        {editingSection && !editingLesson && (
+        {editingModule && !editingSection && !editingLesson && (
+          <EditModuleForm
+            moduleId={module.id}
+            moduleData={editingModule}
+            onSuccess={() => {
+              setRefreshKey((k) => k + 1);
+              setEditingModule(null);
+            }}
+          />
+        )}
+        {editingSection && !editingLesson && !editingModule && (
           <AddSectionForm
             moduleId={module.id}
             section={editingSection}
@@ -60,7 +73,7 @@ export default function ModuleEditPage() {
             }}
           />
         )}
-        {editingLesson && (
+        {editingLesson && !editingModule && (
           <AddLessonForm
             moduleId={module.id}
             sectionId={editingLesson?.sectionId ?? undefined}

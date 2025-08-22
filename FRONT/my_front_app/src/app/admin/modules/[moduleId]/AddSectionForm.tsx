@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { SaveButton } from '@/components/saveButton';
 
 // Definition of proprieties expected by the component
 interface Props {
@@ -80,9 +81,9 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
             />
           </div>
 
-          <Button type="submit" disabled={loading} aria-busy={loading}>
+          <SaveButton type="submit" disabled={loading} aria-busy={loading}>
             {loading ? 'Enregistrement...' : 'Enregistrer'}
-          </Button>
+          </SaveButton>
         </form>
       </CardContent>
     </Card>

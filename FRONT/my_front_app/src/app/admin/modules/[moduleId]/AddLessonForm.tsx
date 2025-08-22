@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import ReactPlayer from 'react-player';
+import { SaveButton } from '@/components/saveButton';
 
 interface Props {
   moduleId: number;
@@ -61,12 +62,6 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {urlVideo && (
-          <div className="mb-4">
-            <label className="block text-sm mb-1">Aperçu vidéo</label>
-            <ReactPlayer src={urlVideo} width="100%" height="250px" controls />
-          </div>
-        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="section-select" className="block text-sm mb-1">
@@ -96,15 +91,21 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
             required
             minLength={2}
           />
+          {urlVideo && (
+            <div className="mb-4">
+              <label className="block text-sm mb-1">Aperçu vidéo</label>
+              <ReactPlayer src={urlVideo} width="100%" height="250px" controls />
+            </div>
+          )}
           <Input
             placeholder="URL YouTube/Vimeo (optionnel)"
             value={urlVideo}
             onChange={(e) => setUrlVideo(e.target.value)}
           />
 
-          <Button type="submit" disabled={loading}>
+          <SaveButton type="submit" disabled={loading}>
             {loading ? "Enregistrement..." : "Enregistrer"}
-          </Button>
+          </SaveButton>
         </form>
       </CardContent>
     </Card>
