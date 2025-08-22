@@ -50,11 +50,13 @@ export default function NewModuleForm() {
     <div className="px-4 sm:px-6 md:px-8 lg:px-12">
       <Card className="py-15 px-6 w-full max-w-md mx-auto bg-white shadow-lg rounded-lg">
         <CardHeader>
-          <CardTitle
-            id="formTitle"
-            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-700 text-center mb-6"
-          >
-            Nouveau module
+          <CardTitle>
+            <h1
+              id="newModule-heading"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-700 text-center mb-6"
+              data-testid="newModules-title">
+              Nouveau module
+            </h1>
           </CardTitle>
         </CardHeader>
 
