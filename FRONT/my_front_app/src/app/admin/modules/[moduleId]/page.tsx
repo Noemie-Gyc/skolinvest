@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
-import CardSommaire from './CardSommaire';
+import CardSummary from './CardSummary';
 import AddSectionForm from './AddSectionForm';
 import AddLessonForm from './AddLessonForm';
 import EditModuleForm from './EditModuleForm';
@@ -39,7 +39,7 @@ export default function ModuleEditPage() {
     // The repartition is different for md (desktop)
     <div className="flex flex-col md:flex-row gap-6 p-4">
       <aside className="w-full md:w-1/3">
-        <CardSommaire
+        <CardSummary
           module={module}
           onRefresh={() => setRefreshKey((k) => k + 1)}
           onEditSectionClick={setEditingSection}

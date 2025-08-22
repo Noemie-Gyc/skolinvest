@@ -18,7 +18,7 @@ interface Section {
   lessons: Lesson[];
 }
 
-// cardSommaire component requires props 
+// cardSummary component requires props
 interface Props {
   module: {
     id: number;
@@ -33,7 +33,7 @@ interface Props {
 }
 
 // Main component to render the summary (for now only section titles list)
-export default function CardSommaire({ module, onRefresh, onEditSectionClick, onEditLessonClick, onEditModuleClick }: Props) {
+export default function CardSummary({ module, onRefresh, onEditSectionClick, onEditLessonClick, onEditModuleClick }: Props) {
   // Asynchronous function to delete a section via API 
   const deleteSection = async (sectionId: number) => {
     // call to our API routes proxy to avoid exposing to our real django URL

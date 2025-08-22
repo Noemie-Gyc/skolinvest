@@ -22,7 +22,7 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
   // state to inform is the form is being submitted 
   const [loading, setLoading] = useState(false);
 
-  // Automatically fill the input title in the cardSommaire once we update the section in the form
+  // Automatically fill the input title in the cardSummary once we update the section in the form
   useEffect(() => {
     if (section) setTitle(section.title);
   }, [section]);
