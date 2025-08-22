@@ -29,7 +29,7 @@ interface Props {
 
 export default function ModulesListClient({ modules }: Props) {
     const [moduleList, setModuleList] = useState(modules); // ModuleList is a list of Module objects
-    const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null); // module ID to delete or value remains null
+    const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null); // module ID to delete or, value remains null
 
     // When the react component image is loaded on the page. If it can't read the path of the thumbnail associated to the module id, 
     // the javascript dictionnary imageErrors is incremented by the key/value {moduleId: true}.
@@ -40,7 +40,7 @@ export default function ModulesListClient({ modules }: Props) {
         //hasError takes the value true if the module id is found in the imageErrors dictionary.
         const hasError = id ? imageErrors[id] : false;
         if (hasError || !thumbnail || thumbnail.trim() === '') {
-            return '/imageTest.jpg'; // default image given for broken paths or missing thumbnails
+            return '/financeMiniature.webp'; // default image given for broken paths or missing thumbnails
         }
         return thumbnail.startsWith('http') ? thumbnail : '/' + thumbnail;
     }
@@ -60,25 +60,26 @@ export default function ModulesListClient({ modules }: Props) {
     return (
         <>
             <div className="px-4 md:px-8">
-                {/* Page title accessible, sr-only(non visible) is for screen readers softwares */}
-                <section aria-labelledby="modules-heading">
-                    <h2 id="modules-heading" className="sr-only">Liste des modules</h2>
-
-                    {/* responsive header (title + bouton + compteur) */}
+                {/* Page title accessible */}
+                <section aria-labelledby="modules-heading" data-testid="modules-section">
+                    {/* responsive header (title + button + counter) */}
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 px-4 gap-2 text-center md:text-left">
                         <div className="flex flex-col items-center md:items-start">
-                            <h2 className="text-blue-700 text-xl sm:text-2xl font-bold">MES MODULES</h2>
+                            <h1 id="modules-heading" className="text-blue-700 text-xl sm:text-2xl font-bold" data-testid="modules-title">
+                                MES MODULES
+                            </h1>
                             {moduleList.length > 0 && (
-                                <span className="text-sm sm:text-base text-purple-800">
+                                <span className="text-sm sm:text-base text-purple-800" data-testid="modules-count">
                                     {moduleList.length} {moduleList.length > 1 ? 'modules' : 'module'}
                                 </span>
                             )}
                         </div>
                         <div className="mt-2 md:mt-0 self-center md:self-auto">
-                            {/* Bouton Ajouter un module */}
+                            {/* button add a module */}
                             <AddButton
                                 href="/admin/modules/new"
                                 className="text-sm sm:text-base md:text-lg px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded full-md"
+                                data-testid="add-module-button"
                             >
                                 + Nouveau
                             </AddButton>
@@ -86,9 +87,9 @@ export default function ModulesListClient({ modules }: Props) {
                     </div>
 
                     {/* ModuleList*/}
-                    <div role="list" className="flex flex-col gap-4">
+                    <div role="list" className="flex flex-col gap-4" data-testid="modules-list">
                         {moduleList.length === 0 ? (
-                            <p className="text-gray-600 text-center md:text-left">
+                            <p className="text-gray-600 text-center md:text-left" data-testid="no-modules-message">
                                 Aucun module disponible.
                             </p>
                         ) : (
@@ -96,17 +97,25 @@ export default function ModulesListClient({ modules }: Props) {
                                 const imageSrc = getThumbnailSrc(module.thumbnail, module.id);
 
                                 return (
-                                    <Card key={module.id} role="listitem" className="flex flex-row items-start gap-2 p-2 sm:gap-4 sm:p-4">
+                                    <Card
+                                        key={module.id}
+                                        role="listitem"
+                                        className="flex flex-row items-start gap-2 p-2 sm:gap-4 sm:p-4"
+                                        data-testid={`module-card-${module.id}`}
+                                    >
                                         {/* module miniature */}
-                                        <div className="relative w-20 h-20 md:w-32 md:h-32 flex-shrink-0">
+                                        <div className="relative w-20 h-20 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded">
                                             <Image
                                                 src={imageSrc}
-                                                alt={`mignature du module ${module.title}`}
-                                                fill
+                                                alt={`miniature du module ${module.title}`}
+                                                width={128}
+                                                height={128}
                                                 // load the image only if visible on viewport by user
-                                                loading="lazy"
-                                                sizes="(max-width: 768px) 100vw, 128px"
-                                                className="object-cover rounded bg-gray-100"
+                                                priority={index === 0}
+                                                loading={index === 0 ? "eager" : "lazy"}
+                                                sizes="(max-width: 768px) 80px, 128px"
+                                                className="object-cover w-full h-full"
+                                                data-testid={`module-thumbnail-${module.id}`}
                                                 // Register if the moduleId thumbnail is broken.
                                                 onError={() =>
                                                     setImageErrors(prev => ({ ...prev, [module.id]: true }))
@@ -120,6 +129,7 @@ export default function ModulesListClient({ modules }: Props) {
                                                 href={`/admin/modules/${module.id}`}
                                                 className="text-neutral-950 font-semibold text-sm sm:text-base md:text-lg break-words max-w-[12rem] sm:max-w-none"
                                                 aria-label={`Éditer le module ${module.title}`}
+                                                data-testid={`module-title-link-${module.id}`}
                                             >
                                                 {module.title}
                                             </Link>
@@ -128,11 +138,14 @@ export default function ModulesListClient({ modules }: Props) {
                                         {/* Status */}
                                         <div className="flex flex-col items-center justify-start w-24 flex-shrink-0 text-center pt-1">
                                             {index === 0 && (
-                                                <span className="text-xs sm:text-sm text-purple-800 font-bold tracking-wide mb-1">
+                                                <span className="text-xs sm:text-sm text-purple-800 font-bold tracking-wide mb-1" data-testid="status-header">
                                                     Statuts
                                                 </span>
                                             )}
-                                            <span className="flex items-center justify-center gap-1 text-sm text-gray-600">
+                                            <span
+                                                className="flex items-center justify-center gap-1 text-sm text-gray-600"
+                                                data-testid={`module-status-${module.id}`}
+                                            >
                                                 {module.status === 'published' && (
                                                     <Eye size={16} className="text-gray-600" aria-hidden="true" />
                                                 )}
@@ -150,13 +163,19 @@ export default function ModulesListClient({ modules }: Props) {
                                                         aria-haspopup="menu"
                                                         // informs user if popup is open or closed
                                                         aria-expanded="false"
+                                                        data-testid={`module-options-${module.id}`}
                                                     >
                                                         <span aria-hidden="true">⋮</span>
                                                     </button>
                                                 </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
+                                                <DropdownMenuContent align="end" data-testid={`module-dropdown-${module.id}`}>
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/admin/modules/${module.id}`}>Éditer</Link>
+                                                        <Link
+                                                            href={`/admin/modules/${module.id}`}
+                                                            data-testid={`edit-module-${module.id}`}
+                                                        >
+                                                            Éditer
+                                                        </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem
                                                         onSelect={e => {
@@ -164,6 +183,7 @@ export default function ModulesListClient({ modules }: Props) {
                                                             setConfirmDeleteId(module.id);
                                                         }}
                                                         className="text-red-600 focus:bg-red-100"
+                                                        data-testid={`delete-module-${module.id}`}
                                                     >
                                                         Supprimer
                                                     </DropdownMenuItem>
@@ -186,6 +206,7 @@ export default function ModulesListClient({ modules }: Props) {
                     // if user clicks on the button on cancel, confirmDeleteId is set to null
                     onCancel={() => setConfirmDeleteId(null)}
                     onConfirm={() => deleteModule(confirmDeleteId)}
+                    data-testid="delete-confirm-dialog"
                 />
             )}
         </>

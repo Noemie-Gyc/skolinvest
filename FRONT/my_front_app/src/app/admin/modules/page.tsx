@@ -19,7 +19,7 @@ async function fetchModules() {
       // send the cookie headers to the backend API
       ...(cookieHeader && { Cookie: cookieHeader }),
     },
-    cache: 'no-store',
+    cache: 'no-cache',
   });
 
   if (!res.ok) {
