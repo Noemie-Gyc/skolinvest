@@ -3,9 +3,10 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
-import CardSommaire from './CardSummary';
+import CardSummary from './CardSummary';
 import AddSectionForm from './AddSectionForm';
-import EditModuleTitleForm from './EditModuleTitleForm';
+import AddLessonForm from './AddLessonForm';
+import EditModuleForm from './EditModuleForm';
 
 export default function ModuleEditPage() {
   const params = useParams();
@@ -15,8 +16,9 @@ export default function ModuleEditPage() {
   const [refreshKey, setRefreshKey] = useState(0);
   // Two options : either there is a section to edit, either null
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
-  // state becomes true if the user clicked on the module title (false by default)
-  const [isEditingModuleTitle, setIsEditingModuleTitle] = useState(false);
+  const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
+  const [editingModule, setEditingModule] = useState<null | { id: number; title: string }>(null);
+
 
   useEffect(() => {
     if (!moduleId) return;
@@ -37,43 +39,51 @@ export default function ModuleEditPage() {
     <div className="flex flex-col md:flex-row gap-6 p-4">
       {/* left part of the screen : summary */}
       <aside className="w-full md:w-1/3">
-        <CardSommaire
+        <CardSummary
           module={module}
-          onRefresh={() => setRefreshKey(k => k + 1)}
-          // action when clicking on the section title to open the edition form
-          onEditSectionClick={section => {
-            setIsEditingModuleTitle(false); // unset module title edition mode
-            setEditingSection(section);
-          }}
-          // action when clicking on the module title to open the edition form
-          onEditModuleTitleClick={() => {
-            setEditingSection(null);
-            setIsEditingModuleTitle(true);
-          }}
+          onRefresh={() => setRefreshKey((k) => k + 1)}
+          onEditSectionClick={setEditingSection}
+          onEditModuleClick={setEditingModule}
+          onEditLessonClick={(section, lesson) =>
+            setEditingLesson({
+              sectionId: section?.id ?? undefined,
+              lesson,
+            })
+          }
         />
       </aside>
 
       {/* right column : edition module title form or section module form */}
       <main className="w-full md:w-2/3">
-        {/* Conditional rendering : if isEditingModuleTitle is set, and we have the moduleId and a title, then the form can be opened*/}
-        {isEditingModuleTitle && (
-          <EditModuleTitleForm
+        {editingModule && !editingSection && !editingLesson && (
+          <EditModuleForm
             moduleId={module.id}
-            currentTitle={module.title}
+            moduleData={editingModule}
             onSuccess={() => {
-              setIsEditingModuleTitle(false);
-              setRefreshKey(k => k + 1);
+              setRefreshKey((k) => k + 1);
+              setEditingModule(null);
             }}
           />
         )}
-        {/*Conditional rendering : if editingSection is set, and we have the moduleId and a section, then the form can be opened*/}
-        {editingSection && (
+        {editingSection && !editingLesson && !editingModule && (
           <AddSectionForm
             moduleId={module.id}
             section={editingSection}
             onSuccess={() => {
-              setRefreshKey(k => k + 1);
+              setRefreshKey((k) => k + 1);
               setEditingSection(null);
+            }}
+          />
+        )}
+        {editingLesson && !editingModule && (
+          <AddLessonForm
+            moduleId={module.id}
+            sectionId={editingLesson?.sectionId ?? undefined}
+            sections={module.sections}
+            lesson={editingLesson.lesson}
+            onSuccess={() => {
+              setRefreshKey((k) => k + 1);
+              setEditingLesson(null);
             }}
           />
         )}
