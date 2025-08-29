@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import ReactPlayer from 'react-player';
 import { SaveButton } from '@/components/saveButton';
@@ -20,6 +19,12 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
   const [selectedSection, setSelectedSection] = useState<string>("");
   const [urlVideo, setUrlVideo] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const formTitleId = useId();
+  const titleInputId = useId();
+  const urlInputId = useId();
+  const sectionSelectId = useId();
 
   useEffect(() => {
     setTitle(lesson ? lesson.title : '');
@@ -30,6 +35,19 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+
+    // Validation needed for accessibility
+    if (!selectedSection) {
+      setLoading(false);
+      setError('Veuillez sélectionner une section');
+      return;
+    }
+    if (!title || title.trim().length < 2) {
+      setLoading(false);
+      setError('Le titre de la leçon doit contenir au moins 2 caractères');
+      return;
+    }
 
     const isEdit = lesson && lesson.id !== 0;
     const method = isEdit ? 'PATCH' : 'POST';
@@ -49,30 +67,44 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
     if (res.ok) {
       onSuccess();
       setTitle('');
+      setUrlVideo('');
     } else {
-      alert('Erreur lors de l’enregistrement');
+      try {
+        const data = await res.json();
+        setError(data?.details || data?.error || 'Erreur lors de l’enregistrement');
+      } catch {
+        setError('Erreur lors de l’enregistrement');
+      }
     }
   };
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>
+        <CardTitle id={formTitleId}>
           {lesson && lesson.id !== 0 ? "Modifier la leçon" : "Nouvelle leçon"}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Live region for async status / errors */}
+        {error && (
+          <p role="alert" aria-live="assertive" className="text-sm text-red-600 mb-2">
+            {error}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby={formTitleId}>
           <div>
-            <label htmlFor="section-select" className="block text-sm mb-1">
+            <label htmlFor={sectionSelectId} className="block text-sm mb-1">
               Section
             </label>
             <select
-              id="section-select"
+              id={sectionSelectId}
               value={selectedSection}
               onChange={(e) => setSelectedSection(e.target.value)}
               className="border rounded px-2 py-1 w-full"
               required
+              aria-required="true"
+              aria-invalid={selectedSection === ''}
             >
               <option value="" disabled>
                 Sélectionner la section
@@ -84,26 +116,54 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
               ))}
             </select>
           </div>
-          <Input
-            placeholder="Titre de la leçon"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            minLength={2}
-          />
+          <div>
+            <label htmlFor={titleInputId} className="block text-sm mb-1">
+              Titre de la leçon
+            </label>
+            <Input
+              id={titleInputId}
+              name="lesson-title"
+              placeholder="Ex. Introduction à l’investissement"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              aria-required="true"
+              aria-invalid={!!title && title.trim().length < 2}
+              aria-describedby={`${titleInputId}-help`}
+              minLength={2}
+            />
+            <p id={`${titleInputId}-help`} className="text-xs text-gray-500 mt-1">
+              Minimum 2 caractères.
+            </p>
+          </div>
           {urlVideo && (
-            <div className="mb-4">
-              <label className="block text-sm mb-1">Aperçu vidéo</label>
+            <figure className="mb-4" aria-labelledby={`${urlInputId}-preview-label`}>
+              <figcaption id={`${urlInputId}-preview-label`} className="block text-sm mb-1">
+                Aperçu vidéo
+              </figcaption>
               <ReactPlayer src={urlVideo} width="100%" height="250px" controls />
-            </div>
+            </figure>
           )}
-          <Input
-            placeholder="URL YouTube/Vimeo (optionnel)"
-            value={urlVideo}
-            onChange={(e) => setUrlVideo(e.target.value)}
-          />
+          <div>
+            <label htmlFor={urlInputId} className="block text-sm mb-1">
+              URL de la vidéo (YouTube/Vimeo)
+            </label>
+            <Input
+              id={urlInputId}
+              name="url-video"
+              placeholder="https://www.youtube.com/watch?v=..."
+              value={urlVideo}
+              onChange={(e) => setUrlVideo(e.target.value)}
+              aria-describedby={`${urlInputId}-help`}
+              inputMode="url"
+              type="url"
+            />
+            <p id={`${urlInputId}-help`} className="text-xs text-gray-500 mt-1">
+              Collez une URL YouTube ou Vimeo valide.
+            </p>
+          </div>
 
-          <SaveButton type="submit" disabled={loading}>
+          <SaveButton type="submit" disabled={loading} aria-busy={loading} aria-live="polite">
             {loading ? "Enregistrement..." : "Enregistrer"}
           </SaveButton>
         </form>
