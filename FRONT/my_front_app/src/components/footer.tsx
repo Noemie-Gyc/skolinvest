@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Twitter, Youtube, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 export default function Footer({
   logoSrc = "/logo.png",
@@ -80,27 +80,6 @@ export default function Footer({
             © {year} Skol Invest. Tous droits réservés.
           </span>
           <div className="flex items-center gap-3">
-            <Link
-              href="https://twitter.com"
-              aria-label="Twitter"
-              className="text-white/90 hover:text-white"
-            >
-              <Twitter className="w-5 h-5" />
-            </Link>
-            <Link
-              href="https://facebook.com"
-              aria-label="Facebook"
-              className="text-white/90 hover:text-white"
-            >
-              <Facebook className="w-5 h-5" />
-            </Link>
-            <Link
-              href="https://www.youtube.com"
-              aria-label="YouTube"
-              className="text-white/90 hover:text-white"
-            >
-              <Youtube className="w-5 h-5" />
-            </Link>
             <Link
               href="https://www.linkedin.com"
               aria-label="LinkedIn"
