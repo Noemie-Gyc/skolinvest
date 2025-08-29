@@ -1,6 +1,13 @@
 # skolinvest
 Skolinvest est une application de e-learning. Cette plateforme de e-learning s’inscrit dans un projet lancé en 2020. Elle a  pour but de démocratiser l’éducation financière avec un outil accessible, pédagogique et complet, et s’adresse à une clientèle curieuse et motivée à développer son autonomie dans la gestion de portefeuille.
 
+# Gestion des dépendances. 
+Par exemple, si vous ajoutez un component Shadcn, vous faites : "npm install @radix-ui/react-dropdown-menu". Soit vous le faites dans votre container frontend soit localement directement dans le projet Front/my-front_app. Cependant, pour la personne qui récupère le projet, toutes ces dépendances ne seront pas à jour car les nodes_modules sont dans le gitignore. Ainsi, quand on clone le projet ou met à jour sa branche et que de nombreux changements ont eu lieu, il faut faire un npm install et normalement il ne devrait pas y avoir de bugs si la personne souhaite utiliser ces composants et les afficher dans le navigateur.
+
+Si vraiment des erreurs persistent la commande : rm -rf node_modules supprime tous vos nodes_modules et après vous pouvez refaire un npm install pour être bien à jour. 
+
+La commande npm ci à priori supprime les nodes_module, puis réinstalle les packages selon le package-lock-json.
+
 # Travailler sans connexion internet avec Docker :
 Pour lancer docker en local sans internet, ça sous entend qu'on ait bien buildé l'app récemment pour
 avoir localement les dernières images à jour. 

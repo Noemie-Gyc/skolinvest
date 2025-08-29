@@ -8,7 +8,7 @@ import { SaveButton } from '@/components/saveButton';
 
 // Definition of proprieties expected by the component
 interface Props {
-  moduleId: number; 
+  moduleId: number;
   section: { id: number; title: string } | null; // section to edit or null if no section
   onSuccess: () => void; // Callback called after the registration has succeeded. 
 }
@@ -19,10 +19,10 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
   // local state for section title
   const [title, setTitle] = useState('');
 
-  // state to inform is the form is being submitted 
+  // state to inform if the form is being submitted 
   const [loading, setLoading] = useState(false);
 
-  // Automatically fill the input title in the cardSummary once we update the section in the form
+  // Each time section changes local state is updated
   useEffect(() => {
     if (section) setTitle(section.title);
   }, [section]);
@@ -76,8 +76,8 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
               required
               minLength={2}
               aria-required="true"
-              // Check if the below attribute is usefull, border becomes red if number of letters<2
-              // aria-invalid={title.length < 2}
+            // Check if the below attribute is usefull, border becomes red if number of letters<2
+            // aria-invalid={title.length < 2}
             />
           </div>
 

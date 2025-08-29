@@ -5,39 +5,39 @@ import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import CardSummary from './CardSummary';
 import AddSectionForm from './AddSectionForm';
+import EditModuleTitleForm from './EditModuleTitleForm';
 import AddLessonForm from './AddLessonForm';
 import EditModuleForm from './EditModuleForm';
 
 export default function ModuleEditPage() {
   const params = useParams();
-  // makes sure moduleId contains a string
   const moduleId = Array.isArray(params.moduleId) ? params.moduleId[0] : params.moduleId;
-
   const [module, setModule] = useState<any>(null);
+  // update the state to load updated data after an edition
   const [refreshKey, setRefreshKey] = useState(0);
+  // Two options : either there is a section to edit, either null
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
   const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
   const [editingModule, setEditingModule] = useState<null | { id: number; title: string }>(null);
 
   useEffect(() => {
     if (!moduleId) return;
-
+    // get the module data from the moduleId in the url's params
     async function loadModule() {
       const res = await fetchWithAuth(`/api/modules/${moduleId}/`);
       if (!res || !res.ok) return;
       const data = await res.json();
       setModule(data);
     }
-
+    // loadModule is called if moduleId or refreshKey change
     loadModule();
   }, [moduleId, refreshKey]);
 
   if (!module) return <p>Chargement...</p>;
 
   return (
-    // w-full manage the responsivness according to the size of the screen.
-    // The repartition is different for md (desktop)
     <div className="flex flex-col md:flex-row gap-6 p-4">
+      {/* left part of the screen : summary */}
       <aside className="w-full md:w-1/3">
         <CardSummary
           module={module}
@@ -52,6 +52,8 @@ export default function ModuleEditPage() {
           }
         />
       </aside>
+
+      {/* right column : edition module title form or section module form */}
       <main className="w-full md:w-2/3">
         {editingModule && !editingSection && !editingLesson && (
           <EditModuleForm
