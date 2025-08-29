@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/componen
 import { AddButton } from '@/components/addButton';
 import DeleteSectionDialog from './DeleteSectionDialog';
 import DeleteLessonDialog from './DeleteLessonDialog';
+import { CirclePlus } from 'lucide-react';
 
 
 interface Lesson {
@@ -42,35 +43,41 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
   };
 
   const deleteLesson = async (lessonId: number) => {
-  await fetch(`/api/lessons/${lessonId}`, { method: 'DELETE' });
-  onRefresh();
-};
+    await fetch(`/api/lessons/${lessonId}`, { method: 'DELETE' });
+    onRefresh();
+  };
 
   return (
     <Card className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle
-          className="cursor-pointer hover:underline"
-          onClick={() => onEditModuleClick({ id: module.id, title: module.title })}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') onEditModuleClick({ id: module.id, title: module.title });
-          }}
-          aria-label={`Modifier le titre du module ${module.title}`}
-        >
-          {module.title}
+        <CardTitle>
+          <h1
+            id="editModule-heading"
+            className="text-blue-700 text-xl sm:text-2xl font-bold cursor-pointer hover:underline"
+            data-testid="editModule-title"
+            onClick={() => onEditModuleClick({ id: module.id, title: module.title })}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onEditModuleClick({ id: module.id, title: module.title });
+            }}
+            role="button"
+            aria-label="Modifier le titre du module"
+          >
+            {module.title}
+          </h1>
         </CardTitle>
       </CardHeader>
+
+
       <CardContent className="space-y-4 overflow-y-auto max-h-full sm:max-h-[70vh]">
         {module.sections.length === 0 ? (
           <p className="text-muted-foreground text-sm">Aucune section</p>
         ) : (
           // Sections list
           module.sections.map((section) => (
-            <div key={section.id} className="space-y-2">
+            <div key={section.id} className=" space-y-2 ">
               {/* Titre de section + poubelle alignés */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between text-blue-700">
                 <p
                   className="font-medium cursor-pointer hover:underline"
                   onClick={() => onEditSectionClick(section)}
@@ -126,22 +133,36 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
           ))
         )}
       </CardContent>
-      <CardFooter className="pt-4">
+      <CardFooter className="flex gap-4">
         <AddButton
           onClick={() => onEditSectionClick({ id: 0, title: "", lessons: [] })}
           className="w-auto"
           aria-label="Ajouter une nouvelle section"
         >
-          Section
+          <CirclePlus className="w-4 h-4" /> Section
         </AddButton>
         <AddButton
           onClick={() => onEditLessonClick(undefined, null)}
           className="w-auto"
           aria-label="Ajouter une nouvelle leçon"
         >
-          Leçon
+          <CirclePlus className="w-4 h-4" /> Leçon
         </AddButton>
       </CardFooter>
     </Card>
+
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

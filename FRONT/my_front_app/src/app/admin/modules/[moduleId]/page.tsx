@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import CardSummary from './CardSummary';
 import AddSectionForm from './AddSectionForm';
-import EditModuleTitleForm from './EditModuleTitleForm';
 import AddLessonForm from './AddLessonForm';
 import EditModuleForm from './EditModuleForm';
 
@@ -19,6 +18,7 @@ export default function ModuleEditPage() {
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
   const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
   const [editingModule, setEditingModule] = useState<null | { id: number; title: string }>(null);
+
 
   useEffect(() => {
     if (!moduleId) return;
