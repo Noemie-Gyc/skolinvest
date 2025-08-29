@@ -40,7 +40,10 @@ Si vous souhaitez rajouter une route.ts contenant des promesses et que vous n'av
 # Problème de modules non reconnus 
 Parfois, lorsque l'on souhaite rajouter un composant. Par exemple, une boîte de dialog via shadcn. L'import dans le composant React n'est pas reconnu malgré la présence de la dépendance dans le package.json. Dans ce cas, la solution est de supprimer les nodes modules sur la machine locale. 
 
-S'il y a la présence d'un dossier Node modules dans le dossier FRONT, dans le terminal git bash, lancer la commande suivante : rm -rf FRONT/node_modules. Ensuite supprimer l'autre dossier Node modules présent dans my_front_app : rm -rf my_front_app/node_modules. 
+S'il y a la présence d'un dossier Node modules dans le dossier FRONT, dans le terminal git bash, lancer la commande suivante : rm -rf FRONT/node_modules. Ensuite supprimer l'autre dossier Node modules présent dans my_front_app : 
+```
+rm -rf my_front_app/node_modules
+```
 
 Une fois les dossiers supprimés, réinstaller les dépendances en lançant toujours localement npm install en se positionnant dans le dossier my_front_app.
 
