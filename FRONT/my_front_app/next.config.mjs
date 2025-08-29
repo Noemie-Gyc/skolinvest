@@ -4,7 +4,7 @@ const nextConfig = {
     reactStrictMode: true,
 
     // Docker configuration, modify development server config. The function sends modified config
-    webpackDevMiddleware: config => {
+     webpack: (config, { isServer }) => {
         config.watchOptions = {
             // check changes every 1000ms
             poll: 1000,

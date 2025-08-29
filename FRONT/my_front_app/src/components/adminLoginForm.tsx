@@ -24,7 +24,7 @@ export function AdminLoginForm({
 }: AdminLoginFormProps) {
   return (
     <form
-       className="
+      className="
         bg-white rounded-[20px] shadow
         flex flex-col items-center gap-4
         max-w-xl mx-auto
@@ -57,15 +57,21 @@ export function AdminLoginForm({
         {title}
       </h1>
       <LoginInput
+        id="username"
+        label="identifiant"
         placeholder="Identifiant"
         value={username}
+        hideLabel={true}
         onChange={onUsernameChange}
         required
       />
       <LoginInput
+        id="password"
+        label="Mot de passe"
         type="password"
         placeholder="Mot de passe"
         value={password}
+        hideLabel={true}
         onChange={onPasswordChange}
         required
       />
@@ -76,7 +82,11 @@ export function AdminLoginForm({
       >
         {loading ? "Connexion..." : "Se connecter"}
       </ConnexionButton>
-      {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+      {errorMsg && (
+        <p id="login-error" role="alert" className="text-red-700 font-bold">
+          {errorMsg}
+        </p>
+      )}
     </form>
   );
 }
