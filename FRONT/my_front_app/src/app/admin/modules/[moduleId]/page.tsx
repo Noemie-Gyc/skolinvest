@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
-import CardSommaire from './CardSommaire';
+import CardSommaire from './CardSummary';
 import AddSectionForm from './AddSectionForm';
 import EditModuleTitleForm from './EditModuleTitleForm';
 
