@@ -1,3 +1,9 @@
-export default function Page() {
-    return <h1>page ajouter module</h1>
-  }
+import NewModuleForm from './NewModuleForm';
+
+export default function NewModulePage() {
+  return (
+    <div className="mt-12">
+      <NewModuleForm />
+    </div>
+  );
+}

@@ -25,7 +25,7 @@ tasks:
   test-unit-back:
     desc: Lance les tests unitaires du backend
     cmds:
-      - docker-compose exec backend python manage.py test authentification.tests.test_authentication
+      - docker-compose exec backend python manage.py test authentification.tests.test_authentication my_docker_django_app.tests.test_section
 
   test-e2e-playwright:
     desc: Lance les tests e2e
@@ -46,3 +46,13 @@ tasks:
     desc: Lance le server front
     cmds: 
       - cd Front && cd my_front_app && npm run dev
+      
+  #FIXME à voir les commandes n'ont pas l'air de fonctionner via task
+  # makemigrations:
+  # desc: Prépare les migrations à envoyer en base de données
+  # cmds:
+  #   - docker-compose exec backend python manage.py makemigrations
+  # migrate:
+  # desc: envoie les migrations vers la base de données
+  # cmds:
+  #   - docker-compose exec backend python manage.py migrate

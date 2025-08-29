@@ -6,6 +6,10 @@ COPY package*.json ./
 
 RUN npm install
 
+COPY . .
+
+ENV NEXT_PUBLIC_API_URL=http://host.docker.internal:8000
+
 EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
