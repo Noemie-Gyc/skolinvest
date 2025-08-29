@@ -48,20 +48,9 @@ Il faudra créer une autre configuration Docker-compose. Exemple : docker-compos
 
 # opérations asynchrones sur les routes
 Si vous souhaitez rajouter une route.ts contenant des promesses et que vous n'avez pas encore travaillé sur le projet, si les promesses ne sont pas détectées du 1er coup, essayez les étapes suivantes :
-- Se placer dans le container frontend
-```
-<span style="color:green">Gitbash</span>
-winpty docker exec -it frontend sh
-```
-ou
-```
-<span style="color:green">Powershell</span>
-docker exec -it frontend sh
-```
-- stasher toutes les modifs en cours :
-```git stash --include-untracked```
-- télécharger le gestionnaire de package codemod :
-```npx @next/codemod@canary next-async-request-api```
+- Se placer dans le container frontend puis lancer : ```winpty docker exec -it frontend sh```(Gitbash) ou ```docker exec -it frontend sh``` (Powershell)
+- stasher toutes les modifs en cours :```git stash --include-untracked```
+- télécharger le gestionnaire de package codemod :```npx @next/codemod@canary next-async-request-api```
 - unstash 
 - régler les conflits du merge
 
@@ -79,6 +68,6 @@ rm -rf my_front_app/node_modules
 
 Une fois les dossiers supprimés, réinstaller les dépendances en lançant toujours localement dans le dossier my_front_app :
 ```
-npm install en se positionnant
+npm install
 ```
 
