@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button"
+import type { ComponentProps } from "react";
+
  
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ComponentProps<typeof Button> & {
   children: React.ReactNode;
 };
 
