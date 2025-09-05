@@ -52,9 +52,9 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
     const isEdit = lesson && lesson.id !== 0;
     const method = isEdit ? 'PATCH' : 'POST';
     const url = isEdit ? `/api/lessons/${lesson.id}` : `/api/lessons`;
-    const body = isEdit 
-     ? { title, url_video: urlVideo }
-     : { title, url_video: urlVideo, section: Number(selectedSection), module: moduleId };
+  const body = isEdit
+    ? { title, url_video: urlVideo, section: Number(selectedSection) }
+    : { title, url_video: urlVideo, section: Number(selectedSection), module: moduleId };
 
     const res = await fetch(url, {
       method,
@@ -159,7 +159,7 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
               type="url"
             />
             <p id={`${urlInputId}-help`} className="text-xs text-gray-500 mt-1">
-              Collez une URL YouTube ou Vimeo valide.
+              URL de la vidéo
             </p>
           </div>
 
