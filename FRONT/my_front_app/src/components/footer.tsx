@@ -35,17 +35,17 @@ export default function Footer({
         <div className="pt-1 md:pt-2">
           <ul className="space-y-2 text-sm">
             <li>
-              <Link className="hover:underline" href="/">
+              <Link className="hover:underline" href="/#formations">
                 Nos formations
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" href="/about">
+              <Link className="hover:underline" href="/#about">
                 A propos
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" href="/contact">
+              <Link className="hover:underline" href="/#contact">
                 Contact
               </Link>
             </li>

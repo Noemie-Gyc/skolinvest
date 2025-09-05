@@ -8,7 +8,18 @@ export default function Page() {
         <PublicHeader />
       </header>
 
-      <main className="h-screen flex flex-col gap-2 justify-center items-center">
+      <main className="min-h-screen flex flex-col">
+        <section id="formations" className="min-h-[60vh] flex items-center justify-center px-4 py-16">
+          <h2 className="text-2xl font-semibold">Nos formations</h2>
+        </section>
+
+        <section id="about" className="min-h-[60vh] flex items-center justify-center bg-gray-50 px-4 py-16">
+          <h2 className="text-2xl font-semibold">À propos</h2>
+        </section>
+
+        <section id="contact" className="min-h-[60vh] flex items-center justify-center px-4 py-16">
+          <h2 className="text-2xl font-semibold">Contact</h2>
+        </section>
       </main>
 
       <Footer />
