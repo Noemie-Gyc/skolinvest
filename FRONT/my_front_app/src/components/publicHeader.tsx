@@ -5,9 +5,9 @@ export default function PublicHeader() {
   return (
     <HeaderNav
       items={[
-  { href: "/#formations", label: "Nos formations" },
-  { href: "/#about", label: "A propos" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#formations-heading", label: "Nos formations" },
+  { href: "/#about-heading", label: "A propos" },
+  { href: "/#contact-heading", label: "Contact" },
       ]}
       showSearch
     />
