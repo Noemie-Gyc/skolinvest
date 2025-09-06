@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Linkedin } from "lucide-react";
+
 
 export default function Footer({
   logoSrc = "/logo.png",
@@ -74,22 +74,11 @@ export default function Footer({
         </div>
       </div>
 
-      <div className="border-t border-white/20">
-        <div className="max-w-6xl mx-auto px-4 py-4 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="border-t border-white/20 max-w-6xl mx-auto px-4 py-4 text-sm">
           <span className="text-white/90">
             © {year} SkolInvest. Tous droits réservés.
           </span>
-          <div className="flex items-center gap-3">
-            <Link
-              href="https://www.linkedin.com"
-              aria-label="LinkedIn"
-              className="text-white/90 hover:text-white"
-            >
-              <Linkedin className="w-5 h-5" />
-            </Link>
-          </div>
         </div>
-      </div>
     </footer>
   );
 }
