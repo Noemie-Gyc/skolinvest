@@ -45,7 +45,7 @@ export default function HeaderNav({
         >
           <Menu size={28} />
         </button>
-        <img src={logoSrc} alt="Logo" className="h-14 w-auto" />
+        <img src={logoSrc} alt="Logo Skolinvest" className="h-14 w-auto" />
         <div className="ml-auto flex items-center gap-2">
           {showSearch && (
             <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
@@ -77,7 +77,7 @@ export default function HeaderNav({
       {/* Desktop header */}
       <div className="hidden md:flex justify-between items-center">
         <div className="flex items-center gap-10">
-          <img src={logoSrc} alt="Logo" />
+          <img src={logoSrc} alt="Logo Skolinvest" />
           <div className="flex items-center gap-2">
             {items.map((it) => (
               <Button

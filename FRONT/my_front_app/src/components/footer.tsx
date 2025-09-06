@@ -19,13 +19,13 @@ export default function Footer({
         <div>
           <Image
             src={logoSrc}
-            alt="Logo"
+            alt="Logo Skolinvest"
             width={220}
             height={88}
             className="block h-16 md:h-20 w-auto"
           />
 
-          <p className="text-white/80 text-sm mt-3">
+          <p className="text-white/90 text-sm mt-3">
             Formations et ressources pour investir et se former sereinement à la
             finance.
           </p>
@@ -76,8 +76,8 @@ export default function Footer({
 
       <div className="border-t border-white/20">
         <div className="max-w-6xl mx-auto px-4 py-4 text-sm flex flex-col md:flex-row items-center justify-between gap-3">
-          <span className="text-white/80">
-            © {year} Skol Invest. Tous droits réservés.
+          <span className="text-white/90">
+            © {year} SkolInvest. Tous droits réservés.
           </span>
           <div className="flex items-center gap-3">
             <Link

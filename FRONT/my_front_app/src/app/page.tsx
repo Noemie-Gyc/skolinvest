@@ -26,7 +26,7 @@ export default function Page() {
               </h1>
               <p className="mt-3 text-base sm:text-lg text-gray-600">Se faire accompagner pour apprendre à placer</p>
               <DiscoverButton asChild className="mt-6">
-                <Link href="#formations-heading" aria-label="Découvrir la section Nos formations">Découvrir</Link>
+                <Link href="#formations" aria-label="Découvrir la section Nos formations">Découvrir</Link>
               </DiscoverButton>
             </div>
 
