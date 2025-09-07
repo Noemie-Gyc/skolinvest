@@ -31,15 +31,15 @@ export default function Page() {
           aria-labelledby="hero-title"
           className="bg-[#FFF8EE] min-h-[60vh] flex items-center px-4 py-12 sm:py-16"
         >
-          <div className="w-full max-w-6xl mx-auto relative grid gap-6 sm:gap-8 md:grid-cols-2 md:items-center">
-            <h1
-              id="hero-title"
-              className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight md:absolute md:top-40 md:left-0 md:whitespace-nowrap md:z-10 md:pr-0 pointer-events-none"
-            >
-              INVESTIR AVEC SKOLINVEST
-            </h1>
-            <div className="pt-12 sm:pt-16 md:pt-40">
-              <p className="text-base sm:text-lg text-gray-600">
+          <div className="w-full max-w-6xl mx-auto relative grid gap-10 sm:gap-8 md:grid-cols-2 md:items-center">
+            <div className="pt-8 sm:pt-10 md:pt-24">
+              <h1
+                id="hero-title"
+                className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight"
+              >
+                APPRENDRE A INVESTIR AVEC SKOLINVEST
+              </h1>
+              <p className="text-base sm:text-lg text-gray-600 mt-4">
                 Se faire accompagner pour apprendre à placer
               </p>
               <DiscoverButton asChild className="mt-6">
@@ -71,7 +71,7 @@ export default function Page() {
         >
           <div className="w-full max-w-4xl mx-auto">
             <h2 id="methode-heading" className="text-2xl font-semibold">
-              LA METHODE SKOLINVEST
+              PLACER SANS RISQUE : LA METHODE SKOLINVEST
             </h2>
             <p className="leading-relaxed text-gray-700 mt-6">
               Des parcours structurés de manière à vous familiariser avec les
@@ -104,120 +104,155 @@ export default function Page() {
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
 
-            <div className="bg-amber-300 flex flex-col lg:flex-row gap-10 p-4 rounded-md flex-1 space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold">
-                  Parcours gestion passive : Débuter en bourse
-                </h3>
-                <p>
-                  Les acteurs, le vocabulaire, les spécificités de chaque
-                  instrument financier et gérer son portefeuille.
-                </p>
-                <p>
-                  La formation vous indique les risques et rentabilités moyennes
-                  selon les actifs et comment répartir votre épargne sur les
-                  différents instruments en diversifiant votre risque.
-                </p>
-                <DiscoverButton>
-                  <Link
-                    href="/"
-                    aria-label="Commencer le cours Gestion passive"
-                  >
-                    Commencer
-                  </Link>
-                </DiscoverButton>
+            <div className="flex flex-col gap-20 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
+              {/* Bloc 1 */}
+              <div className="flex flex-col lg:flex-row gap-12">
+                <div className="lg:w-1/2 m-14">
+                  <h3 className="text-lg font-semibold mb-6">
+                    Parcours gestion passive : Débuter en bourse
+                  </h3>
+                  <p className="mb-6">
+                    Les acteurs, le vocabulaire, les spécificités de chaque
+                    instrument financier et gérer son portefeuille.
+                  </p>
+                  <p className="mb-6">
+                    La formation vous indique les risques et rentabilités
+                    moyennes selon les actifs et comment répartir votre épargne
+                    sur les différents instruments en diversifiant votre risque.
+                  </p>
+                  <DiscoverButton className="mb-6">
+                    <Link
+                      href="/"
+                      aria-label="Commencer le cours Gestion passive"
+                    >
+                      Commencer
+                    </Link>
+                  </DiscoverButton>
+                </div>
+                <div className="lg:w-1/2 flex flex-col gap-8">
+                  <CarouselCourses
+                    items={[
+                      {
+                        id: 1,
+                        content: (
+                          <div className="w-full h-full flex flex-col items-center justify-center">
+                            <Image
+                              src="/financeMiniature.webp"
+                              alt="Slider détails du cours Gestion passive"
+                              width={400}
+                              height={400}
+                              className="w-full h-full object-cover rounded-b-lg"
+                            />
+                            <h4 className="mt-2 text-sm">
+                              Détails du module Gestion passive
+                            </h4>
+                          </div>
+                        ),
+                      },
+                      {
+                        id: 2,
+                        content: (
+                          <>
+                            {
+                              "Un point sur la fiscalité est également fait afin d'optimiser le rendement de votre portefeuille. Vous apprendrez à sélectionner un fond et à diversifier le risque de votre portefeuille. A la fin de la formation vous aurez mis en place une routine d'investissement peu contraignante."
+                            }
+                          </>
+                        ),
+                      },
+                    ]}
+                    className="self-start"
+                  />
+                </div>
               </div>
 
-              <div className="flex-1 flex flex-col gap-8">
-                {/* First carousel*/}
-                <CarouselCourses
-                  items={[
-                    { id: 1, content: <>{"slide 1"}</> },
-                    {
-                      id: 2,
-                      content: (
-                        <>
-                          {
-                            "Un point sur la fiscalité est également fait afin d'optimiser le rendement de votre portefeuille. Vous apprendrez à sélectionner un fond et à diversifier le risque de votre portefeuille. A la fin de la formation vous aurez mis en place une routine d'investissement peu contraignante en terme de temps investi mensuellement dans la gestion de votre épargne."
-                          }
-                        </>
-                      ),
-                    },
-                  ]}
-                  className="self-start"
-                />
-              </div>
-            </div>
-
-            <div className="bg-amber-300 flex flex-col lg:flex-row gap-10 p-4 rounded-md flex-1 space-y-4 gap 8">
-              <div>
-                <h3 className="text-lg font-semibold">
-                  Parcours expert : Stock picking
-                </h3>
-                <p>
-                  Dans ce parcours vous apprendrez également les bases du
-                  parcours gestion passive.
-                </p>
-                <p>
-                  Une fois que vous aurez une bonne compréhension de l'univers
-                  financier, de ses risques et de ses limites, indispensable à
-                  la bonne réflexion d'un analyste financier.
-                </p>
-                <DiscoverButton>
-                  <Link href="/" aria-label="Commencer le cours Stock picking">
-                    Commencer
-                  </Link>
-                </DiscoverButton>
-              </div>
-
-              <div>
-                {/* Second carousel */}
-                <CarouselCourses
-                  items={[
-                    { id: 1, content: <>{}</> },
-                    {
-                      id: 2,
-                      content: (
-                        <>
-                          {
-                            "Vous serez plongé dans l'analyse d'entreprise afin d'aller chercher des rendements supérieurs au rendement du marché. Les actions sont historiquement l'actif le plus rentable, c'est pourquoi ce parcours se focalise sur l'analyse d'entreprises."
-                          }
-                        </>
-                      ),
-                    },
-                    {
-                      id: 3,
-                      content: (
-                        <>
-                          {
-                            "Nombreux sont les ratios et autres indicateurs boursiers alors comment savoir lesquels choisir? A partir de quel seuil sont-ils bons? Combien doivent-être validés pour passer à l'achat d'une action? L'analyse est-elle différente selon les secteurs?"
-                          }
-                        </>
-                      ),
-                    },
-                    {
-                      id: 4,
-                      content: (
-                        <>
-                          {
-                            "Ce parcours s'appuie notamment sur les expériences d'investisseurs ayant eu des performances remarquables pendant plus de 15 années tels que Warren Buffet, Peter Lynch, Ken Fisher, entre autres."
-                          }
-                        </>
-                      ),
-                    },
-                    {
-                      id: 5,
-                      content: (
-                        <>
-                          {
-                            "Vous apprendrez à lire des rapports financiers afin de dresser un cadre de sélection clair et les bons outils pour faciliter les analyses et le suivi de votre portefeuille vous seront fournis."
-                          }
-                        </>
-                      ),
-                    },
-                  ]}
-                  className="self-start"
-                />
+              {/* Bloc 2 */}
+              <div className="flex flex-col lg:flex-row gap-12">
+                <div className="lg:w-1/2 m-14">
+                  <h3 className="text-lg font-semibold mb-6">
+                    Parcours expert : Stock picking
+                  </h3>
+                  <p className="mb-4">
+                    Dans ce parcours vous apprendrez également les bases du
+                    parcours gestion passive.
+                  </p>
+                  <p className="mb-6">
+                    Une fois que vous aurez une bonne compréhension de l'univers
+                    financier, de ses risques et de ses limites, indispensable à
+                    la bonne réflexion d'un analyste financier.
+                  </p>
+                  <DiscoverButton className="mb-6">
+                    <Link
+                      href="/"
+                      aria-label="Commencer le cours Stock picking"
+                    >
+                      Commencer
+                    </Link>
+                  </DiscoverButton>
+                </div>
+                <div className="lg:w-1/2 flex flex-col gap-8">
+                  <CarouselCourses
+                    items={[
+                      {
+                        id: 1,
+                        content: (
+                          <div className="w-full h-full flex flex-col items-center justify-center">
+                            <Image
+                              src="/financeMiniature.webp"
+                              alt="Slider des détails du module Stock picking"
+                              width={400}
+                              height={400}
+                              className="w-full h-full object-cover rounded-b-lg"
+                            />
+                            <h4 className="mt-2 text-sm">
+                              Détails du module Stock picking
+                            </h4>
+                          </div>
+                        ),
+                      },
+                      {
+                        id: 2,
+                        content: (
+                          <>
+                            {
+                              "Vous serez plongé dans l'analyse d'entreprise afin d'aller chercher des rendements supérieurs au rendement du marché."
+                            }
+                          </>
+                        ),
+                      },
+                      {
+                        id: 3,
+                        content: (
+                          <>
+                            {
+                              "Nombreux sont les ratios et autres indicateurs boursiers alors comment savoir lesquels choisir?"
+                            }
+                          </>
+                        ),
+                      },
+                      {
+                        id: 4,
+                        content: (
+                          <>
+                            {
+                              "Ce parcours s'appuie notamment sur des investisseurs remarquables comme Warren Buffet, Peter Lynch, Ken Fisher."
+                            }
+                          </>
+                        ),
+                      },
+                      {
+                        id: 5,
+                        content: (
+                          <>
+                            {
+                              "Vous apprendrez à lire des rapports financiers et disposer d'outils pour le suivi de portefeuille."
+                            }
+                          </>
+                        ),
+                      },
+                    ]}
+                    className="self-start"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -228,14 +263,14 @@ export default function Page() {
           aria-labelledby="about-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto">
+          <div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
             <h2 id="about-heading" className="text-2xl font-semibold">
-              À PROPOS
+              À PROPOS : DE LA PASSION DE LA FINANCE A SKOLINVEST
             </h2>
             <h3 className="text-lg font-medium mt-2">
               Skolinvest, c'est quoi ?
             </h3>
-            <p>
+            <p className="mt-4">
               Skolinvest est née du constat d'un manque d'éducation financière
               en France alors que les études réalisées démontrent un fort
               intérêt de la part des français, en particulier les jeunes. <br />
@@ -245,23 +280,28 @@ export default function Page() {
               par où commencer devant cette quantité d'information et comment
               procéder pour bien gérer son portefeuille.
             </p>
-            <img
-              src="/specialiste-finance-investissement.png"
-              alt="illustration conseillère financière"
-            />
-            <p>
-              Skolinvest est composé des termes skol et invest, skol signifie
-              "école" en breton, vous êtes donc sur le site de l'école de
-              l'investissement.
-            </p>
-            <p>
-              Skolinvest se propose d'accompagner les débutants en bourse mais
-              aussi les investisseurs plus aguerris afin de les guider dans
-              l'utilisation des instruments et des indicateurs financiers, ainsi
-              que leur apprendre à gérer un portefeuille boursier sur le
-              long-terme et en faire des investisseurs confiants et
-              indépendants.
-            </p>
+            <div className="flex flex-row gap-6">
+              <Image
+                src="/specialiste-finance-investissement.png"
+                alt="illustration conseillère financière"
+                height={450}
+                width={450}
+                className="mt-15 mr-30"
+              />
+              <p>
+                Skolinvest est composé des termes skol et invest, skol signifie
+                "école" en breton, vous êtes donc sur le site de l'école de
+                l'investissement.
+                <br />
+                <br />
+                Skolinvest se propose d'accompagner les débutants en bourse mais
+                aussi les investisseurs plus aguerris afin de les guider dans
+                l'utilisation des instruments et des indicateurs financiers,
+                ainsi que leur apprendre à gérer un portefeuille boursier sur le
+                long-terme et en faire des investisseurs confiants et
+                indépendants.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -270,31 +310,40 @@ export default function Page() {
           aria-labelledby="contact-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto">
-            <h2 id="contact-heading" className="text-2xl font-semibold">
-              CONTACT
+          <div className="w-full max-w-6xl mx-auto flex flex-col gap-10">
+            <h2 id="contact-heading" className="text-2xl font-semibold text-center">
+              LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
-            <Link
-              href="https://www.linkedin.com"
-              aria-label="LinkedIn"
-              className="text-black hover:text-black/60"
-            >
-              <Linkedin className="w-5 h-5" />
-            </Link>
-            <Link
-              href="mailto:alice@skolinvest.com"
-              aria-label="Email"
-              className="text-black hover:text-black/60"
-            >
-              <Mail className="w-5 h-5" />
-            </Link>
-            <NewsletterInput placeholder="Votre adresse email" />
 
-            <DiscoverButton asChild>
-              <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
-                Prendre rendez-vous
+            {/* Ligne d'icônes centrées */}
+            <div className="flex items-center justify-center gap-12">
+              <DiscoverButton asChild>
+                <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
+                  <span className="flex items-center gap-2 text-sm font-medium">Rendez-vous</span>
+                </Link>
+              </DiscoverButton>
+              <Link
+                href="https://www.linkedin.com"
+                aria-label="LinkedIn"
+                className="text-black hover:text-black/70 transition-colors"
+              >
+                <Linkedin className="w-8 h-8" />
               </Link>
-            </DiscoverButton>
+              <Link
+                href="mailto:alice@skolinvest.com"
+                aria-label="Email"
+                className="text-black hover:text-black/70 transition-colors"
+              >
+                <Mail className="w-8 h-8" />
+              </Link>
+            </div>
+
+            {/* Formulaire newsletter aligné à droite */}
+            <div className="flex justify-end">
+              <div className="w-full max-w-sm">
+                <NewsletterInput placeholder="Votre adresse email" />
+              </div>
+            </div>
           </div>
         </section>
       </main>
