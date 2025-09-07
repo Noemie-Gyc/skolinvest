@@ -81,7 +81,7 @@ export default function AddSectionForm({ moduleId, section, onSuccess }: Props) 
             />
           </div>
 
-          <SaveButton type="submit" disabled={loading} aria-busy={loading}>
+          <SaveButton type="submit" disabled={loading} aria-busy={loading} data-testid="save-section-button">
             {loading ? 'Enregistrement...' : 'Enregistrer'}
           </SaveButton>
         </form>

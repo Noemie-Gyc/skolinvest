@@ -95,7 +95,7 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
         <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby={formTitleId}>
           <div>
             <label htmlFor={sectionSelectId} className="block text-sm mb-1">
-              Section
+              Section option
             </label>
             <select
               id={sectionSelectId}
@@ -163,7 +163,7 @@ export default function AddLessonForm({ moduleId, sectionId, sections, lesson, o
             </p>
           </div>
 
-          <SaveButton type="submit" disabled={loading} aria-busy={loading} aria-live="polite">
+          <SaveButton type="submit" disabled={loading} aria-busy={loading} aria-live="polite" data-testid="save-lesson-button">
             {loading ? "Enregistrement..." : "Enregistrer"}
           </SaveButton>
         </form>
