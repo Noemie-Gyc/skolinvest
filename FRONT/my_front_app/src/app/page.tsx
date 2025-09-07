@@ -6,10 +6,14 @@ import Link from "next/link";
 import { DiscoverButton } from "@/components/discoverButton";
 import { Linkedin, Mail } from "lucide-react";
 import { NewsletterInput} from "@/components/newsletterInput";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, } from "@/components/ui/carousel";
+import { CarouselCourses } from "@/components/carouselCourse";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 export default function Page() {
   const currentMonth = new Date().toISOString().slice(0, 7);
   const calendlyUrl = `https://calendly.com/skolinvest-formation/prise-de-rendez-vous-clone?month=${currentMonth}`;
+
   return (
     <>
       <a
@@ -89,6 +93,7 @@ export default function Page() {
             </p>
           </div>
         </section>
+
         <section
           id="formations"
           aria-labelledby="formations-heading"
@@ -98,6 +103,123 @@ export default function Page() {
             <h2 id="formations-heading" className="text-2xl font-semibold">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
+
+            <div className="bg-amber-300 flex flex-col lg:flex-row gap-10 p-4 rounded-md flex-1 space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold">
+                  Parcours gestion passive : Débuter en bourse
+                </h3>
+                <p>
+                  Les acteurs, le vocabulaire, les spécificités de chaque
+                  instrument financier et gérer son portefeuille.
+                </p>
+                <p>
+                  La formation vous indique les risques et rentabilités moyennes
+                  selon les actifs et comment répartir votre épargne sur les
+                  différents instruments en diversifiant votre risque.
+                </p>
+                <DiscoverButton>
+                  <Link
+                    href="/"
+                    aria-label="Commencer le cours Gestion passive"
+                  >
+                    Commencer
+                  </Link>
+                </DiscoverButton>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-8">
+                {/* First carousel*/}
+                <CarouselCourses
+                  items={[
+                    { id: 1, content: <>{"slide 1"}</> },
+                    {
+                      id: 2,
+                      content: (
+                        <>
+                          {
+                            "Un point sur la fiscalité est également fait afin d'optimiser le rendement de votre portefeuille. Vous apprendrez à sélectionner un fond et à diversifier le risque de votre portefeuille. A la fin de la formation vous aurez mis en place une routine d'investissement peu contraignante en terme de temps investi mensuellement dans la gestion de votre épargne."
+                          }
+                        </>
+                      ),
+                    },
+                  ]}
+                  className="self-start"
+                />
+              </div>
+            </div>
+
+            <div className="bg-amber-300 flex flex-col lg:flex-row gap-10 p-4 rounded-md flex-1 space-y-4 gap 8">
+              <div>
+                <h3 className="text-lg font-semibold">
+                  Parcours expert : Stock picking
+                </h3>
+                <p>
+                  Dans ce parcours vous apprendrez également les bases du
+                  parcours gestion passive.
+                </p>
+                <p>
+                  Une fois que vous aurez une bonne compréhension de l'univers
+                  financier, de ses risques et de ses limites, indispensable à
+                  la bonne réflexion d'un analyste financier.
+                </p>
+                <DiscoverButton>
+                  <Link href="/" aria-label="Commencer le cours Stock picking">
+                    Commencer
+                  </Link>
+                </DiscoverButton>
+              </div>
+
+              <div>
+                {/* Second carousel */}
+                <CarouselCourses
+                  items={[
+                    { id: 1, content: <>{}</> },
+                    {
+                      id: 2,
+                      content: (
+                        <>
+                          {
+                            "Vous serez plongé dans l'analyse d'entreprise afin d'aller chercher des rendements supérieurs au rendement du marché. Les actions sont historiquement l'actif le plus rentable, c'est pourquoi ce parcours se focalise sur l'analyse d'entreprises."
+                          }
+                        </>
+                      ),
+                    },
+                    {
+                      id: 3,
+                      content: (
+                        <>
+                          {
+                            "Nombreux sont les ratios et autres indicateurs boursiers alors comment savoir lesquels choisir? A partir de quel seuil sont-ils bons? Combien doivent-être validés pour passer à l'achat d'une action? L'analyse est-elle différente selon les secteurs?"
+                          }
+                        </>
+                      ),
+                    },
+                    {
+                      id: 4,
+                      content: (
+                        <>
+                          {
+                            "Ce parcours s'appuie notamment sur les expériences d'investisseurs ayant eu des performances remarquables pendant plus de 15 années tels que Warren Buffet, Peter Lynch, Ken Fisher, entre autres."
+                          }
+                        </>
+                      ),
+                    },
+                    {
+                      id: 5,
+                      content: (
+                        <>
+                          {
+                            "Vous apprendrez à lire des rapports financiers afin de dresser un cadre de sélection clair et les bons outils pour faciliter les analyses et le suivi de votre portefeuille vous seront fournis."
+                          }
+                        </>
+                      ),
+                    },
+                  ]}
+                  className="self-start"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -167,12 +289,9 @@ export default function Page() {
               <Mail className="w-5 h-5" />
             </Link>
             <NewsletterInput placeholder="Votre adresse email" />
-            
+
             <DiscoverButton asChild>
-              <Link
-                href={calendlyUrl}
-                aria-label="Prendre rendez-vous"
-              >
+              <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
                 Prendre rendez-vous
               </Link>
             </DiscoverButton>
