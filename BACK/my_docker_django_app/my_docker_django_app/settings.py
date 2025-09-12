@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'authentification',
-    'my_docker_django_app'
+    'my_docker_django_app',
+    'users',
 ]
 
 REST_FRAMEWORK = {

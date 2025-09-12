@@ -1,10 +1,10 @@
 from rest_framework_simplejwt.views import TokenObtainPairView,  TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from .serializers import StaffTokenObtainPairSerializer
 import logging
 
 # This class enables obtaining access token + refresh token. Inherits from TokenObtainPairView that will be overloaded to sent back tokens through cookies
@@ -13,7 +13,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
     # This serializer rejects all the users that are not authorized : all except is_superuser and is_staff 
     # This is taken into consideration instead of the native serializer, so if the check is not valid, there will be an error.
-    serializer_class = StaffTokenObtainPairSerializer
+    serializer_class = TokenObtainPairSerializer
 
     # Overload method POST to manage response after the authentication
     def post(self, request, *args, **kwargs):

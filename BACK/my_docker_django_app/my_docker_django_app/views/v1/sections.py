@@ -1,12 +1,13 @@
 from my_docker_django_app.models import Section
 from my_docker_django_app.serializers import  SectionSerializer
+from users.permissions import IsBackOfficeUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 class SectionListCreateView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
     def get(self, request):
         sections = Section.objects.all()
@@ -23,7 +24,7 @@ class SectionListCreateView(APIView):
 # Section CRUD is created manually. This way is better if we want to customize the methods in the future. We could have used the native django methods
 # as done in the module.
 class SectionDetailView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
     def get_object(self, pk):
         try:

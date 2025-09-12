@@ -60,7 +60,7 @@ class JWTAuthenticationTests(APITestCase):
         self.assertIn("access", response.data)
         self.assertIn("refresh", response.data)
 
-    # Fourth test case : check if the user has none of is_staff and is_superuser properties cannot connect properly
+    # Fourth test case : check if the user has none of is_staff and is_superuser properties can also be authenticated
     def test_non_privileged_user_cannot_authenticate(self):
         User.objects.create_user(
             username="regularuser",
@@ -68,7 +68,7 @@ class JWTAuthenticationTests(APITestCase):
             is_staff=False,
             is_superuser=False
         )
-
         response = self.authenticate("regularuser", "nopass")
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("non autorisé", str(response.data).lower())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("access", response.data)
+        self.assertIn("refresh", response.data)

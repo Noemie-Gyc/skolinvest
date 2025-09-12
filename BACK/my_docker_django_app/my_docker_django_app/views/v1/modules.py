@@ -1,5 +1,6 @@
 from my_docker_django_app.models import Module
 from my_docker_django_app.serializers import ModuleSerializer
+from users.permissions import IsBackOfficeUser
 from rest_framework.generics import (
     CreateAPIView, 
     RetrieveAPIView, 
@@ -25,13 +26,13 @@ class ModuleListView(APIView):
 class ModuleDetailView(RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
 # CreateAPIView is a native class to create a view
 class ModuleCreateView(CreateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
     # This function is to automatically update the user_id in the creation of the module. 
     def perform_create(self, serializer):
@@ -40,23 +41,19 @@ class ModuleCreateView(CreateAPIView):
 class ModuleUpdateView(UpdateAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
 class ModuleDeleteView(DestroyAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
 # The edition of the module is only allowed for user is_staff or superuser. In a future we could have user 'student' and we don't want them 
 # to update the modules and access to the back office (also restricted via the authentification app)
 class EditableModuleListView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsBackOfficeUser]
 
     def get(self, request):
-        user = request.user
-        if not user.is_staff or not user.is_superuser:
-            return Response({"detail": "Accès interdit."}, status=status.HTTP_403_FORBIDDEN)
-
         modules = Module.objects.all()
         serializer = ModuleSerializer(modules, many=True)
         return Response(serializer.data)
