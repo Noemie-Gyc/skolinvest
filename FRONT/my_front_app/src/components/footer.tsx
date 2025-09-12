@@ -13,8 +13,9 @@ export default function Footer({
 
   return (
     <footer className="bg-[#3952fb] text-white rounded-t-4xl mt-8">
-      <div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3 items-start"> {/* + items-start */}
-
+      <div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3 items-start">
+        {" "}
+        {/* + items-start */}
         {/* Col 1: Logo*/}
         <div>
           <Image
@@ -30,7 +31,6 @@ export default function Footer({
             finance.
           </p>
         </div>
-
         {/* Col 2: Navigation */}
         <div className="pt-1 md:pt-2">
           <ul className="space-y-2 text-sm">
@@ -51,23 +51,25 @@ export default function Footer({
             </li>
           </ul>
         </div>
-
         {/* Col 3: Legal */}
         <div className="pt-1 md:pt-2">
           <ul className="space-y-2 text-sm">
             <li>
-              <Link className="hover:underline" href="/">
+              <Link className="hover:underline" href="/mentions-legales">
                 Mentions légales
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" href="/">
-                Politique de confidentialité
+              <Link className="hover:underline" href="/conditions-utilisation">
+                Conditions d’utilisation
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" href="/">
-                Conditions d’utilisation
+              <Link
+                className="hover:underline"
+                href="/politique-confidentialite"
+              >
+                Politique de confidentialité
               </Link>
             </li>
           </ul>
@@ -75,10 +77,10 @@ export default function Footer({
       </div>
 
       <div className="border-t border-white/20 max-w-6xl mx-auto px-4 py-4 text-sm">
-          <span className="text-white/90">
-            © {year} SkolInvest. Tous droits réservés.
-          </span>
-        </div>
+        <span className="text-white/90">
+          © {year} SkolInvest. Tous droits réservés.
+        </span>
+      </div>
     </footer>
   );
 }
