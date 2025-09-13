@@ -6,9 +6,7 @@ import Link from "next/link";
 import { DiscoverButton } from "@/components/discoverButton";
 import { Linkedin, Mail } from "lucide-react";
 import { NewsletterInput} from "@/components/newsletterInput";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, } from "@/components/ui/carousel";
 import { CarouselCourses } from "@/components/carouselCourse";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 export default function Page() {
   const currentMonth = new Date().toISOString().slice(0, 7);

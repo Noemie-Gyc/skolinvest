@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <a
-        href="/"
+        href="#gcu"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
       >
         Aller au contenu principal
@@ -15,7 +15,7 @@ export default function Page() {
       </header>
 
       <main>
-        <h1>CONDITIONS GENERALES D'UTILISATION</h1>
+        <h1 id="gcu">CONDITIONS GENERALES D'UTILISATION</h1>
         <section>
           <h2>1. Préambule</h2>
           <p>
@@ -24,6 +24,7 @@ export default function Page() {
             édité par Noémie Goyec et Caroline Cirier, et accessible à l’adresse
             https://www.skolinvest.com. <br />
             <br />
+            Les présentes Conditions Générales d'Utilisation (CGU) s'appliquent à tous les utilisateurs de SkolInvest, qu'ils soient visiteurs, apprenants ou administrateurs. Certaines sections concernent spécifiquement les administrateurs accédant au back office.
           </p>
           <p>
             En accédant au Site, vous acceptez sans réserve les présentes CGU.
@@ -192,6 +193,64 @@ export default function Page() {
               Tout litige relatif à l’utilisation du Site sera soumis aux
               tribunaux compétents, nonobstant pluralité de défendeurs.
             </li>
+          </ul>
+        </section>
+        <section>
+          <h2>Utilisation du Back Office</h2>
+          <h3>1. Accès réservé</h3>
+          <ul>
+            <li>
+              L’accès au back office est réservé aux membres autorisés de
+              l’équipe de [Nom de la cliente].
+            </li>
+            <li>
+              Chaque utilisateur dispose d’un compte personnel et est
+              responsable de la confidentialité de ses identifiants.
+            </li>
+          </ul>
+
+          <h3>2. Utilisation autorisée</h3>
+          <ul>
+            <li>
+              Le back office est destiné uniquement à la gestion des cours, des
+              utilisateurs et des contenus de SkolInvest.
+            </li>
+            <li>
+              Toute utilisation non autorisée (partage de compte, accès
+              frauduleux, etc.) est interdite.
+            </li>
+          </ul>
+
+          <h3>3. Responsabilités des administrateurs</h3>
+          <p>Les administrateurs s’engagent à :</p>
+          <ul>
+            <li>Ne pas partager leurs identifiants avec des tiers.</li>
+            <li>
+              Respecter les lois en vigueur (droit d’auteur, protection des
+              données, etc.).
+            </li>
+            <li>
+              Ne pas modifier ou supprimer des contenus sans autorisation.
+            </li>
+          </ul>
+          <h3>4. Sécurité</h3>
+          <ul>
+            <li>
+              Les administrateurs doivent signaler immédiatement toute suspicion
+              de violation de sécurité (ex : accès non autorisé).
+            </li>
+            <li>
+              SkolInvest se réserve le droit de suspendre ou résilier l’accès
+              en cas de non-respect des règles.
+            </li>
+          </ul>
+          <h3>5. Propriété des contenus</h3>
+          <ul>
+            <li>
+              Les contenus créés via le back office (cours, images, vidéos,
+              etc.) restent la propriété de Alice Goyec.
+            </li>
+            <li>Les administrateurs ne peuvent ni copier ni redistribuer ces contenus en dehors du cadre de SkolInvest.</li>
           </ul>
         </section>
       </main>

@@ -14,10 +14,11 @@ export default function Footer({
   return (
     <footer className="bg-[#3952fb] text-white rounded-t-4xl mt-8">
       <div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3 items-start">
-        {" "}
+
         {/* + items-start */}
         {/* Col 1: Logo*/}
         <div>
+          <Link href="/" aria-label="Accueil">
           <Image
             src={logoSrc}
             alt="Logo Skolinvest"
@@ -25,6 +26,7 @@ export default function Footer({
             height={88}
             className="block h-16 md:h-20 w-auto"
           />
+          </Link>
 
           <p className="text-white/90 text-sm mt-3">
             Formations et ressources pour investir et se former sereinement à la

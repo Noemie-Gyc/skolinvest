@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <a
-        href="/#legal-notices"
+        href="#legal-notices"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
       >
         Aller au contenu principal
@@ -20,7 +20,7 @@ export default function Page() {
           Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004
           pour la confiance en l'économie numérique, il est précisé aux
           utilisateurs du site SkolInvest l'identité des différents
-          intervenants dans le cadre de sa réalisation et de son suivi.
+          intervenants dans le cadre de sa réalisation et de son suivi. Ces mentions légales s'appliquent à toutes les parties du site, y compris le back office.
         </p>
         <section>
           <h2>Edition du site </h2>
