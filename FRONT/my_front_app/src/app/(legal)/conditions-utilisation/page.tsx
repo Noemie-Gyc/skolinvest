@@ -5,8 +5,9 @@ export default function Page() {
   return (
     <>
       <a
-        href="#gcu"
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
+        aria-label="Aller au contenu principal"
       >
         Aller au contenu principal
       </a>
@@ -14,8 +15,8 @@ export default function Page() {
         <PublicHeader />
       </header>
 
-      <main>
-        <h1 id="gcu">CONDITIONS GENERALES D'UTILISATION</h1>
+      <main id="main-content" role="main">
+        <h1>CONDITIONS GENERALES D'UTILISATION</h1>
         <section>
           <h2>1. Préambule</h2>
           <p>
@@ -185,7 +186,7 @@ export default function Page() {
           <h2>10. Contact</h2>
           <p>
             Pour toute question ou réclamation, vous pouvez nous contacter à
-            l’adresse suivante : alice@skolinvest.com
+            l’adresse suivante : <a href="mailto:alice@skolinvest.com">alice@skolinvest.com</a>
           </p>
           <ul>
             <li>Les présentes CGU sont régies par le droit français.</li>
@@ -254,7 +255,6 @@ export default function Page() {
           </ul>
         </section>
       </main>
-
       <Footer />
     </>
   );

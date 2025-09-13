@@ -5,17 +5,18 @@ export default function Page() {
   return (
     <>
       <a
-        href="#legal-notices"
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
+        aria-label="Aller au contenu principal"
       >
         Aller au contenu principal
       </a>
-      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b">
+      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b" role="banner">
         <PublicHeader />
       </header>
 
-      <main>
-        <h1 id="legal-notices">MENTIONS LÉGALES</h1>
+      <main id="main-content" role="main">
+        <h1>MENTIONS LÉGALES</h1>
         <p>
           Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004
           pour la confiance en l'économie numérique, il est précisé aux
@@ -61,7 +62,9 @@ export default function Page() {
         </section>
         <section>
           <h2>Nous contacter</h2>
-          <p>Par email : alice@skolinvest.com </p>
+          <p>
+            Par email : <a href="mailto:alice@skolinvest.com">alice@skolinvest.com</a>
+          </p>
         </section>
         <section>
           <h2>Données personnelles</h2>

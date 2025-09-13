@@ -5,8 +5,9 @@ export default function Page() {
   return (
     <>
       <a
-        href="#privacy-policy"
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
+        aria-label="Aller au contenu principal"
       >
         Aller au contenu principal
       </a>
@@ -14,8 +15,8 @@ export default function Page() {
         <PublicHeader />
       </header>
 
-      <main>
-        <h1 id="privacy-policy">POLITIQUE DE COINFIDENTIALITE</h1>
+      <main id="main-content" role="main">
+        <h1>POLITIQUE DE CONFIDENTIALITÉ</h1>
         <h2>Introduction</h2>
         <p>
           SkolInvest, édité par Noémie Goyec et Caroline Cirier, s’engage à
@@ -113,7 +114,7 @@ export default function Page() {
             structuré.
           </li>
         </ul>
-        <p>Pour exercer ces droits, contactez-nous à : alice@skolinvest.com.</p>
+        <p>Pour exercer ces droits, contactez-nous à : <a href="mailto:alice@skolinvest.com">alice@skolinvest.com</a>.</p>
         <h2>Sécurité des Données</h2>
         <p>
           Nous mettons en place des mesures techniques et organisationnelles
@@ -129,7 +130,7 @@ export default function Page() {
         <h2>Contact</h2>
         <p>
           Pour toute question concernant cette politique ou vos données
-          personnelles, contactez-nous à :alice@skolinvest.com
+          personnelles, contactez-nous à :<a href="mailto:alice@skolinvest.com">alice@skolinvest.com</a>
         </p>
         <section>
           <h2>Données des Utilisateurs Administrateurs</h2>
@@ -230,11 +231,10 @@ export default function Page() {
           <p>
             Les administrateurs disposent des mêmes droits que les autres
             utilisateurs (accès, rectification, effacement, etc.). Pour exercer
-            ces droits, ils peuvent contacter : alice@skolinvest.com.
+            ces droits, ils peuvent contacter : <a href="mailto:alice@skolinvest.com">alice@skolinvest.com</a>.
           </p>
         </section>
       </main>
-
       <Footer />
     </>
   );
