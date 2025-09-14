@@ -7,11 +7,13 @@ import { useState } from "react";
 
 type Props = {
     placeholder?: string,
+    id?: string;
+    "aria-label"?: string;
 }
 
 {/* TODO : Créer une fonction pour vérifier la validité de l'adresse email  */ }
 
-export function NewsletterInput({ placeholder }: Props) {
+export function NewsletterInput({ id, placeholder, "aria-label": ariaLabel }: Props) {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     // Regex simple pour valider un email
@@ -28,6 +30,8 @@ export function NewsletterInput({ placeholder }: Props) {
     return (
         <div className="border rounded-lg flex justify between items-center">
             <Input
+                id={id}
+                aria-label={ariaLabel || "Email for newsletter"}
                 type="text"
                 placeholder={placeholder || "you@example.com"}
                 data-testid="newsletter-email-input"

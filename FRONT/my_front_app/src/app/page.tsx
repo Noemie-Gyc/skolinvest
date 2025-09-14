@@ -16,33 +16,36 @@ export default function Page() {
     <>
       <a
         href="#formations-heading"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white rounded"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white focus:rounded"
       >
         Aller au contenu principal
       </a>
-      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b">
+
+      {/* En-tête */}
+      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b" role="banner">
         <PublicHeader />
       </header>
-      <main className="min-h-screen flex flex-col">
+
+      <main id="main-content" className="min-h-screen flex flex-col">
+        {/* Section Hero */}
         <section
           aria-labelledby="hero-title"
           className="bg-[#FFF8EE] min-h-[60vh] flex items-center px-4 py-12 sm:py-16"
         >
-          <div className="w-full max-w-6xl mx-auto relative grid gap-8 sm:gap-10 md:grid-cols-2">
+          <div className="w-full max-w-6xl mx-auto relative grid gap-8 sm:gap-10 md:grid-cols-2 md:items-center">
             <div className="pt-8 sm:pt-10 md:pt-12 lg:pt-16">
               <h1
                 id="hero-title"
-                className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-gray-900"
               >
-                APPRENDRE A INVESTIR AVEC SKOLINVEST
+                APPRENDRE À INVESTIR AVEC SKOLINVEST
               </h1>
-              <p className="text-base sm:text-lg text-gray-600 mt-4">
-                Se faire accompagner pour apprendre à placer
+              <p className="text-base sm:text-lg text-gray-700 mt-4">
+                Se faire accompagner pour apprendre à placer son argent en toute sérénité.
               </p>
-              <DiscoverButton asChild className="mt-6">
+              <DiscoverButton asChild className="mt-6" aria-label="Découvrir nos formations">
                 <Link
                   href="#formations-heading"
-                  aria-label="Découvrir la section Nos formations"
                 >
                   Découvrir
                 </Link>
@@ -51,7 +54,7 @@ export default function Page() {
             <div className="relative md:col-start-2 md:row-start-1">
               <Image
                 src="/apprendre-la-finance.png"
-                alt="Illustration élève en formation financière"
+                alt="Illustration d'un élève suivant une formation financière en ligne"
                 width={720}
                 height={480}
                 priority
@@ -61,62 +64,51 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Méthode Section */}
         <section
           id="methode"
           aria-labelledby="methode-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
           <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
-            <h2 id="methode-heading" className="text-2xl font-semibold">
-              PLACER SANS RISQUE : LA METHODE SKOLINVEST
+            <h2 id="methode-heading" className="text-2xl font-semibold text-gray-900">
+              PLACER SANS RISQUE : LA MÉTHODE SKOLINVEST
             </h2>
             <p className="leading-relaxed text-gray-700 mt-6 text-base sm:text-lg">
-              Des parcours structurés de manière à vous familiariser avec les
-              concepts de base, indispensables à la bonne compréhension des
-              mécanismes de marchés.
+              Des parcours structurés de manière à vous familiariser avec les concepts de base, indispensables à la bonne compréhension des mécanismes de marchés.
               <br /><br />
-              Comprendre les institutions clés, leur rôle, les instruments
-              financiers et leurs relations pour vous construire une vue globale
-              et une réflexion sur l'univers financier.
+              Comprendre les institutions clés, leur rôle, les instruments financiers et leurs relations pour vous construire une vue globale et une réflexion sur l'univers financier.
               <br /><br />
-              Après ces étapes vous verrez comment optimiser votre portefeuille
-              et nous fixerons ensemble vos objectifs.
+              Après ces étapes, vous verrez comment optimiser votre portefeuille et nous fixerons ensemble vos objectifs.
               <br /><br />
-              Un second entretien a lieu à la fin du parcours afin de faire le
-              point sur la construction de votre propre portefeuille.
+              Un second entretien a lieu à la fin du parcours afin de faire le point sur la construction de votre propre portefeuille.
             </p>
           </div>
         </section>
 
-        {/* Formations Section */}
         <section
           id="formations"
           aria-labelledby="formations-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
           <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 id="formations-heading" className="text-2xl font-semibold">
+            <h2 id="formations-heading" className="text-2xl font-semibold text-gray-900">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
             <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
-              {/* Bloc 1 */}
+              {/* Bloc 1 : Gestion passive */}
               <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start">
                 <div className="lg:w-1/2">
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-800">
                     Parcours gestion passive : Débuter en bourse
                   </h3>
-                  <p className="mb-4 text-base sm:text-lg">
-                    Les acteurs, le vocabulaire, les spécificités de chaque
-                    instrument financier et gérer son portefeuille.
+                  <p className="mb-4 text-base sm:text-lg text-gray-700">
+                    Découvrez les acteurs, le vocabulaire, les spécificités de chaque instrument financier et apprenez à gérer votre portefeuille.
                   </p>
-                  <p className="mb-4 text-base sm:text-lg">
-                    La formation vous indique les risques et rentabilités
-                    moyennes selon les actifs et comment répartir votre épargne
-                    sur les différents instruments en diversifiant votre risque.
+                  <p className="mb-4 text-base sm:text-lg text-gray-700">
+                    La formation vous indique les risques et rentabilités moyennes selon les actifs et comment répartir votre épargne sur les différents instruments en diversifiant votre risque.
                   </p>
-                  <DiscoverButton className="mb-4">
-                    <Link href="/" aria-label="Commencer le cours Gestion passive">
+                  <DiscoverButton className="mb-4" aria-label="Commencer le cours Gestion passive">
+                    <Link href="/">
                       Commencer
                     </Link>
                   </DiscoverButton>
@@ -130,12 +122,12 @@ export default function Page() {
                           <div className="w-full h-full flex flex-col items-center justify-start">
                             <Image
                               src="/financeMiniature.webp"
-                              alt="Slider détails du cours Gestion passive"
+                              alt="Aperçu du module Gestion passive"
                               width={400}
                               height={400}
                               className="w-full h-auto object-cover rounded-lg"
                             />
-                            <h4 className="mt-2 text-sm text-center">
+                            <h4 className="mt-2 text-sm text-center text-gray-800">
                               Détails du module Gestion passive
                             </h4>
                           </div>
@@ -144,34 +136,31 @@ export default function Page() {
                       {
                         id: 2,
                         content: (
-                          <p className="text-base sm:text-lg">
+                          <p className="text-base sm:text-lg text-gray-700">
                             Un point sur la fiscalité est également fait afin d'optimiser le rendement de votre portefeuille. Vous apprendrez à sélectionner un fond et à diversifier le risque de votre portefeuille. À la fin de la formation, vous aurez mis en place une routine d'investissement peu contraignante.
                           </p>
                         ),
                       },
                     ]}
                     className="w-full"
+                    aria-label="Carousel des détails du cours Gestion passive"
                   />
                 </div>
               </div>
 
-              {/* Bloc 2 */}
               <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start">
                 <div className="lg:w-1/2">
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-gray-800">
                     Parcours expert : Stock picking
                   </h3>
-                  <p className="mb-4 text-base sm:text-lg">
-                    Dans ce parcours, vous apprendrez également les bases du
-                    parcours gestion passive.
+                  <p className="mb-4 text-base sm:text-lg text-gray-700">
+                    Dans ce parcours, vous apprendrez également les bases du parcours gestion passive.
                   </p>
-                  <p className="mb-4 text-base sm:text-lg">
-                    Une fois que vous aurez une bonne compréhension de l'univers
-                    financier, de ses risques et de ses limites, indispensable à
-                    la bonne réflexion d'un analyste financier.
+                  <p className="mb-4 text-base sm:text-lg text-gray-700">
+                    Une fois que vous aurez une bonne compréhension de l'univers financier, de ses risques et de ses limites, indispensable à la bonne réflexion d'un analyste financier.
                   </p>
-                  <DiscoverButton className="mb-4">
-                    <Link href="/" aria-label="Commencer le cours Stock picking">
+                  <DiscoverButton className="mb-4" aria-label="Commencer le cours Stock picking">
+                    <Link href="/">
                       Commencer
                     </Link>
                   </DiscoverButton>
@@ -185,12 +174,12 @@ export default function Page() {
                           <div className="w-full h-full flex flex-col items-center justify-start">
                             <Image
                               src="/financeMiniature.webp"
-                              alt="Slider des détails du module Stock picking"
+                              alt="Aperçu du module Stock picking"
                               width={400}
                               height={400}
                               className="w-full h-auto object-cover rounded-lg"
                             />
-                            <h4 className="mt-2 text-sm text-center">
+                            <h4 className="mt-2 text-sm text-center text-gray-800">
                               Détails du module Stock picking
                             </h4>
                           </div>
@@ -199,7 +188,7 @@ export default function Page() {
                       {
                         id: 2,
                         content: (
-                          <p className="text-base sm:text-lg">
+                          <p className="text-base sm:text-lg text-gray-700">
                             Vous serez plongé dans l'analyse d'entreprise afin d'aller chercher des rendements supérieurs au rendement du marché.
                           </p>
                         ),
@@ -207,7 +196,7 @@ export default function Page() {
                       {
                         id: 3,
                         content: (
-                          <p className="text-base sm:text-lg">
+                          <p className="text-base sm:text-lg text-gray-700">
                             Nombreux sont les ratios et autres indicateurs boursiers, alors comment savoir lesquels choisir ?
                           </p>
                         ),
@@ -215,7 +204,7 @@ export default function Page() {
                       {
                         id: 4,
                         content: (
-                          <p className="text-base sm:text-lg">
+                          <p className="text-base sm:text-lg text-gray-700">
                             Ce parcours s'appuie notamment sur des investisseurs remarquables comme Warren Buffet, Peter Lynch, Ken Fisher.
                           </p>
                         ),
@@ -223,13 +212,14 @@ export default function Page() {
                       {
                         id: 5,
                         content: (
-                          <p className="text-base sm:text-lg">
+                          <p className="text-base sm:text-lg text-gray-700">
                             Vous apprendrez à lire des rapports financiers et disposer d'outils pour le suivi de portefeuille.
                           </p>
                         ),
                       },
                     ]}
                     className="w-full"
+                    aria-label="Carousel des détails du cours Stock picking"
                   />
                 </div>
               </div>
@@ -237,99 +227,95 @@ export default function Page() {
           </div>
         </section>
 
-        {/* À Propos Section */}
         <section
           id="about"
           aria-labelledby="about-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
           <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 id="about-heading" className="text-2xl font-semibold">
+            <h2 id="about-heading" className="text-2xl font-semibold text-gray-900">
               À PROPOS : DE LA PASSION DE LA FINANCE À SKOLINVEST
             </h2>
-            <h3 className="text-lg font-medium mt-4">
+            <h3 className="text-lg font-medium mt-4 text-gray-800">
               Skolinvest, c'est quoi ?
             </h3>
-            <p className="mt-4 text-base sm:text-lg">
-              Skolinvest est née du constat d'un manque d'éducation financière
-              en France alors que les études réalisées démontrent un fort
-              intérêt de la part des Français, en particulier les jeunes.
+            <p className="mt-4 text-base sm:text-lg text-gray-700">
+              Skolinvest est née du constat d'un manque d'éducation financière en France alors que les études réalisées démontrent un fort intérêt de la part des Français, en particulier les jeunes.
               <br /><br />
-              Beaucoup de vulgarisateurs sont maintenant présents sur les
-              réseaux sociaux. Cependant, il n'est pas toujours évident de savoir
-              par où commencer devant cette quantité d'information et comment
-              procéder pour bien gérer son portefeuille.
+              Beaucoup de vulgarisateurs sont maintenant présents sur les réseaux sociaux. Cependant, il n'est pas toujours évident de savoir par où commencer devant cette quantité d'informations et comment procéder pour bien gérer son portefeuille.
             </p>
             <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12 items-start mt-8">
               <div className="w-full md:w-1/2">
                 <Image
                   src="/specialiste-finance-investissement.png"
-                  alt="Illustration conseillère financière"
+                  alt="Illustration d'une conseillère financière"
                   height={450}
                   width={450}
                   className="w-full h-auto object-cover rounded-lg"
                 />
               </div>
               <div className="w-full md:w-1/2 mt-4 md:mt-0">
-                <p className="text-base sm:text-lg">
-                  Skolinvest est composé des termes "skol" et "invest", "skol" signifie
-                  "école" en breton, vous êtes donc sur le site de l'école de
-                  l'investissement.
+                <p className="text-base sm:text-lg text-gray-700">
+                  Skolinvest est composé des termes "skol" et "invest". "Skol" signifie "école" en breton : vous êtes donc sur le site de l'école de l'investissement.
                   <br /><br />
-                  Skolinvest se propose d'accompagner les débutants en bourse mais
-                  aussi les investisseurs plus aguerris afin de les guider dans
-                  l'utilisation des instruments et des indicateurs financiers,
-                  ainsi que leur apprendre à gérer un portefeuille boursier sur le
-                  long terme et en faire des investisseurs confiants et
-                  indépendants.
+                  Skolinvest se propose d'accompagner les débutants en bourse mais aussi les investisseurs plus aguerris afin de les guider dans l'utilisation des instruments et des indicateurs financiers, ainsi que leur apprendre à gérer un portefeuille boursier sur le long terme et en faire des investisseurs confiants et indépendants.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Contact Section */}
         <section
           id="contact"
           aria-labelledby="contact-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
           <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 id="contact-heading" className="text-2xl font-semibold text-center">
+            <h2 id="contact-heading" className="text-2xl font-semibold text-center text-gray-900">
               LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
             <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap mt-8">
               <DiscoverButton asChild>
-                <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
-                  <span className="flex items-center gap-2 text-sm font-medium">
-                    Rendez-vous
-                  </span>
+                <Link
+                  href={calendlyUrl}
+                  aria-label="Prendre rendez-vous pour discuter d'un projet d'investissement"
+                  className="inline-flex items-center gap-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                >
+                  Rendez-vous
                 </Link>
               </DiscoverButton>
               <Link
-                href="https://www.linkedin.com"
-                aria-label="LinkedIn"
-                className="text-black hover:text-black/70 transition-colors"
+                href="https://www.linkedin.com/company/skolinvest"
+                aria-label="Visiter la page LinkedIn"
+                className="text-black hover:text-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               >
-                <Linkedin className="w-8 h-8" />
+                <Linkedin className="w-8 h-8" aria-hidden="true" focusable="false" />
               </Link>
               <Link
                 href="mailto:alice@skolinvest.com"
-                aria-label="Email"
-                className="text-black hover:text-black/70 transition-colors"
+                aria-label="Envoyer un email à alice@skolinvest.com"
+                className="text-black hover:text-black/70 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               >
-                <Mail className="w-8 h-8" />
+                <Mail className="w-8 h-8" aria-hidden="true" focusable="false" />
               </Link>
             </div>
             <div className="flex justify-center w-full mt-8">
-              <div className="w-full max-w-sm">
-                <NewsletterInput placeholder="Votre adresse email" />
-              </div>
+              <form className="w-full max-w-sm">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Adresse email pour la newsletter
+                </label>
+                <NewsletterInput
+                  id="newsletter-email"
+                  placeholder="Votre adresse email"
+                  aria-label="S'inscrire à la newsletter pour recevoir des conseils en investissement"
+                />
+              </form>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
+
+      <Footer role="contentinfo" />
     </>
   );
 }

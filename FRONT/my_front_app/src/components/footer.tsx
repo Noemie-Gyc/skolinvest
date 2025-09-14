@@ -6,13 +6,15 @@ import Image from "next/image";
 
 export default function Footer({
   logoSrc = "/logo.png",
+  role
 }: {
   logoSrc?: string;
+  role?: string;
 }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#3952fb] text-white rounded-t-4xl mt-8">
+    <footer className="bg-[#3952fb] text-white rounded-t-4xl mt-8"  role={role}>
       <div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3 items-start">
 
         {/* + items-start */}
