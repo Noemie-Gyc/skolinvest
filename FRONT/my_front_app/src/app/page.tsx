@@ -28,8 +28,8 @@ export default function Page() {
           aria-labelledby="hero-title"
           className="bg-[#FFF8EE] min-h-[60vh] flex items-center px-4 py-12 sm:py-16"
         >
-          <div className="w-full max-w-6xl mx-auto relative grid gap-10 sm:gap-8 md:grid-cols-2 md:items-center">
-            <div className="pt-8 sm:pt-10 md:pt-24">
+          <div className="w-full max-w-6xl mx-auto relative grid gap-10 sm:gap-8 md:grid-cols-2">
+            <div className="md:mt-10">
               <h1
                 id="hero-title"
                 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight"
@@ -48,7 +48,7 @@ export default function Page() {
                 </Link>
               </DiscoverButton>
             </div>
-            <div className="relative md:col-start-2 md:row-start-1">
+            <div className="relative md:col-start-2 md:row-start-0">
               <Image
                 src="/apprendre-la-finance.png"
                 alt="Illustration élève en formation financière"
@@ -307,14 +307,19 @@ export default function Page() {
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
           <div className="w-full max-w-6xl mx-auto flex flex-col gap-10">
-            <h2 id="contact-heading" className="text-2xl font-semibold text-center">
+            <h2
+              id="contact-heading"
+              className="text-2xl font-semibold text-center"
+            >
               LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
             {/* Ligne d'icônes centrées */}
             <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap">
               <DiscoverButton asChild>
                 <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
-                  <span className="flex items-center gap-2 text-sm font-medium">Rendez-vous</span>
+                  <span className="flex items-center gap-2 text-sm font-medium">
+                    Rendez-vous
+                  </span>
                 </Link>
               </DiscoverButton>
               <Link
