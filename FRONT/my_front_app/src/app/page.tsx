@@ -21,18 +21,16 @@ export default function Page() {
         Aller au contenu principal
       </a>
 
-      {/* En-tête */}
       <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b" role="banner">
         <PublicHeader />
       </header>
 
       <main id="main-content" className="min-h-screen flex flex-col">
-        {/* Section Hero */}
         <section
           aria-labelledby="hero-title"
           className="bg-[#FFF8EE] min-h-[60vh] flex items-center px-4 py-12 sm:py-16"
         >
-          <div className="w-full max-w-6xl mx-auto relative grid gap-8 sm:gap-10 md:grid-cols-2 md:items-center">
+          <div className="w-full max-w-5xl mx-auto relative grid gap-8 sm:gap-10 md:grid-cols-2">
             <div className="pt-8 sm:pt-10 md:pt-12 lg:pt-16">
               <h1
                 id="hero-title"
@@ -67,9 +65,9 @@ export default function Page() {
         <section
           id="methode"
           aria-labelledby="methode-heading"
-          className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
+          className="min-h-[60vh] flex flex-col px-4 py-12 sm:py-16 gap-4 w-full"
         >
-          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
             <h2 id="methode-heading" className="text-2xl font-semibold text-gray-900">
               PLACER SANS RISQUE : LA MÉTHODE SKOLINVEST
             </h2>
@@ -90,13 +88,13 @@ export default function Page() {
           aria-labelledby="formations-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
             <h2 id="formations-heading" className="text-2xl font-semibold text-gray-900">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
-            <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
-              {/* Bloc 1 : Gestion passive */}
-              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start">
+            <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 bg-white/80">
+
+              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start shadow-sm shadow-black/15 rounded-xl bg-white/80 backdrop-blur m-6">
                 <div className="lg:w-1/2">
                   <h3 className="text-lg font-semibold mb-4 text-gray-800">
                     Parcours gestion passive : Débuter en bourse
@@ -119,7 +117,7 @@ export default function Page() {
                       {
                         id: 1,
                         content: (
-                          <div className="w-full h-full flex flex-col items-center justify-start">
+                          <div className="w-full flex flex-col justify-start">
                             <Image
                               src="/financeMiniature.webp"
                               alt="Aperçu du module Gestion passive"
@@ -148,7 +146,7 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start">
+              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start shadow-sm shadow-black/15 rounded-xl bg-white/80 backdrop-blur m-6">
                 <div className="lg:w-1/2">
                   <h3 className="text-lg font-semibold mb-4 text-gray-800">
                     Parcours expert : Stock picking
@@ -232,7 +230,7 @@ export default function Page() {
           aria-labelledby="about-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 ">
             <h2 id="about-heading" className="text-2xl font-semibold text-gray-900">
               À PROPOS : DE LA PASSION DE LA FINANCE À SKOLINVEST
             </h2>
@@ -244,13 +242,13 @@ export default function Page() {
               <br /><br />
               Beaucoup de vulgarisateurs sont maintenant présents sur les réseaux sociaux. Cependant, il n'est pas toujours évident de savoir par où commencer devant cette quantité d'informations et comment procéder pour bien gérer son portefeuille.
             </p>
-            <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12 items-start mt-8">
-              <div className="w-full md:w-1/2">
+            <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12 items-start mt-16">
+              <div className="w-full md:w-1/2 md:mr-18">
                 <Image
                   src="/specialiste-finance-investissement.png"
                   alt="Illustration d'une conseillère financière"
-                  height={450}
-                  width={450}
+                  height={400}
+                  width={400}
                   className="w-full h-auto object-cover rounded-lg"
                 />
               </div>
@@ -270,7 +268,7 @@ export default function Page() {
           aria-labelledby="contact-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
             <h2 id="contact-heading" className="text-2xl font-semibold text-center text-gray-900">
               LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
