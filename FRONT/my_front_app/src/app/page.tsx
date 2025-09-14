@@ -48,7 +48,7 @@ export default function Page() {
                 </Link>
               </DiscoverButton>
             </div>
-            <div className="relative md:col-start-2 md:row-start-0">
+            <div className="relative md:col-start-2 md:row-start-1">
               <Image
                 src="/apprendre-la-finance.png"
                 alt="Illustration élève en formation financière"
@@ -66,7 +66,7 @@ export default function Page() {
           aria-labelledby="methode-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
             <h2 id="methode-heading" className="text-2xl font-semibold">
               PLACER SANS RISQUE : LA METHODE SKOLINVEST
             </h2>
@@ -96,13 +96,13 @@ export default function Page() {
           aria-labelledby="formations-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto">
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
             <h2 id="formations-heading" className="text-2xl font-semibold">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
             <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
               {/* Bloc 1 */}
-              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6">
+              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6 items-start">
                 <div className="lg:w-1/2">
                   <h3 className="text-lg font-semibold mb-4">
                     Parcours gestion passive : Débuter en bourse
@@ -125,13 +125,13 @@ export default function Page() {
                     </Link>
                   </DiscoverButton>
                 </div>
-                <div className="lg:w-1/2 flex flex-col gap-4">
+                <div className="lg:w-1/2 flex flex-col gap-4 mt-0">
                   <CarouselCourses
                     items={[
                       {
                         id: 1,
                         content: (
-                          <div className="w-full h-full flex flex-col items-center justify-center">
+                          <div className="w-full h-full flex flex-col items-center justify-start">
                             <Image
                               src="/financeMiniature.webp"
                               alt="Slider détails du cours Gestion passive"
@@ -162,7 +162,7 @@ export default function Page() {
               </div>
 
               {/* Bloc 2 */}
-              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6">
+              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6 items-start">
                 <div className="lg:w-1/2">
                   <h3 className="text-lg font-semibold mb-4">
                     Parcours expert : Stock picking
@@ -185,13 +185,13 @@ export default function Page() {
                     </Link>
                   </DiscoverButton>
                 </div>
-                <div className="lg:w-1/2 flex flex-col gap-4">
+                <div className="lg:w-1/2 flex flex-col gap-4 mt-0">
                   <CarouselCourses
                     items={[
                       {
                         id: 1,
                         content: (
-                          <div className="w-full h-full flex flex-col items-center justify-center">
+                          <div className="w-full h-full flex flex-col items-center justify-start">
                             <Image
                               src="/financeMiniature.webp"
                               alt="Slider des détails du module Stock picking"
@@ -259,7 +259,7 @@ export default function Page() {
           aria-labelledby="about-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 gap-4 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto flex flex-col gap-6">
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
             <h2 id="about-heading" className="text-2xl font-semibold">
               À PROPOS : DE LA PASSION DE LA FINANCE A SKOLINVEST
             </h2>
@@ -276,27 +276,31 @@ export default function Page() {
               par où commencer devant cette quantité d'information et comment
               procéder pour bien gérer son portefeuille.
             </p>
-            <div className="flex flex-col md:flex-row gap-6 items-center">
-              <Image
-                src="/specialiste-finance-investissement.png"
-                alt="illustration conseillère financière"
-                height={450}
-                width={450}
-                className="w-full md:w-1/2 lg:w-1/3 h-auto object-cover"
-              />
-              <p className="text-base sm:text-lg">
-                Skolinvest est composé des termes skol et invest, skol signifie
-                "école" en breton, vous êtes donc sur le site de l'école de
-                l'investissement.
-                <br />
-                <br />
-                Skolinvest se propose d'accompagner les débutants en bourse mais
-                aussi les investisseurs plus aguerris afin de les guider dans
-                l'utilisation des instruments et des indicateurs financiers,
-                ainsi que leur apprendre à gérer un portefeuille boursier sur le
-                long-terme et en faire des investisseurs confiants et
-                indépendants.
-              </p>
+            <div className="flex flex-col md:flex-row md:gap-12 lg:gap-16 items-center mt-8">
+              <div className="w-full md:w-1/2">
+                <Image
+                  src="/specialiste-finance-investissement.png"
+                  alt="illustration conseillère financière"
+                  height={450}
+                  width={450}
+                  className="w-full h-auto object-cover rounded-lg"
+                />
+              </div>
+              <div className="w-full md:w-1/2">
+                <p className="text-base sm:text-lg mt-4 md:mt-0">
+                  Skolinvest est composé des termes skol et invest, skol
+                  signifie "école" en breton, vous êtes donc sur le site de
+                  l'école de l'investissement.
+                  <br />
+                  <br />
+                  Skolinvest se propose d'accompagner les débutants en bourse
+                  mais aussi les investisseurs plus aguerris afin de les guider
+                  dans l'utilisation des instruments et des indicateurs
+                  financiers, ainsi que leur apprendre à gérer un portefeuille
+                  boursier sur le long-terme et en faire des investisseurs
+                  confiants et indépendants.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -306,7 +310,7 @@ export default function Page() {
           aria-labelledby="contact-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-6xl mx-auto flex flex-col gap-10">
+          <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
             <h2
               id="contact-heading"
               className="text-2xl font-semibold text-center"
@@ -314,7 +318,7 @@ export default function Page() {
               LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
             {/* Ligne d'icônes centrées */}
-            <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap">
+            <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap mt-8">
               <DiscoverButton asChild>
                 <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
                   <span className="flex items-center gap-2 text-sm font-medium">
@@ -338,7 +342,7 @@ export default function Page() {
               </Link>
             </div>
             {/* Formulaire newsletter */}
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full mt-8">
               <div className="w-full max-w-sm">
                 <NewsletterInput placeholder="Votre adresse email" />
               </div>
