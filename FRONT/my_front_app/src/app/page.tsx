@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DiscoverButton } from "@/components/discoverButton";
 import { Linkedin, Mail } from "lucide-react";
-import { NewsletterInput} from "@/components/newsletterInput";
+import { NewsletterInput } from "@/components/newsletterInput";
 import { CarouselCourses } from "@/components/carouselCourse";
 
 export default function Page() {
@@ -23,7 +23,6 @@ export default function Page() {
       <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b">
         <PublicHeader />
       </header>
-
       <main className="min-h-screen flex flex-col">
         <section
           aria-labelledby="hero-title"
@@ -71,7 +70,7 @@ export default function Page() {
             <h2 id="methode-heading" className="text-2xl font-semibold">
               PLACER SANS RISQUE : LA METHODE SKOLINVEST
             </h2>
-            <p className="leading-relaxed text-gray-700 mt-6">
+            <p className="leading-relaxed text-gray-700 mt-6 text-base sm:text-lg">
               Des parcours structurés de manière à vous familiariser avec les
               concepts de base, indispensables à la bonne compréhension des
               mécanismes de marchés.
@@ -101,24 +100,23 @@ export default function Page() {
             <h2 id="formations-heading" className="text-2xl font-semibold">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
-
-            <div className="flex flex-col gap-20 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
+            <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 rounded-none rounded-b-lg bg-white/80 backdrop-blur">
               {/* Bloc 1 */}
-              <div className="flex flex-col lg:flex-row gap-12">
-                <div className="lg:w-1/2 m-14">
-                  <h3 className="text-lg font-semibold mb-6">
+              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6">
+                <div className="lg:w-1/2">
+                  <h3 className="text-lg font-semibold mb-4">
                     Parcours gestion passive : Débuter en bourse
                   </h3>
-                  <p className="mb-6">
+                  <p className="mb-4 text-base sm:text-lg">
                     Les acteurs, le vocabulaire, les spécificités de chaque
                     instrument financier et gérer son portefeuille.
                   </p>
-                  <p className="mb-6">
+                  <p className="mb-4 text-base sm:text-lg">
                     La formation vous indique les risques et rentabilités
                     moyennes selon les actifs et comment répartir votre épargne
                     sur les différents instruments en diversifiant votre risque.
                   </p>
-                  <DiscoverButton className="mb-6">
+                  <DiscoverButton className="mb-4">
                     <Link
                       href="/"
                       aria-label="Commencer le cours Gestion passive"
@@ -127,7 +125,7 @@ export default function Page() {
                     </Link>
                   </DiscoverButton>
                 </div>
-                <div className="lg:w-1/2 flex flex-col gap-8">
+                <div className="lg:w-1/2 flex flex-col gap-4">
                   <CarouselCourses
                     items={[
                       {
@@ -164,21 +162,21 @@ export default function Page() {
               </div>
 
               {/* Bloc 2 */}
-              <div className="flex flex-col lg:flex-row gap-12">
-                <div className="lg:w-1/2 m-14">
-                  <h3 className="text-lg font-semibold mb-6">
+              <div className="flex flex-col lg:flex-row gap-12 p-4 sm:p-6">
+                <div className="lg:w-1/2">
+                  <h3 className="text-lg font-semibold mb-4">
                     Parcours expert : Stock picking
                   </h3>
-                  <p className="mb-4">
+                  <p className="mb-4 text-base sm:text-lg">
                     Dans ce parcours vous apprendrez également les bases du
                     parcours gestion passive.
                   </p>
-                  <p className="mb-6">
+                  <p className="mb-4 text-base sm:text-lg">
                     Une fois que vous aurez une bonne compréhension de l'univers
                     financier, de ses risques et de ses limites, indispensable à
                     la bonne réflexion d'un analyste financier.
                   </p>
-                  <DiscoverButton className="mb-6">
+                  <DiscoverButton className="mb-4">
                     <Link
                       href="/"
                       aria-label="Commencer le cours Stock picking"
@@ -187,7 +185,7 @@ export default function Page() {
                     </Link>
                   </DiscoverButton>
                 </div>
-                <div className="lg:w-1/2 flex flex-col gap-8">
+                <div className="lg:w-1/2 flex flex-col gap-4">
                   <CarouselCourses
                     items={[
                       {
@@ -268,7 +266,7 @@ export default function Page() {
             <h3 className="text-lg font-medium mt-2">
               Skolinvest, c'est quoi ?
             </h3>
-            <p className="mt-4">
+            <p className="mt-4 text-base sm:text-lg">
               Skolinvest est née du constat d'un manque d'éducation financière
               en France alors que les études réalisées démontrent un fort
               intérêt de la part des français, en particulier les jeunes. <br />
@@ -278,15 +276,15 @@ export default function Page() {
               par où commencer devant cette quantité d'information et comment
               procéder pour bien gérer son portefeuille.
             </p>
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-6 items-center">
               <Image
                 src="/specialiste-finance-investissement.png"
                 alt="illustration conseillère financière"
                 height={450}
                 width={450}
-                className="mt-15 mr-30"
+                className="w-full md:w-1/2 lg:w-1/3 h-auto object-cover"
               />
-              <p>
+              <p className="text-base sm:text-lg">
                 Skolinvest est composé des termes skol et invest, skol signifie
                 "école" en breton, vous êtes donc sur le site de l'école de
                 l'investissement.
@@ -312,9 +310,8 @@ export default function Page() {
             <h2 id="contact-heading" className="text-2xl font-semibold text-center">
               LE PROJET D'INVESTIR ? CONTACTEZ-MOI
             </h2>
-
             {/* Ligne d'icônes centrées */}
-            <div className="flex items-center justify-center gap-12">
+            <div className="flex items-center justify-center gap-6 sm:gap-12 flex-wrap">
               <DiscoverButton asChild>
                 <Link href={calendlyUrl} aria-label="Prendre rendez-vous">
                   <span className="flex items-center gap-2 text-sm font-medium">Rendez-vous</span>
@@ -335,9 +332,8 @@ export default function Page() {
                 <Mail className="w-8 h-8" />
               </Link>
             </div>
-
-            {/* Formulaire newsletter aligné à droite */}
-            <div className="flex justify-end">
+            {/* Formulaire newsletter */}
+            <div className="flex justify-center w-full">
               <div className="w-full max-w-sm">
                 <NewsletterInput placeholder="Votre adresse email" />
               </div>
@@ -345,7 +341,6 @@ export default function Page() {
           </div>
         </section>
       </main>
-
       <Footer />
     </>
   );
