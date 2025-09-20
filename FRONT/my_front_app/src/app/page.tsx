@@ -10,7 +10,7 @@ import { CarouselCourses } from "@/components/carouselCourse";
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const [firstModuleTitle, setFirstModuleTitle] = useState<string | null>(null);
+  const [modules, setModules] = useState<Array<{ id: number; title: string }>>([]);
   const [modulesLoading, setModulesLoading] = useState(true);
   const [modulesError, setModulesError] = useState<string | null>(null);
 
@@ -21,19 +21,23 @@ export default function Page() {
       setModulesError(null);
       try {
   // Use the frontend proxy endpoint so we don't run into CORS or cookie issues.
-  const res = await fetch('/api/modules/public');
+        const res = await fetch('/api/modules/public');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (!mounted) return;
-        if (Array.isArray(data) && data.length > 0) {
-          setFirstModuleTitle(data[0].title || null);
+        // backend now returns an array of published modules: [{ id, title }, ...]
+        if (Array.isArray(data)) {
+          setModules(data.map((m: any) => ({ id: Number(m.id), title: String(m.title) })));
+        } else if (data && typeof data === 'object' && data.title) {
+          // backward compatibility: single-object shape { title }
+          setModules([{ id: Number(data.id ?? 0), title: String(data.title) }]);
         } else {
-          setFirstModuleTitle(null);
+          setModules([]);
         }
       } catch (err: any) {
         if (!mounted) return;
         setModulesError(err?.message ?? 'Erreur réseau');
-        setFirstModuleTitle(null);
+        setModules([]);
       } finally {
         if (mounted) setModulesLoading(false);
       }
@@ -122,110 +126,57 @@ export default function Page() {
             <h2 id="formations-heading" className="text-2xl font-semibold text-gray-900">
               NOS COURS POUR APPRENDRE LA FINANCE
             </h2>
-            <div className="flex flex-col gap-10 mt-10 shadow-sm shadow-black/10 bg-white/80">
-
-              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start shadow-sm shadow-black/15 rounded-xl bg-white/80 backdrop-blur m-6">
-                <div className="lg:w-1/2">
-                  <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                    {modulesLoading ? 'Chargement...' : (firstModuleTitle ?? 'Parcours gestion passive : Débuter en bourse')}
-                    {modulesError ? ` — erreur: ${modulesError}` : null}
-                  </h3>
-                  <p className="mb-4 text-base sm:text-lg text-gray-700">
-                    Découvrez les acteurs, le vocabulaire, les spécificités de chaque instrument financier et apprenez à gérer votre portefeuille.
-                  </p>
-                  <p className="mb-4 text-base sm:text-lg text-gray-700">
-                    La formation vous indique les risques et rentabilités moyennes selon les actifs et comment répartir votre épargne sur les différents instruments en diversifiant votre risque.
-                  </p>
-                  <DiscoverButton className="mb-4" aria-label="Commencer le cours Gestion passive">
-                    <Link href="/">Commencer</Link>
-                  </DiscoverButton>
+            <div className="flex flex-col gap-10 mt-10">
+              {modulesLoading ? (
+                <div className="w-full p-6 m-6 shadow-sm shadow-black/10 rounded-xl bg-white/80">
+                  <h3 className="text-lg font-semibold text-gray-800">Chargement...</h3>
                 </div>
-                <div className="lg:w-1/2 flex flex-col gap-4 w-full">
-                  <CarouselCourses
-                    items={[
-                      {
-                        id: 1,
-                        content: (
-                          <div className="w-full flex flex-col justify-start">
-                            <Image
-                              src="/financeMiniature.webp"
-                              alt="Aperçu du module Gestion passive"
-                              width={400}
-                              height={400}
-                              className="w-full h-auto object-cover rounded-lg"
-                            />
-                            <h4 className="mt-2 text-sm text-center text-gray-800">Détails du module Gestion passive</h4>
-                          </div>
-                        ),
-                      },
-                      {
-                        id: 2,
-                        content: (
-                          <p className="text-base sm:text-lg text-gray-700">Un point sur la fiscalité est également fait afin d'optimiser le rendement de votre portefeuille. Vous apprendrez à sélectionner un fond et à diversifier le risque de votre portefeuille. À la fin de la formation, vous aurez mis en place une routine d'investissement peu contraignante.</p>
-                        ),
-                      },
-                    ]}
-                    className="w-full"
-                    aria-label="Carousel des détails du cours Gestion passive"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start shadow-sm shadow-black/15 rounded-xl bg-white/80 backdrop-blur m-6">
-                <div className="lg:w-1/2">
-                  <h3 className="text-lg font-semibold mb-4 text-gray-800">Parcours expert : Stock picking</h3>
-                  <p className="mb-4 text-base sm:text-lg text-gray-700">Dans ce parcours, vous apprendrez également les bases du parcours gestion passive.</p>
-                  <p className="mb-4 text-base sm:text-lg text-gray-700">Une fois que vous aurez une bonne compréhension de l'univers financier, de ses risques et de ses limites, indispensable à la bonne réflexion d'un analyste financier.</p>
-                  <DiscoverButton className="mb-4" aria-label="Commencer le cours Stock picking"><Link href="/">Commencer</Link></DiscoverButton>
-                </div>
-                <div className="lg:w-1/2 flex flex-col gap-4 w-full">
-                  <CarouselCourses
-                    items={[
-                      {
-                        id: 1,
-                        content: (
-                          <div className="w-full h-full flex flex-col items-center justify-start">
-                            <Image
-                              src="/financeMiniature.webp"
-                              alt="Aperçu du module Stock picking"
-                              width={400}
-                              height={400}
-                              className="w-full h-auto object-cover rounded-lg"
-                            />
-                            <h4 className="mt-2 text-sm text-center text-gray-800">Détails du module Stock picking</h4>
-                          </div>
-                        ),
-                      },
-                      {
-                        id: 2,
-                        content: (
-                          <p className="text-base sm:text-lg text-gray-700">Vous serez plongé dans l'analyse d'entreprise afin d'aller chercher des rendements supérieurs au rendement du marché.</p>
-                        ),
-                      },
-                      {
-                        id: 3,
-                        content: (
-                          <p className="text-base sm:text-lg text-gray-700">Nombreux sont les ratios et autres indicateurs boursiers, alors comment savoir lesquels choisir ?</p>
-                        ),
-                      },
-                      {
-                        id: 4,
-                        content: (
-                          <p className="text-base sm:text-lg text-gray-700">Ce parcours s'appuie notamment sur des investisseurs remarquables comme Warren Buffet, Peter Lynch, Ken Fisher.</p>
-                        ),
-                      },
-                      {
-                        id: 5,
-                        content: (
-                          <p className="text-base sm:text-lg text-gray-700">Vous apprendrez à lire des rapports financiers et disposer d'outils pour le suivi de portefeuille.</p>
-                        ),
-                      },
-                    ]}
-                    className="w-full"
-                    aria-label="Carousel des détails du cours Stock picking"
-                  />
-                </div>
-              </div>
+              ) : modules.length > 0 ? (
+                modules.map((mod) => (
+                  <div key={mod.id} className="w-full flex flex-col lg:flex-row gap-8 p-4 sm:p-6 items-start shadow-sm shadow-black/15 rounded-xl bg-white/80 backdrop-blur">
+                    <div className="w-full lg:w-1/2 pr-4">
+                      <h3 className="text-lg font-semibold mb-4 text-gray-800">{mod.title}{modulesError ? ` — erreur: ${modulesError}` : null}</h3>
+                      <p className="mb-4 text-base sm:text-lg text-gray-700">
+                        Découvrez les acteurs, le vocabulaire, les spécificités de chaque instrument financier et apprenez à gérer votre portefeuille.
+                      </p>
+                      <DiscoverButton className="mb-4" aria-label={`Commencer le cours ${mod.title}`}>
+                        <Link href="/">Commencer</Link>
+                      </DiscoverButton>
+                    </div>
+                    <div className="w-full lg:w-1/2 pl-4">
+                      <CarouselCourses
+                        items={[
+                          {
+                            id: 1,
+                            content: (
+                              <div className="w-full flex flex-col justify-start">
+                                <Image
+                                  src="/financeMiniature.webp"
+                                  alt={`Aperçu du module ${mod.title}`}
+                                  width={400}
+                                  height={400}
+                                  className="w-full h-auto object-cover rounded-lg"
+                                />
+                                <h4 className="mt-2 text-sm text-center text-gray-800">Détails du module {mod.title}</h4>
+                              </div>
+                            ),
+                          },
+                          {
+                            id: 2,
+                            content: (
+                              <p className="text-base sm:text-lg text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+                            ),
+                          },
+                        ]}
+                        className="w-full"
+                        aria-label={`Carousel des détails du cours ${mod.title}`}
+                      />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="m-6 text-gray-600">Aucun module publié pour le moment.</div>
+              )}
             </div>
           </div>
         </section>

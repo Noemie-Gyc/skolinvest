@@ -8,12 +8,9 @@ export async function GET(request: NextRequest) {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const text = await res.text();
+    const json = await res.json();
 
-    return new NextResponse(text, {
-      status: res.status,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return NextResponse.json(json, { status: res.status });
   } catch (err: any) {
     console.error('Proxy error for public modules:', err);
     return NextResponse.json({ error: 'Proxy error', details: err?.message ?? String(err) }, { status: 502 });
