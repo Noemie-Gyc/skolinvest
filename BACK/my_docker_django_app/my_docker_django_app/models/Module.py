@@ -9,6 +9,8 @@ class Module(models.Model):
     publication_date = models.DateField(blank = True, null=True)
     modification_date = models.DateField(auto_now=True)
     title = models.CharField(max_length=255, null = False)
+    introduction = models.TextField(blank=True, default='')
+    detail = models.TextField(blank=True, default='')
     thumbnail = models.CharField(max_length=255, blank=True)
     status = models.CharField(
         max_length=10,

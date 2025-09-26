@@ -28,7 +28,7 @@ class ModuleListView(APIView):
 class ModuleDetailView(RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 # CreateAPIView is a native class to create a view
 class ModuleCreateView(CreateAPIView):
