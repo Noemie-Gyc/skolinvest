@@ -76,7 +76,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
             }}
             role="button"
             aria-label="Modifier le titre du module"
-          className="text-blue-700 text-s sm:text-m font-bold cursor-pointer hover:underline"
+          className="text-blue-700 cursor-pointer hover:underline"
           >Introduction du module
           </h2>
           <h2 
@@ -85,7 +85,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
             onKeyDown={(e) => { if (e.key === 'Enter') onEditModuleClick({ id: module.id, field: 'detail', detail: module.detail }); }}
             role="button"
             aria-label="Modifier le détail du module"
-            className="text-blue-700 text-s sm:text-m font-bold cursor-pointer hover:underline"
+            className="text-blue-700 cursor-pointer hover:underline"
           >Details du module</h2>
         </CardTitle>
       </CardHeader>
