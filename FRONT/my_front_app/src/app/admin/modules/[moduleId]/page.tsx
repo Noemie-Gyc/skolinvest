@@ -7,6 +7,7 @@ import CardSummary from './CardSummary';
 import AddSectionForm from './AddSectionForm';
 import AddLessonForm from './AddLessonForm';
 import EditModuleForm from './EditModuleForm';
+import EditTextFieldForm from './EditTextFieldForm';
 
 export default function ModuleEditPage() {
   const params = useParams();
@@ -17,7 +18,7 @@ export default function ModuleEditPage() {
   // Two options : either there is a section to edit, either null
   const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
   const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
-  const [editingModule, setEditingModule] = useState<null | { id: number; title: string }>(null);
+  const [editingModule, setEditingModule] = useState<null | { id: number; title?: string; field?: 'title'|'introduction'|'detail'; introduction?: string; detail?: string }>(null);
 
 
   useEffect(() => {
@@ -56,14 +57,29 @@ export default function ModuleEditPage() {
       {/* right column : edition module title form or section module form */}
       <main className="w-full md:w-2/3">
         {editingModule && !editingSection && !editingLesson && (
-          <EditModuleForm
-            moduleId={module.id}
-            moduleData={editingModule}
-            onSuccess={() => {
-              setRefreshKey((k) => k + 1);
-              setEditingModule(null);
-            }}
-          />
+          // If editing field is 'title', show EditModuleForm, otherwise show the generic text field form
+          editingModule.field === 'title' || !editingModule.field ? (
+            <EditModuleForm
+              moduleId={module.id}
+              moduleData={{ id: module.id, title: editingModule.title ?? module.title }}
+              onSuccess={() => {
+                setRefreshKey((k) => k + 1);
+                setEditingModule(null);
+              }}
+            />
+          ) : (
+            // Lazy-load the EditTextFieldForm component client-side import
+            <EditTextFieldForm
+              moduleId={module.id}
+              fieldName={editingModule.field as 'introduction' | 'detail'}
+              fieldLabel={editingModule.field === 'introduction' ? 'Introduction du module' : 'Détail du module'}
+              initialValue={editingModule.field === 'introduction' ? (editingModule.introduction ?? module.introduction) : (editingModule.detail ?? module.detail)}
+              onSuccess={() => {
+                setRefreshKey((k) => k + 1);
+                setEditingModule(null);
+              }}
+            />
+          )
         )}
         {editingSection && !editingLesson && !editingModule && (
           <AddSectionForm

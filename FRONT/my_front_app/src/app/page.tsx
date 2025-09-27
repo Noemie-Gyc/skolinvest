@@ -10,7 +10,7 @@ import { CarouselCourses } from "@/components/carouselCourse";
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const [modules, setModules] = useState<Array<{ id: number; title: string }>>([]);
+  const [modules, setModules] = useState<Array<{ id: number; title: string, introduction: string, detail: string }>>([]);
   const [modulesLoading, setModulesLoading] = useState(true);
   const [modulesError, setModulesError] = useState<string | null>(null);
 
@@ -20,17 +20,17 @@ export default function Page() {
       setModulesLoading(true);
       setModulesError(null);
       try {
-  // Use the frontend proxy endpoint so we don't run into CORS or cookie issues.
+  // Use the frontend proxy endpoint so we don't run into CORS or cookie issues
         const res = await fetch('/api/modules/public');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (!mounted) return;
-        // backend now returns an array of published modules: [{ id, title }, ...]
+        // backend now returns an array of published modules
         if (Array.isArray(data)) {
-          setModules(data.map((m: any) => ({ id: Number(m.id), title: String(m.title) })));
+          setModules(data.map((m: any) => ({ id: Number(m.id), title: String(m.title), introduction: String(m.introduction), detail : String(m.detail) })));
         } else if (data && typeof data === 'object' && data.title) {
           // backward compatibility: single-object shape { title }
-          setModules([{ id: Number(data.id ?? 0), title: String(data.title) }]);
+          setModules([{ id: Number(data.id ?? 0), title: String(data.title), introduction : String(data.introduction), detail : String(data.detail)}]);
         } else {
           setModules([]);
         }
@@ -137,7 +137,7 @@ export default function Page() {
                     <div className="w-full lg:w-1/2 pr-4">
                       <h3 className="text-lg font-semibold mb-4 text-gray-800">{mod.title}{modulesError ? ` — erreur: ${modulesError}` : null}</h3>
                       <p className="mb-4 text-base sm:text-lg text-gray-700">
-                        Découvrez les acteurs, le vocabulaire, les spécificités de chaque instrument financier et apprenez à gérer votre portefeuille.
+                        {mod.introduction}
                       </p>
                       <DiscoverButton className="mb-4" aria-label={`Commencer le cours ${mod.title}`}>
                         <Link href="/">Commencer</Link>
@@ -164,7 +164,7 @@ export default function Page() {
                           {
                             id: 2,
                             content: (
-                              <p className="text-base sm:text-lg text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+                              <p className="text-base sm:text-lg text-gray-700">{mod.detail}</p>
                             ),
                           },
                         ]}

@@ -18,10 +18,8 @@ class ModuleListView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        # only expose published modules for the public API
         modules = Module.objects.filter(status='published').order_by('id')
-        # Return a list of minimal representations (id and title) for each published module
-        data = [{'id': m.id, 'title': m.title} for m in modules]
+        data = [{'id': m.id, 'title': m.title, 'introduction' : m.introduction, 'detail' : m.detail } for m in modules]
         return Response(data)
     
 # RetrieveAPIView is a native class to get the detail of an instance identified by the primary key

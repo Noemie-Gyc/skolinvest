@@ -24,13 +24,16 @@ interface Props {
   module: {
     id: number;
     title: string;
+    introduction?: string;
+    detail?: string;
     sections: Section[];
     lessons: Lesson[];
   };
   onRefresh: () => void; // Callback to reload datas after a deletion for example
   onEditSectionClick: (section: Section) => void; // Callback to open edition form
   onEditLessonClick: (section: Section, lesson: { id: number; title: string } | null) => void;
-  onEditModuleClick: (module: { id: number; title: string }) => void;
+  // onEditModuleClick can accept either a title-edit payload or a field-edit payload
+  onEditModuleClick: (payload: { id: number; title?: string; introduction?: string; detail?: string; field?: 'title' | 'introduction' | 'detail' }) => void;
 }
 
 // Main component to render the summary (for now only section titles list)
@@ -55,16 +58,35 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
             id="editModule-heading"
             className="text-blue-700 text-xl sm:text-2xl font-bold cursor-pointer hover:underline"
             data-testid="editModule-title"
-            onClick={() => onEditModuleClick({ id: module.id, title: module.title })}
+            onClick={() => onEditModuleClick({ id: module.id, title: module.title})}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onEditModuleClick({ id: module.id, title: module.title });
+              if (e.key === 'Enter') onEditModuleClick({ id: module.id, title: module.title});
             }}
             role="button"
             aria-label="Modifier le titre du module"
           >
             {module.title}
           </h1>
+          <h2 
+          onClick={() => onEditModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction })}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onEditModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction });
+            }}
+            role="button"
+            aria-label="Modifier le titre du module"
+          className="text-blue-700 text-s sm:text-m font-bold cursor-pointer hover:underline"
+          >Introduction du module
+          </h2>
+          <h2 
+            onClick={() => onEditModuleClick({ id: module.id, field: 'detail', detail: module.detail })}
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter') onEditModuleClick({ id: module.id, field: 'detail', detail: module.detail }); }}
+            role="button"
+            aria-label="Modifier le détail du module"
+            className="text-blue-700 text-s sm:text-m font-bold cursor-pointer hover:underline"
+          >Details du module</h2>
         </CardTitle>
       </CardHeader>
 
