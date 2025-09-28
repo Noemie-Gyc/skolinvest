@@ -2,32 +2,37 @@
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { fetchWithAuth } from '@/lib/fetchWithAuth';
 import CardSummary from './CardSummary';
-import DisplayLessonForm from './DisplayLessonForm';
-import DisplayTextFieldForm from './DisplayTextFieldForm';
-import DisplaySectionForm from './DisplaySectionForm';
+import ViewTextField from './ViewTextField';
+import ViewSection from './ViewSection';
+import ViewLesson from './ViewLesson';
+import { fetchWithAuth } from '@/lib/fetchWithAuth';
 
 export default function ModuleEditPage() {
   const params = useParams();
   const moduleId = Array.isArray(params.moduleId) ? params.moduleId[0] : params.moduleId;
   const [module, setModule] = useState<any>(null);
-  // update the state to load updated data after an edition
+  // refresh key in case we need to refetch
   const [refreshKey, setRefreshKey] = useState(0);
-  // Two options : either there is a section to edit, either null
-  const [editingSection, setEditingSection] = useState<null | { id: number; title: string }>(null);
-  const [editingLesson, setEditingLesson] = useState<null | { sectionId: number; lesson: { id: number; title: string } | null }>(null);
-  const [editingModule, setEditingModule] = useState<null | { id: number; title?: string; field?: 'title'|'introduction'|'detail'; introduction?: string; detail?: string }>(null);
+  // Viewing states for the public read-only UI
+  const [viewingSection, setViewingSection] = useState<null | { id: number; title: string }>(null);
+  const [viewingLesson, setViewingLesson] = useState<null | { sectionId?: number; lesson: { id: number; title: string; url_video?: string } | null }>(null);
+  const [viewingModule, setViewingModule] = useState<null | { id: number; field?: 'title'|'introduction'|'detail'; introduction?: string; detail?: string }>(null);
 
 
   useEffect(() => {
     if (!moduleId) return;
     // get the module data from the moduleId in the url's params
     async function loadModule() {
-      const res = await fetchWithAuth(`/api/modules/${moduleId}/`);
-      if (!res || !res.ok) return;
-      const data = await res.json();
-      setModule(data);
+      try {
+  // public view performs only GETs to display content. Use frontend proxy to backend public detail
+  const res = await fetchWithAuth(`/api/modules/${moduleId}`);
+        if (!res || !res.ok) return;
+        const data = await res.json();
+        setModule(data);
+      } catch (e) {
+        // silent fail for public view; module stays null
+      }
     }
     // loadModule is called if moduleId or refreshKey change
     loadModule();
@@ -42,10 +47,10 @@ export default function ModuleEditPage() {
         <CardSummary
           module={module}
           onRefresh={() => setRefreshKey((k) => k + 1)}
-          onEditSectionClick={setEditingSection}
-          onEditModuleClick={setEditingModule}
-          onEditLessonClick={(section, lesson) =>
-            setEditingLesson({
+          onViewSectionClick={setViewingSection}
+          onViewModuleClick={setViewingModule}
+          onViewLessonClick={(section, lesson) =>
+            setViewingLesson({
               sectionId: section?.id ?? undefined,
               lesson,
             })
@@ -55,43 +60,33 @@ export default function ModuleEditPage() {
 
       {/* right column : edition module title form or section module form */}
       <main className="w-full md:w-2/3">
-        {editingModule && !editingSection && !editingLesson && (
-         (
-            //DisplayTextFieldForm component client-side import
-            <DisplayTextFieldForm
+          {viewingModule && !viewingSection && !viewingLesson && (
+            <ViewTextField
               moduleId={module.id}
-              fieldName={editingModule.field as 'introduction' | 'detail'}
-              fieldLabel={editingModule.field === 'introduction' ? 'Introduction du module' : 'Détail du module'}
-              initialValue={editingModule.field === 'introduction' ? (editingModule.introduction ?? module.introduction) : (editingModule.detail ?? module.detail)}
-              onSuccess={() => {
-                setRefreshKey((k) => k + 1);
-                setEditingModule(null);
-              }}
+              fieldName={viewingModule.field ?? 'introduction'}
+              fieldLabel={viewingModule.field === 'introduction' ? 'Introduction du module' : 'Détail du module'}
+              value={viewingModule.field === 'introduction' ? (viewingModule.introduction ?? module.introduction) : (viewingModule.detail ?? module.detail)}
+              onClose={() => setViewingModule(null)}
             />
-          )
-        )}
-        {editingSection && !editingLesson && !editingModule && (
-          <DisplaySectionForm
-            moduleId={module.id}
-            section={editingSection}
-            onSuccess={() => {
-              setRefreshKey((k) => k + 1);
-              setEditingSection(null);
-            }}
-          />
-        )}
-        {editingLesson && !editingModule && (
-          <DisplayLessonForm
-            moduleId={module.id}
-            sectionId={editingLesson?.sectionId ?? undefined}
-            sections={module.sections}
-            lesson={editingLesson.lesson}
-            onSuccess={() => {
-              setRefreshKey((k) => k + 1);
-              setEditingLesson(null);
-            }}
-          />
-        )}
+          )}
+
+          {viewingSection && !viewingLesson && !viewingModule && (
+            <ViewSection
+              moduleId={module.id}
+              section={viewingSection}
+              onClose={() => setViewingSection(null)}
+            />
+          )}
+
+          {viewingLesson && !viewingModule && (
+            <ViewLesson
+              moduleId={module.id}
+              sectionId={viewingLesson?.sectionId ?? undefined}
+              sections={module.sections}
+              lesson={viewingLesson.lesson}
+              onClose={() => setViewingLesson(null)}
+            />
+          )}
       </main>
     </div>
   );

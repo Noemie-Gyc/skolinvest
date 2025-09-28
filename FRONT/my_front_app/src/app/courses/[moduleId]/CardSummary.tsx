@@ -24,32 +24,25 @@ interface Props {
     lessons: Lesson[];
   };
   onRefresh: () => void;
-  onEditSectionClick: (section: Section) => void;
-  onEditLessonClick: (section: Section, lesson: { id: number; title: string } | null) => void;
-  onEditModuleClick: (payload: { id: number; title?: string; introduction?: string; detail?: string; field?: 'title' | 'introduction' | 'detail' }) => void;
+  // For the public view we expose read-only view callbacks
+  onViewSectionClick: (section: Section) => void;
+  onViewLessonClick: (section: Section, lesson: { id: number; title: string } | null) => void;
+  onViewModuleClick: (payload: { id: number; title?: string; introduction?: string; detail?: string; field?: 'title' | 'introduction' | 'detail' }) => void;
 }
 
-export default function CardSummary({ module, onRefresh, onEditSectionClick, onEditLessonClick, onEditModuleClick }: Props) {
-  const deleteSection = async (sectionId: number) => {
-    await fetch(`/api/sections/${sectionId}`, { method: 'DELETE' });
-    onRefresh();
-  };
-
-  const deleteLesson = async (lessonId: number) => {
-    await fetch(`/api/lessons/${lessonId}`, { method: 'DELETE' });
-    onRefresh();
-  };
+export default function CardSummary({ module, onRefresh, onViewSectionClick, onViewLessonClick, onViewModuleClick }: Props) {
+  // public view: no delete actions available
 
   // For editing introduction and detail fields
   const renderEditableH2 = (field: 'introduction' | 'detail', label: string) => (
     <h2
-      onClick={() => onEditModuleClick({ id: module.id, field, [field]: module[field] })}
+      onClick={() => onViewModuleClick({ id: module.id, field, [field]: module[field] })}
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === "Enter") onEditModuleClick({ id: module.id, field, [field]: module[field] });
+        if (e.key === "Enter") onViewModuleClick({ id: module.id, field, [field]: module[field] });
       }}
       role="button"
-      aria-label={`Modifier le contenu de ${label}`}
+      aria-label={`Voir le contenu de ${label}`}
       className="text-blue-700 cursor-pointer hover:underline"
     >
       {label}
@@ -64,11 +57,11 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
             id="editModule-heading"
             className="text-blue-700 text-xl sm:text-2xl font-bold cursor-pointer hover:underline"
             data-testid="editModule-title"
-            onClick={() => onEditModuleClick({ id: module.id, title: module.title })}
+            onClick={() => onViewModuleClick({ id: module.id, title: module.title, field: 'title' })}
             tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") onEditModuleClick({ id: module.id, title: module.title });
-            }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") onViewModuleClick({ id: module.id, title: module.title });
+                }}
             role="button"
             aria-label="Modifier le titre du module"
           >
@@ -77,8 +70,24 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 overflow-y-auto max-h-full sm:max-h-[70vh]">
-        {renderEditableH2('introduction', 'Introduction du module')}
-        {renderEditableH2('detail', 'Details du module')}
+        <h2
+          onClick={() => onViewModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction })}
+          tabIndex={0}
+          role="button"
+          aria-label={`Voir l'introduction`}
+          className="text-blue-700 cursor-pointer hover:underline"
+        >
+          Introduction du module
+        </h2>
+        <h2
+          onClick={() => onViewModuleClick({ id: module.id, field: 'detail', detail: module.detail })}
+          tabIndex={0}
+          role="button"
+          aria-label={`Voir les détails`}
+          className="text-blue-700 cursor-pointer hover:underline"
+        >
+          Details du module
+        </h2>
         {module.sections.length === 0 ? (
           <p className="text-muted-foreground text-sm">Aucune section</p>
         ) : (
@@ -87,10 +96,10 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
               <div className="flex items-center justify-between text-blue-700">
                 <p
                   className="font-medium cursor-pointer hover:underline"
-                  onClick={() => onEditSectionClick(section)}
+                  onClick={() => onViewSectionClick(section)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === "Enter") onEditSectionClick(section); }}
+                      onKeyDown={(e) => { if (e.key === "Enter") onViewSectionClick(section); }}
                   aria-label={`Modifier la section ${section.title}`}
                 >
                   {section.title}
@@ -102,10 +111,10 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                     <div key={lesson.id} className="flex items-center justify-between">
                       <span
                         className="text-sm cursor-pointer hover:underline"
-                        onClick={() => onEditLessonClick(section, lesson)}
+                        onClick={() => onViewLessonClick(section, lesson)}
                         role="button"
                         tabIndex={0}
-                        onKeyDown={(e) => { if (e.key === "Enter") onEditLessonClick(section, lesson); }}
+                            onKeyDown={(e) => { if (e.key === "Enter") onViewLessonClick(section, lesson); }}
                         aria-label={`Modifier la leçon ${lesson.title}`}
                       >
                         {lesson.title}
