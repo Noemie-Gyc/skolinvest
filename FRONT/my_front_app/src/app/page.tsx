@@ -9,6 +9,8 @@ import { NewsletterInput } from "@/components/newsletterInput";
 import { CarouselCourses } from "@/components/carouselCourse";
 import { useEffect, useState } from 'react';
 
+
+
 export default function Page() {
   const [modules, setModules] = useState<Array<{ id: number; title: string, introduction: string, detail: string }>>([]);
   const [modulesLoading, setModulesLoading] = useState(true);
@@ -151,7 +153,7 @@ export default function Page() {
                             content: (
                               <div className="w-full flex flex-col justify-start">
                                 <Image
-                                  src="/financeMiniature.webp"
+                                  src="https://cdn.pixabay.com/photo/2018/02/08/10/22/desk-3139127_1280.jpg"
                                   alt={`Aperçu du module ${mod.title}`}
                                   width={400}
                                   height={400}
