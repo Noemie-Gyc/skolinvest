@@ -1,25 +1,21 @@
 'use client';
-
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { AddButton } from '@/components/addButton';
 import DeleteSectionDialog from './DeleteSectionDialog';
 import DeleteLessonDialog from './DeleteLessonDialog';
 import { CirclePlus } from 'lucide-react';
 
-
 interface Lesson {
   id: number;
   title: string;
 }
 
-// TypeScript : definition of a Section object (proprieties and types)
 interface Section {
   id: number;
   title: string;
   lessons: Lesson[];
 }
 
-// cardSummary component requires props
 interface Props {
   module: {
     id: number;
@@ -29,26 +25,38 @@ interface Props {
     sections: Section[];
     lessons: Lesson[];
   };
-  onRefresh: () => void; // Callback to reload datas after a deletion for example
-  onEditSectionClick: (section: Section) => void; // Callback to open edition form
+  onRefresh: () => void;
+  onEditSectionClick: (section: Section) => void;
   onEditLessonClick: (section: Section, lesson: { id: number; title: string } | null) => void;
-  // onEditModuleClick can accept either a title-edit payload or a field-edit payload
   onEditModuleClick: (payload: { id: number; title?: string; introduction?: string; detail?: string; field?: 'title' | 'introduction' | 'detail' }) => void;
 }
 
-// Main component to render the summary (for now only section titles list)
 export default function CardSummary({ module, onRefresh, onEditSectionClick, onEditLessonClick, onEditModuleClick }: Props) {
-  // Asynchronous function to delete a section via API 
   const deleteSection = async (sectionId: number) => {
-    // call to our API routes proxy to avoid exposing to our real django URL
     await fetch(`/api/sections/${sectionId}`, { method: 'DELETE' });
-    onRefresh(); // Reloading of the list after deletion
+    onRefresh();
   };
 
   const deleteLesson = async (lessonId: number) => {
     await fetch(`/api/lessons/${lessonId}`, { method: 'DELETE' });
     onRefresh();
   };
+
+  // For editing introduction and detail fields
+  const renderEditableH2 = (field: 'introduction' | 'detail', label: string) => (
+    <h2
+      onClick={() => onEditModuleClick({ id: module.id, field, [field]: module[field] })}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") onEditModuleClick({ id: module.id, field, [field]: module[field] });
+      }}
+      role="button"
+      aria-label={`Modifier le contenu de ${label}`}
+      className="text-blue-700 cursor-pointer hover:underline"
+    >
+      {label}
+    </h2>
+  );
 
   return (
     <Card className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
@@ -58,70 +66,42 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
             id="editModule-heading"
             className="text-blue-700 text-xl sm:text-2xl font-bold cursor-pointer hover:underline"
             data-testid="editModule-title"
-            onClick={() => onEditModuleClick({ id: module.id, title: module.title})}
+            onClick={() => onEditModuleClick({ id: module.id, title: module.title })}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onEditModuleClick({ id: module.id, title: module.title});
+              if (e.key === "Enter") onEditModuleClick({ id: module.id, title: module.title });
             }}
             role="button"
             aria-label="Modifier le titre du module"
           >
             {module.title}
           </h1>
-          <h2 
-          onClick={() => onEditModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction })}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') onEditModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction });
-            }}
-            role="button"
-            aria-label="Modifier le titre du module"
-          className="text-blue-700 cursor-pointer hover:underline"
-          >Introduction du module
-          </h2>
-          <h2 
-            onClick={() => onEditModuleClick({ id: module.id, field: 'detail', detail: module.detail })}
-            tabIndex={0}
-            onKeyDown={(e) => { if (e.key === 'Enter') onEditModuleClick({ id: module.id, field: 'detail', detail: module.detail }); }}
-            role="button"
-            aria-label="Modifier le détail du module"
-            className="text-blue-700 cursor-pointer hover:underline"
-          >Details du module</h2>
         </CardTitle>
       </CardHeader>
-
-
       <CardContent className="space-y-4 overflow-y-auto max-h-full sm:max-h-[70vh]">
+        {renderEditableH2('introduction', 'Introduction du module')}
+        {renderEditableH2('detail', 'Details du module')}
         {module.sections.length === 0 ? (
           <p className="text-muted-foreground text-sm">Aucune section</p>
         ) : (
-          // Sections list
           module.sections.map((section) => (
-            <div key={section.id} className=" space-y-2 ">
-              {/* Titre de section + poubelle alignés */}
+            <div key={section.id} className="space-y-2">
               <div className="flex items-center justify-between text-blue-700">
                 <p
                   className="font-medium cursor-pointer hover:underline"
                   onClick={() => onEditSectionClick(section)}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') onEditSectionClick(section);
-                  }}
+                  onKeyDown={(e) => { if (e.key === "Enter") onEditSectionClick(section); }}
                   aria-label={`Modifier la section ${section.title}`}
                 >
                   {section.title}
                 </p>
-
                 <DeleteSectionDialog
                   sectionTitle={section.title}
-                  onDelete={async () => {
-                    await deleteSection(section.id);
-                  }}
+                  onDelete={async () => { await deleteSection(section.id); }}
                 />
               </div>
-
-              {/* Liste des leçons sous le titre de section */}
               <div className="pl-4 space-y-1">
                 {section.lessons && section.lessons.length > 0 ? (
                   section.lessons.map((lesson) => (
@@ -131,19 +111,14 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                         onClick={() => onEditLessonClick(section, lesson)}
                         role="button"
                         tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') onEditLessonClick(section, lesson);
-                        }}
+                        onKeyDown={(e) => { if (e.key === "Enter") onEditLessonClick(section, lesson); }}
                         aria-label={`Modifier la leçon ${lesson.title}`}
                       >
                         {lesson.title}
                       </span>
-
                       <DeleteLessonDialog
                         lessonTitle={lesson.title}
-                        onDelete={async () => {
-                          await deleteLesson(lesson.id);
-                        }}
+                        onDelete={async () => { await deleteLesson(lesson.id); }}
                       />
                     </div>
                   ))
@@ -172,19 +147,5 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
         </AddButton>
       </CardFooter>
     </Card>
-
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
