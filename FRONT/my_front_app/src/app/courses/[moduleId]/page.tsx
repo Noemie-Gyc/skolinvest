@@ -7,6 +7,8 @@ import ViewTextField from './ViewTextField';
 import ViewSection from './ViewSection';
 import ViewLesson from './ViewLesson';
 import { fetchWithAuth } from '@/lib/fetchWithAuth';
+import PublicHeader from "@/components/publicHeader";
+import Footer from "@/components/footer";
 
 export default function ModuleEditPage() {
   const params = useParams();
@@ -41,6 +43,11 @@ export default function ModuleEditPage() {
   if (!module) return <p>Chargement...</p>;
 
   return (
+    <>
+      <header className="sticky top-0 z-10 bg-white/70 backdrop-blur border-b" role="banner">
+        <PublicHeader />
+      </header>
+
     <div className="flex flex-col md:flex-row gap-6 p-4">
       {/* left part of the screen : summary */}
       <aside className="w-full md:w-1/3">
@@ -89,5 +96,7 @@ export default function ModuleEditPage() {
           )}
       </main>
     </div>
+    <Footer role="contentinfo" />
+    </>
   );
 }

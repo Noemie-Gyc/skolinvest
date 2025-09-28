@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { SaveButton } from '@/components/saveButton';
 
 interface Props {
   moduleId: number;
@@ -19,7 +19,7 @@ export default function ViewSection({ moduleId, section, onClose }: Props) {
       <CardContent>
         <p className="text-sm text-muted-foreground">Affichage en lecture seule de la section. Aucune modification possible depuis l'espace public.</p>
         <div className="mt-4">
-          <Button onClick={onClose} variant="ghost">Fermer</Button>
+          <SaveButton onClick={onClose}>Fermer</SaveButton>
         </div>
       </CardContent>
     </Card>

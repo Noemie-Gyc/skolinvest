@@ -31,24 +31,6 @@ interface Props {
 }
 
 export default function CardSummary({ module, onRefresh, onViewSectionClick, onViewLessonClick, onViewModuleClick }: Props) {
-  // public view: no delete actions available
-
-  // For editing introduction and detail fields
-  const renderEditableH2 = (field: 'introduction' | 'detail', label: string) => (
-    <h2
-      onClick={() => onViewModuleClick({ id: module.id, field, [field]: module[field] })}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") onViewModuleClick({ id: module.id, field, [field]: module[field] });
-      }}
-      role="button"
-      aria-label={`Voir le contenu de ${label}`}
-      className="text-blue-700 cursor-pointer hover:underline"
-    >
-      {label}
-    </h2>
-  );
-
   return (
     <Card className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
       <CardHeader>
@@ -70,7 +52,7 @@ export default function CardSummary({ module, onRefresh, onViewSectionClick, onV
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 overflow-y-auto max-h-full sm:max-h-[70vh]">
-        <h2
+        <p
           onClick={() => onViewModuleClick({ id: module.id, field: 'introduction', introduction: module.introduction })}
           tabIndex={0}
           role="button"
@@ -78,8 +60,8 @@ export default function CardSummary({ module, onRefresh, onViewSectionClick, onV
           className="text-blue-700 cursor-pointer hover:underline"
         >
           Introduction du module
-        </h2>
-        <h2
+        </p>
+        <p
           onClick={() => onViewModuleClick({ id: module.id, field: 'detail', detail: module.detail })}
           tabIndex={0}
           role="button"
@@ -87,14 +69,14 @@ export default function CardSummary({ module, onRefresh, onViewSectionClick, onV
           className="text-blue-700 cursor-pointer hover:underline"
         >
           Details du module
-        </h2>
+        </p>
         {module.sections.length === 0 ? (
           <p className="text-muted-foreground text-sm">Aucune section</p>
         ) : (
           module.sections.map((section) => (
             <div key={section.id} className="space-y-2">
               <div className="flex items-center justify-between text-blue-700">
-                <p
+                <h2
                   className="font-medium cursor-pointer hover:underline"
                   onClick={() => onViewSectionClick(section)}
                   role="button"
@@ -103,13 +85,13 @@ export default function CardSummary({ module, onRefresh, onViewSectionClick, onV
                   aria-label={`Modifier la section ${section.title}`}
                 >
                   {section.title}
-                </p>
+                </h2>
               </div>
               <div className="pl-4 space-y-1">
                 {section.lessons && section.lessons.length > 0 ? (
                   section.lessons.map((lesson) => (
                     <div key={lesson.id} className="flex items-center justify-between">
-                      <span
+                      <h3
                         className="text-sm cursor-pointer hover:underline"
                         onClick={() => onViewLessonClick(section, lesson)}
                         role="button"
@@ -118,7 +100,7 @@ export default function CardSummary({ module, onRefresh, onViewSectionClick, onV
                         aria-label={`Modifier la leçon ${lesson.title}`}
                       >
                         {lesson.title}
-                      </span>
+                      </h3>
                     </div>
                   ))
                 ) : (

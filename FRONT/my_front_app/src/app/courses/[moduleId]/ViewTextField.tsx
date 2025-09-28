@@ -1,8 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-
+import { SaveButton } from '@/components/saveButton';
 interface Props {
   moduleId: number;
   fieldName: string;
@@ -19,10 +18,10 @@ export default function ViewTextField({ moduleId, fieldName, fieldLabel, value, 
       </CardHeader>
       <CardContent>
         <div className="prose max-w-full">
-          {value ? <div dangerouslySetInnerHTML={{ __html: value }} /> : <p className="text-sm text-muted-foreground">Aucun contenu pour le moment.</p>}
+          {value}
         </div>
         <div className="mt-4">
-          <Button onClick={onClose} variant="ghost">Fermer</Button>
+          <SaveButton onClick={onClose}>Fermer</SaveButton>
         </div>
       </CardContent>
     </Card>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { SaveButton } from '@/components/saveButton';
 
 interface Lesson {
   id: number;
@@ -59,7 +59,7 @@ export default function ViewLesson({ moduleId, sectionId, sections, lesson, onCl
           <p className="text-sm text-muted-foreground">Aucune vidéo pour cette leçon.</p>
         )}
         <div className="mt-4">
-          <Button onClick={onClose} variant="ghost">Fermer</Button>
+          <SaveButton onClick={onClose}>Fermer</SaveButton>
         </div>
       </CardContent>
     </Card>

@@ -44,7 +44,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
 
   // For editing introduction and detail fields
   const renderEditableH2 = (field: 'introduction' | 'detail', label: string) => (
-    <h2
+    <p
       onClick={() => onEditModuleClick({ id: module.id, field, [field]: module[field] })}
       tabIndex={0}
       onKeyDown={(e) => {
@@ -55,7 +55,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
       className="text-blue-700 cursor-pointer hover:underline"
     >
       {label}
-    </h2>
+    </p>
   );
 
   return (
@@ -87,7 +87,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
           module.sections.map((section) => (
             <div key={section.id} className="space-y-2">
               <div className="flex items-center justify-between text-blue-700">
-                <p
+                <h2
                   className="font-medium cursor-pointer hover:underline"
                   onClick={() => onEditSectionClick(section)}
                   role="button"
@@ -96,7 +96,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                   aria-label={`Modifier la section ${section.title}`}
                 >
                   {section.title}
-                </p>
+                </h2>
                 <DeleteSectionDialog
                   sectionTitle={section.title}
                   onDelete={async () => { await deleteSection(section.id); }}
@@ -106,7 +106,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                 {section.lessons && section.lessons.length > 0 ? (
                   section.lessons.map((lesson) => (
                     <div key={lesson.id} className="flex items-center justify-between">
-                      <span
+                      <h3
                         className="text-sm cursor-pointer hover:underline"
                         onClick={() => onEditLessonClick(section, lesson)}
                         role="button"
@@ -115,7 +115,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                         aria-label={`Modifier la leçon ${lesson.title}`}
                       >
                         {lesson.title}
-                      </span>
+                      </h3>
                       <DeleteLessonDialog
                         lessonTitle={lesson.title}
                         onDelete={async () => { await deleteLesson(lesson.id); }}
