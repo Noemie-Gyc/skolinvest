@@ -5,6 +5,7 @@ import { AddButton } from '@/components/addButton';
 import DeleteSectionDialog from './DeleteSectionDialog';
 import DeleteLessonDialog from './DeleteLessonDialog';
 import { CirclePlus } from 'lucide-react';
+import { slugify } from '@/lib/utils';
 
 
 interface Lesson {
@@ -79,6 +80,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
               {/* Titre de section + poubelle alignés */}
               <div className="flex items-center justify-between text-blue-700">
                 <p
+                  data-testid={`section-title-${slugify(section.title)}`}
                   className="font-medium cursor-pointer hover:underline"
                   onClick={() => onEditSectionClick(section)}
                   role="button"
@@ -105,6 +107,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
                   section.lessons.map((lesson) => (
                     <div key={lesson.id} className="flex items-center justify-between">
                       <span
+                        data-testid={`lesson-title-${slugify(lesson.title)}`}
                         className="text-sm cursor-pointer hover:underline"
                         onClick={() => onEditLessonClick(section, lesson)}
                         role="button"
@@ -138,6 +141,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
           onClick={() => onEditSectionClick({ id: 0, title: "", lessons: [] })}
           className="w-auto"
           aria-label="Ajouter une nouvelle section"
+          data-testid="new section"
         >
           <CirclePlus className="w-4 h-4" /> Section
         </AddButton>
@@ -145,6 +149,7 @@ export default function CardSummary({ module, onRefresh, onEditSectionClick, onE
           onClick={() => onEditLessonClick(undefined, null)}
           className="w-auto"
           aria-label="Ajouter une nouvelle leçon"
+          data-testid="new lesson"
         >
           <CirclePlus className="w-4 h-4" /> Leçon
         </AddButton>
