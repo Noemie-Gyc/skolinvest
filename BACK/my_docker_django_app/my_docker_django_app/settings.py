@@ -181,24 +181,30 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),  # fichier à la racine du projet
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['console'],
+            'handlers': ['console','file'],
             'level': 'ERROR',
             'propagate': False,
         },
         'my_docker_django_app': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'DEBUG',
         },
          'authentification': {
-        'handlers': ['console'],
+        'handlers': ['console', 'file'],
         'level': 'INFO',
         'propagate': False,
         },
