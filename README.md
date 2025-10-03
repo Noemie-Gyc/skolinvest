@@ -80,3 +80,13 @@ Une fois les dossiers supprimés, réinstaller les dépendances en lançant touj
 npm install
 ```
 
+# Tests
+Pour lancer les tests qu'ils soient unitaires ou d'intégration, se référer au task file.
+
+Côté backend, nous avons dans l'application métier principale (my_docker_django_app) deux dossiers :
+api et integration_model. 
+
+Le dossier "api" est pour tous les tests d'intégration ou unitaires impliquant l'api donc de tester le bon fonctionnement des endpoints, des fonctions intervenants sur les views de chacun des modèles.
+
+Le dossier "integration_model" concerne des tests de bas niveau, vérifiant la bonne intégration en base de données de nos modèles via l'ORM Django. 
+
