@@ -10,7 +10,7 @@ export function slugify(text: string): string {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')           // remplace espaces par tirets
-    .replace(/[^\w\-]+/g, '')       // supprime caractères spéciaux
-    .replace(/\-\-+/g, '-');        // remplace tirets doubles par un seul
+    .replace(/\s+/g, '-')           // replace spaces with hyphens
+    .replace(/[^\w\-]+/g, '')       // delete special characters
+    .replace(/\-\-+/g, '-');        // replace doule hyphens by one
 }

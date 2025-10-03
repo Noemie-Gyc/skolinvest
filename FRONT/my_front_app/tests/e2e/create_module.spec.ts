@@ -71,9 +71,11 @@ test('module creation and completion', async ({ page }) => {
     //Save the lesson
     await page.getByTestId('save-lesson-button').click();
     // Check wheather lesson is in the proper section
+    
     //TODO : Revoir cette partie qui ne fonctionne pas comme attendu
     // const sectionContainer = page.getByTestId(`section-title-${slugify(sectionTitle2)}`);
     // await expect(sectionContainer.getByTestId(`lesson-title-${slugify(lessonTitle)}`)).toBeVisible();
+
     // click on the My course manager link in the header to go back to the module list
     const myCourseManagerButton =  page.locator('a[href="/admin/modules"]');
     await expect(myCourseManagerButton).toBeVisible({ timeout: 10000 });
@@ -81,49 +83,6 @@ test('module creation and completion', async ({ page }) => {
     await expect(page).toHaveURL('http://localhost:3000/admin/modules');
     await expect(page.getByRole("heading", { name: "MES MODULES", level: 1 })).toBeVisible();
 });
-
-// test('edit module from module List', async ({ page }) => {
-//     //Cliquer sur les trois petits points
-//     //cliquer sur éditer 
-//     //Vérifier qu'on arrive sur une page d'édition qui porte le même titre
-//     // Modifier le titre
-//     // enregistrer
-//     // vérifier qu'il est bien visible dans le cardSummary
-//     //Cliquer sur une section
-//     //changer le titre
-//     // Enregistrer
-//     // Vérifier que le titre est bien à jour
-//     //Cliquer sur une leçon
-//     // Modifier le titre, 
-//     // la vidéo, 
-//     // la section
-//     // Enregistrer
-//     // Vérifier que les modifications sont bien prises en compte
-//     // Vérifier que la leçon est dans la bonne section. 
-//     // Supprimer la leçon
-//     // Vérifier qu'elle n'est plus visible dans la liste des leçons
-//     // Supprimer une section, faire un assert null
-//     // Vérifier qu'elle n'est plus visible dans la liste des sections
-//     // Retourner à la liste des modules
-// });
-
-// test('delete module', async ({ page }) => {
-//     //aller sur le bouton supprimer du module créé précédemment
-//     //Appuyer sur supprimer depuis la pop up
-//     // Faire un assert null
-//     // Vérifier que le nombre de modules a bien diminué de 1
-// });
-
-// test('module creation errors', async ({ page }) => {
-//     //Essayer de créer un module sans titre
-//     //Essayer de créer un module avec un titre de moins de 3 caractères
-// });
-
-// test('user without rights', async ({ page }) => {
-//     //Déconnecter l'utilisateur admin
-//     //Essayer de se connecter avec un utilisateur qui n'a pas les droits
-//     //Vérifier que le message d'erreur s'affiche correctement
-// });
 
 // TODO : test accessibilité, éditer un module en utilisant que le keyboard. 
 
@@ -139,13 +98,6 @@ test.afterAll(async () => {
 
   const status = res.status();
   const text = await res.text();
-
-  // 👇 Affiche bien tout, et force les logs à apparaître
-  console.log('--- Cleanup API response ---');
-  console.log('URL:', url);
-  console.log('Status code:', status);
-  console.log('Response body:', text);
-  console.log('-----------------------------');
 
   expect(res.ok()).toBeTruthy();
 });
