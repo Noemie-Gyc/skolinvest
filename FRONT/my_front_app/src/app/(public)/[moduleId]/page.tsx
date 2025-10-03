@@ -28,7 +28,7 @@ export default function ModuleEditPage() {
     async function loadModule() {
       try {
   // public view performs only GETs to display content. Use frontend proxy to backend public detail
-  const res = await fetchWithAuth(`/api/modules/${moduleId}`);
+  const res = await fetch(`/api/modules/${moduleId}`);
         if (!res || !res.ok) return;
         const data = await res.json();
         setModule(data);
