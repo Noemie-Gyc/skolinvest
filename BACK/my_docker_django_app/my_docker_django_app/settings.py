@@ -203,10 +203,10 @@ LOGGING = {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
         },
-         'authentification': {
-        'handlers': ['console', 'file'],
-        'level': 'INFO',
-        'propagate': False,
+        'authentification': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
