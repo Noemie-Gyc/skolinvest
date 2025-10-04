@@ -13,19 +13,20 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 # This class is to visualize the whole list of the modules available on the public app
-# TODO ModuleListView only get the modules that has the field 'status' == 'published'
+# ModuleListView only get the modules that has the field 'status' == 'published'
 class ModuleListView(APIView):
     permission_classes = [AllowAny]
+
     def get(self, request):
-        modules = Module.objects.all()
-        serializer = ModuleSerializer(modules, many=True)
-        return Response(serializer.data)
+        modules = Module.objects.filter(status='published').order_by('id')
+        data = [{'id': m.id, 'title': m.title, 'introduction' : m.introduction, 'detail' : m.detail } for m in modules]
+        return Response(data)
     
 # RetrieveAPIView is a native class to get the detail of an instance identified by the primary key
 class ModuleDetailView(RetrieveAPIView):
     queryset = Module.objects.all()
     serializer_class = ModuleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 # CreateAPIView is a native class to create a view
 class ModuleCreateView(CreateAPIView):

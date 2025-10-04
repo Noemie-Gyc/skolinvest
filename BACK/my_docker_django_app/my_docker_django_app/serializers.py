@@ -24,6 +24,8 @@ class ModuleSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'title',
+            'introduction',
+            'detail',
             'status',
             'thumbnail',
             'publication_date',
