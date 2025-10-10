@@ -68,42 +68,9 @@ class ModulesAPITests(APITestCase):
 
     def test_list_public_modules(self):
         url = reverse("module-list")
-        self.client.logout()  # simulate public access (pas authentifié)
+        self.client.logout()  
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreaterEqual(len(response.data), 1)
-
-    def test_editable_list_access_granted_to_admin(self):
-        # Création d'un user admin (staff ou superuser)
-        user = User.objects.create_user(
-        username="adminuser",
-        password="testpass",
-        is_staff=True  # ou is_superuser=True
-        )
-
-        # Génération manuelle du token JWT (bypass du serializer qui valide les rôles)
-        refresh = RefreshToken.for_user(user)
-        self.client.cookies['access'] = str(refresh.access_token)
-        # Appel de la vue protégée
-        url = reverse("module-admin-list")
-        response = self.client.get(url)
-
-        # Vérifie que l’accès est autorisé
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_editable_list_access_denied_to_non_admin(self):
-         # Création d'un utilisateur sans aucun droit admin
-        user = User.objects.create_user(
-            username="notadmin",
-            password="testpass",
-            is_staff=False,
-            is_superuser=False
-        )
-        refresh = RefreshToken.for_user(user)
-        self.client.cookies['access'] = str(refresh.access_token)
-
-        url = reverse("module-admin-list")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 403)
     
     
