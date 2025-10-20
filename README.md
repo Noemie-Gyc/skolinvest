@@ -80,3 +80,18 @@ Une fois les dossiers supprimés, réinstaller les dépendances en lançant touj
 npm install
 ```
 
+# Ajouter les connexions à la base de donnée
+
+Pour avoir l'accès à la base de donnée créer un fichier ```.env``` à la base du repo et renseigner les variables d'environnement dedans.
+
+```
+DEBUG=True
+DB_NAME=${DB_NAME}
+DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+DB_USER=${DB_USER}
+DB_PASSWORD=${DB_PASSWORD}
+DB_PORT=${DB_PORT}
+DB_HOST=${DB_HOST}
+ALLOWED_HOST=${ALLOWED_HOST}
+NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+```
