@@ -95,3 +95,11 @@ DB_HOST=${DB_HOST}
 ALLOWED_HOST=${ALLOWED_HOST}
 NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 ```
+
+# Ajouter les connexions à l'API
+
+Pour avoir l'accès à la base de donnée créer un fichier ```.env``` à la base du repo /FRONT et renseigner les variables d'environnement dedans.
+
+```
+NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+```
