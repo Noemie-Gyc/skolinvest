@@ -98,7 +98,7 @@ NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 # Ajouter les connexions à l'API
 
-Pour avoir l'accès à la base de donnée créer un fichier ```.env``` à la base du repo /FRONT et renseigner les variables d'environnement dedans.
+Pour avoir l'accès aux données mises à disposition par l'API créer un fichier ```.env``` à la base du repo /FRONT et renseigner les variables d'environnement dedans.
 
 ```
 NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
