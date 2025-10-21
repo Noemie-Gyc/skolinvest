@@ -18,7 +18,6 @@ class LessonsAPITests(APITestCase):
         self.assertEqual(response.status_code, 200)
         access_token = response.data['access']
         self.client.cookies['access'] = access_token
-        #self.client.login(username="testuser", password="testpass")
 
         self.module = Module.objects.create(title="Module test", publication_date= "2025-06-13", user=self.user)
         self.section = Section.objects.create(title="Section test", module=self.module)
