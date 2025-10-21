@@ -80,26 +80,13 @@ Une fois les dossiers supprimés, réinstaller les dépendances en lançant touj
 npm install
 ```
 
-# Ajouter les connexions à la base de donnée
+# Tests
+Pour lancer les tests qu'ils soient unitaires ou d'intégration, se référer au task file.
 
-Pour avoir l'accès à la base de donnée créer un fichier ```.env``` à la base du repo et renseigner les variables d'environnement dedans.
+Côté backend, nous avons dans l'application métier principale (my_docker_django_app) deux dossiers :
+api et integration_model. 
 
-```
-DEBUG=True
-DB_NAME=${DB_NAME}
-DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-DB_USER=${DB_USER}
-DB_PASSWORD=${DB_PASSWORD}
-DB_PORT=${DB_PORT}
-DB_HOST=${DB_HOST}
-ALLOWED_HOST=${ALLOWED_HOST}
-NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-```
+Le dossier "api" est pour tous les tests d'intégration ou unitaires impliquant l'api donc de tester le bon fonctionnement des endpoints, des fonctions intervenants sur les views de chacun des modèles.
 
-# Ajouter les connexions à l'API
+Le dossier "integration_model" concerne des tests de bas niveau, vérifiant la bonne intégration en base de données de nos modèles via l'ORM Django. 
 
-Pour avoir l'accès aux données mises à disposition par l'API créer un fichier ```.env``` à la base du repo /FRONT et renseigner les variables d'environnement dedans.
-
-```
-NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-```
