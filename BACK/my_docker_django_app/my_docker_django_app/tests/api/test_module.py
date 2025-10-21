@@ -28,7 +28,7 @@ class ModulesAPITests(APITestCase):
         self.client.login(username="testuser", password="testpass")
         
         # Mock the creation of the Module with the mandatory datas. 
-        self.module = Module.objects.create(title="Module mocké", user_id = self.user.id)
+        self.module = Module.objects.create(title="Module mocké", user_id = self.user.id, status='published')
 
     def test_create_module(self):
         url = reverse("module-create")
