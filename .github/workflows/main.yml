@@ -46,39 +46,44 @@ jobs:
   #    - name: Run Playwright tests
   #      run: npx playwright test tests/e2e
 
-  # test-backend:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: BACK/my_docker_django_app
-  #   services:
-  #     mysql:
-  #       image: mysql:8.0
-  #       env:
-  #         MYSQL_ROOT_PASSWORD: rootpassword
-  #         MYSQL_DATABASE: skolinvestdb
-  #         MYSQL_USER: skolinvestuser
-  #         MYSQL_PASSWORD: userpass
-  #       ports: ['3306:3306']
-  #       options: >-
-  #         --health-cmd="mysqladmin ping --silent"
-  #         --health-interval=10s
-  #         --health-timeout=5s
-  #         --health-retries=5
+  test-backend:
+     runs-on: ubuntu-latest
+     defaults:
+       run:
+         working-directory: BACK/my_docker_django_app
+     services:
+       mysql:
+         image: mysql:8.0
+         env:
+           MYSQL_ROOT_PASSWORD: rootpassword
+           MYSQL_DATABASE: skolinvestdb
+           MYSQL_USER: skolinvestuser
+           MYSQL_PASSWORD: userpass
+         ports: ['3306:3306']
+         options: >-
+           --health-cmd="mysqladmin ping --silent"
+           --health-interval=10s
+           --health-timeout=5s
+           --health-retries=5
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+     steps:
+       - name: Checkout repository
+         uses: actions/checkout@v4
 
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: '3.11'
+       - name: Setup Python
+         uses: actions/setup-python@v5
+         with:
+           python-version: '3.11'
 
-  #     - name: Install dependencies
-  #       run: pip install -r requirements.txt
+       - name: Install dependencies
+         run: pip install -r requirements.txt
 
-  #     - name: Run Django tests
-  #       run: python manage.py test
-  #       env:
-  #         DATABASE_URL: mysql://skolinvestuser:userpass@127.0.0.1:3306/skolinvestdb
+       - name: Run Django unit tests
+         run: task test-unit-back
+         env:
+           DATABASE_URL: mysql://skolinvestuser:userpass@127.0.0.1:3306/skolinvestdb
+
+       - name: Run Django integration tests
+         run: task integration-test-pytest
+         env:
+           DATABASE_URL: mysql://skolinvestuser:userpass@127.0.0.1:3306/skolinvestdb
