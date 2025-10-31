@@ -49,10 +49,10 @@ services:
     image: mysql:8
     container_name: mysql_container
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword # Mot de passe root de MySQL
-      MYSQL_DATABASE: skolinvestdb  # Nom de la base de données
-      MYSQL_USER: skolinvestuser  # Utilisateur MySQL
-      MYSQL_PASSWORD: userpass     
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"                 
     volumes:
