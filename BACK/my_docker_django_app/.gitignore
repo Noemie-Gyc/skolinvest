@@ -2,3 +2,4 @@
 my_docker_django_app/__pycache__/
 *.pyc
 debug.log
+../.env
