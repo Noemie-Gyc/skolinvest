@@ -342,15 +342,8 @@ export default function Page() {
                 className="mt-2 text-xs text-gray-600 text-center"
               >
                 En renseignant votre adresse mail, vous acceptez de recevoir
-                notre newsletter par mail et vous prenez connaissance de notre
-                <a href="/politique-confidentialite" className="underline">
-                  Politique de Confidentialité
-                </a>. Vous pouvez vous désinscrire à tout moment en nous contactant
-                à
-                <span className="underline">
-                  contact@skolinvest.com
-                </span>
-                .
+                notre newsletter par mail et vous prenez connaissance de notre <a href="/politique-confidentialite" className="underline">Politique de Confidentialité</a>. Vous pouvez vous désinscrire à tout moment en nous contactant
+                à <span className="underline"> contact@skolinvest.com</span>.
               </p>
             </div>
           </div>
