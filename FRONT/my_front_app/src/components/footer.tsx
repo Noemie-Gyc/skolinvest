@@ -5,7 +5,7 @@ import Image from "next/image";
 
 
 export default function Footer({
-  logoSrc = "/logo.png",
+  logoSrc = "/logo.svg",
   role
 }: {
   logoSrc?: string;

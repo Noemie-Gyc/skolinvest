@@ -25,7 +25,7 @@ interface HeaderNavProps {
 
 export default function HeaderNav({
   items,
-  logoSrc = "/logo.png",
+  logoSrc = "/logo.svg",
   showSearch = false,
   onLogoutClick,
   className = "",
