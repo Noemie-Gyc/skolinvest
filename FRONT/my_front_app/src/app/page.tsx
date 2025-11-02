@@ -283,7 +283,7 @@ export default function Page() {
           aria-labelledby="contact-heading"
           className="min-h-[60vh] flex flex-col justify-center px-4 py-12 sm:py-16 w-full"
         >
-          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 ">
             <h2
               id="contact-heading"
               className="text-2xl font-semibold text-center text-gray-900"
@@ -323,8 +323,9 @@ export default function Page() {
                 />
               </Link>
             </div>
-            <div className="flex justify-center w-full mt-8">
-              <form className="w-full max-w-sm">
+            
+            <div className="w-full max-w-sm mx-auto px-4 sm:px-6 mt-8">
+              <form className="w-full">
                 <label htmlFor="newsletter-email" className="sr-only">
                   Adresse email pour la newsletter
                 </label>
@@ -332,15 +333,25 @@ export default function Page() {
                   id="newsletter-email"
                   placeholder="S'inscrire à la newsletter"
                   aria-label="S'inscrire à la newsletter pour recevoir des conseils en investissement"
+                  aria-describedby="newsletter-privacy"
                 />
               </form>
-            </div>
 
-            <div className="mt-2 mr-50 ml-50 text-xs text-gray-600 text-center" id="newsletter-privacy" aria-label="Aller à la politique de confidentialité">
-              En renseignant votre adresse mail, vous acceptez de recevoir notre
-              newsletter par mail et vous prenez connaissance de notre <a href="/politique-confidentialite" className="underline">Politique
-              de Confidentialité</a>. Vous pouvez vous désinscrire à tout moment en
-              nous contactant à <span className="underline">contact@skolinvest.com</span>.
+              <p
+                id="newsletter-privacy"
+                className="mt-2 text-xs text-gray-600 text-center"
+              >
+                En renseignant votre adresse mail, vous acceptez de recevoir
+                notre newsletter par mail et vous prenez connaissance de notre
+                <a href="/politique-confidentialite" className="underline">
+                  Politique de Confidentialité
+                </a>. Vous pouvez vous désinscrire à tout moment en nous contactant
+                à
+                <span className="underline">
+                  contact@skolinvest.com
+                </span>
+                .
+              </p>
             </div>
           </div>
         </section>
