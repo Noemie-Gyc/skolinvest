@@ -55,11 +55,11 @@ jobs:
   #     mysql:
   #       image: mysql:8.0
   #       env:
-  #         MYSQL_ROOT_PASSWORD: rootpassword
-  #         MYSQL_DATABASE: skolinvestdb
-  #         MYSQL_USER: skolinvestuser
-  #         MYSQL_PASSWORD: userpass
-  #       ports: ['3306:3306']
+  #         MYSQL_ROOT_PASSWORD: DB_ROOT_PASSWORD
+  #         MYSQL_DATABASE: DB_NAME
+  #         MYSQL_USER: DB_USER
+  #         MYSQL_PASSWORD: DB_PASSWORD
+  #       ports: ['DB_PORT:DB_PORT']
   #       options: >-
   #         --health-cmd="mysqladmin ping --silent"
   #         --health-interval=10s

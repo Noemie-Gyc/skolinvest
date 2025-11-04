@@ -25,3 +25,4 @@ djangorestframework
 djangorestframework-simplejwt
 pytest
 pytest-django
+dotenv

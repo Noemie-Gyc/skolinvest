@@ -13,8 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
+from pathlib import Path
 import logging
 from django.utils.log import DEFAULT_LOGGING
+
+#TODO : changer le path du env_path en fonction de l'ordi utilisé
+env_path = Path("C:\Users\cirie\Desktop\ADA\RNCP\skolinvest\BACK\.env") 
+load_dotenv(dotenv_path=env_path) 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,11 +117,11 @@ WSGI_APPLICATION = 'my_docker_django_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skolinvestdb',  # Le nom de votre base de données MySQL
-        'USER': 'skolinvestuser',         # L'utilisateur MySQL
-        'PASSWORD': 'userpass', # Le mot de passe
-        'HOST': 'mysql',      # L'hôte (localhost si vous utilisez une base locale)
-        'PORT': '3306',           # Le port de MySQL (par défaut 3306)
+        'NAME': os.getenv('DB_NAME'),  # Le nom de votre base de données MySQL
+        'USER': os.getenv('DB_USER'),         # L'utilisateur MySQL
+        'PASSWORD': os.getenv('DB_PASSWORD'), # Le mot de passe
+        'HOST': os.getenv('DB_PORT'),      # L'hôte (localhost si vous utilisez une base locale)
+        'PORT': os.getenv('DB_HOST'),           # Le port de MySQL (par défaut 3306)
     }
 }
 
